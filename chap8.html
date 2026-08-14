@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第8章 氧化还原反应 - 互动学习工作台</title>
+    <title>第8章 氧化还原反应 - 互动探究学习工作台</title>
     <style>
         :root {
-            --bg-primary: #f8fafc;
+            --bg-body: #f8fafc;
             --bg-card: #ffffff;
-            --bg-card-secondary: #f1f5f9;
+            --bg-card-sub: #f1f5f9;
             --text-main: #0f172a;
             --text-sub: #475569;
             --primary: #2563eb;
@@ -18,17 +18,17 @@
             --accent-amber: #f59e0b;
             --border-color: #e2e8f0;
             --font-scale: 1;
-            --layout-max-width: 1000px;
+            --layout-max-width: 1100px;
             --ans-bg: #fef08a;
             --ans-text: #854d0e;
             --ans-border: #facc15;
-            --canvas-bg: #0f172a;
+            --canvas-bg: #090d16;
         }
 
         body.dark-mode {
-            --bg-primary: #090d16;
+            --bg-body: #090d16;
             --bg-card: #131b2e;
-            --bg-card-secondary: #1e293b;
+            --bg-card-sub: #1e293b;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
             --primary: #3b82f6;
@@ -44,16 +44,16 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            background-color: var(--bg-primary);
+            background-color: var(--bg-body);
             color: var(--text-main);
             font-size: calc(1rem * var(--font-scale));
-            line-height: 1.65;
-            padding-bottom: 80px;
+            line-height: 1.7;
+            padding-bottom: 90px;
         }
 
         /* 顶部悬浮工具栏 */
@@ -76,13 +76,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            background: var(--bg-card-secondary);
+            background: var(--bg-card-sub);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 6px;
             font-size: 0.875rem;
             cursor: pointer;
@@ -107,7 +108,11 @@
             background: var(--primary-hover);
         }
 
-        /* 容器排版 */
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 0.8rem;
+        }
+
         .container {
             max-width: var(--layout-max-width);
             margin: 24px auto;
@@ -120,19 +125,19 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
-            margin-bottom: 24px;
+            margin-bottom: 26px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         h1.main-title {
-            font-size: 1.8rem;
+            font-size: 1.85rem;
             font-weight: 800;
             margin-bottom: 8px;
             color: var(--primary);
         }
 
         h2.section-title {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 16px;
             display: flex;
@@ -140,15 +145,26 @@
             gap: 8px;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 8px;
+            color: var(--text-main);
         }
 
-        /* 核心点读挖空组件 (.inline-ans) */
+        h3.sub-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 18px 0 10px 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 隐形挖空点读组件 */
         .inline-ans {
             display: inline-block;
-            min-width: 50px;
+            min-width: 48px;
             padding: 1px 8px;
             margin: 0 3px;
-            background: var(--bg-card-secondary);
+            background: var(--bg-card-sub);
             border-bottom: 2px dashed var(--primary);
             color: transparent;
             border-radius: 4px;
@@ -161,7 +177,7 @@
         }
 
         .inline-ans::before {
-            content: " [ 点此查看 ] ";
+            content: "[ 点击显色 ]";
             color: var(--text-sub);
             font-size: 0.85em;
             font-weight: normal;
@@ -179,69 +195,57 @@
             display: none;
         }
 
-        /* 学习目标卡片 */
-        .goals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 12px;
-        }
-
-        .goal-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            background: var(--bg-card-secondary);
-            padding: 12px;
+        /* 口诀高亮卡片 */
+        .motto-banner {
+            background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(245,158,11,0.08));
+            border-left: 4px solid var(--primary);
+            padding: 16px;
             border-radius: 8px;
-            font-size: 0.95rem;
+            margin: 16px 0;
+            font-size: 1rem;
+            line-height: 1.9;
         }
 
-        .goal-badge {
-            background: var(--primary);
-            color: #fff;
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            white-space: nowrap;
+        /* 插图标准容器 */
+        .img-container {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+            margin: 16px 0;
         }
 
-        /* 热区探究器 (Hotspot Explorer) */
-        .explorer-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-            align-items: start;
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            display: inline-block;
         }
 
-        @media (max-width: 768px) {
-            .explorer-layout { grid-template-columns: 1fr; }
+        .img-caption {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 8px;
         }
 
-        .hotspot-viewer {
+        /* 双线桥热区探究器 */
+        .hotspot-viewer-box {
             position: relative;
-            width: 100%;
-            background: #0f172a;
+            background: var(--bg-card-sub);
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            aspect-ratio: 16 / 10;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 240px;
         }
 
-        .hotspot-viewer img {
+        .hotspot-viewer-box img {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
             display: block;
-        }
-
-        .hotspot-viewer .placeholder-text {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            text-align: center;
-            padding: 20px;
+            object-fit: contain;
         }
 
         .hotspot-point {
@@ -249,13 +253,13 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: rgba(37, 99, 235, 0.9);
+            background: rgba(37, 99, 235, 0.95);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
@@ -273,7 +277,7 @@
         }
 
         .hotspot-point.active {
-            background: #ef4444;
+            background: var(--accent-red);
             box-shadow: 0 0 15px rgba(239, 68, 68, 0.9);
         }
 
@@ -282,77 +286,121 @@
             100% { transform: scale(2.2); opacity: 0; }
         }
 
-        .hotspot-detail-panel {
-            background: var(--bg-card-secondary);
+        /* 引导式双线桥画法构建器 */
+        .guide-stepper {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 18px;
-            min-height: 240px;
-            border: 1px solid var(--border-color);
+            margin: 16px 0;
         }
 
-        /* 模拟器 (Simulator) */
-        .sim-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .sim-container { grid-template-columns: 1fr; }
-        }
-
-        .sim-controls {
+        .stepper-nav {
             display: flex;
-            flex-direction: column;
-            gap: 14px;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .control-group label {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .control-group select, .control-group input[type="range"] {
-            padding: 8px;
+        .step-btn {
+            padding: 6px 12px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             background: var(--bg-card);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-main);
         }
 
-        .sim-screen {
-            background: var(--bg-card-secondary);
+        .step-btn.active {
+            background: var(--primary);
+            color: #fff !important;
+            border-color: var(--primary);
+        }
+
+        .bridge-display-box {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 16px;
+            padding: 20px;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: center;
+            overflow-x: auto;
         }
 
-        .calc-row {
+        /* 题目切换卡片组件 (Tab 模式) */
+        .tab-box {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            padding-bottom: 4px;
-            border-bottom: 1px dashed var(--border-color);
-            font-size: 0.95rem;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 700;
+        .tab-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card-sub);
+            cursor: pointer;
             font-size: 0.85rem;
-            text-align: center;
+            font-weight: 600;
+            color: var(--text-main);
         }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #ffffff !important;
+            border-color: var(--primary);
+        }
+
+        .interactive-quiz-card {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .quiz-header {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .quiz-input {
+            padding: 5px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            margin: 2px 4px;
+        }
+
+        .solution-box {
+            display: none;
+            margin-top: 14px;
+            padding: 14px;
+            background: var(--bg-card);
+            border-left: 3px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .feedback-tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .feedback-correct { color: var(--accent-green); }
+        .feedback-wrong { color: var(--accent-red); }
 
         /* Canvas 动画容器 */
         .canvas-box {
@@ -361,25 +409,55 @@
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-        }
-
-        canvas {
-            display: block;
-            width: 100%;
-            height: 260px;
+            margin: 16px 0;
         }
 
         .canvas-toolbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.3);
-            padding: 8px 16px;
+            background: rgba(0,0,0,0.45);
+            padding: 10px 16px;
             color: #fff;
             font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        /* NotebookLM 风格思维导图 (Tree Foldable) */
+        /* 矢量双线桥容器 */
+        .bridge-vector-card {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin: 14px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        /* SOP 流程网格 */
+        .sop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+
+        .sop-step {
+            background: var(--bg-card-sub);
+            border-left: 3px solid var(--primary);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .sop-step strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        /* 思维导图 */
         .mindmap-node {
             margin-left: 20px;
             border-left: 2px solid var(--border-color);
@@ -394,7 +472,7 @@
             gap: 6px;
             padding: 4px 8px;
             border-radius: 6px;
-            background: var(--bg-card-secondary);
+            background: var(--bg-card-sub);
             font-weight: 600;
             user-select: none;
             font-size: 0.95rem;
@@ -418,9 +496,8 @@
             display: none;
         }
 
-        /* 打印样式支持 */
         @media print {
-            .toolbar, .canvas-toolbar, .sim-controls button, .btn {
+            .toolbar, .canvas-toolbar, .btn, .canvas-box, .hotspot-point, .stepper-nav, .tab-box {
                 display: none !important;
             }
             body {
@@ -441,6 +518,9 @@
             .inline-ans::before {
                 display: none !important;
             }
+            .solution-box {
+                display: block !important;
+            }
             .mindmap-content.collapsed {
                 display: block !important;
             }
@@ -452,8 +532,8 @@
     <!-- 顶部固定工具栏 -->
     <header class="toolbar">
         <div class="toolbar-group">
-            <span style="font-weight: 700; color: var(--primary);">🧪 ChemInteractive</span>
-            <span style="color: var(--text-sub);">| 高一化学 第8章</span>
+            <span style="font-weight: 800; color: var(--primary);">⚗️ ChemInteract Studio</span>
+            <span style="color: var(--text-sub);">| 高一化学 第8章 氧化还原反应</span>
         </div>
         <div class="toolbar-group">
             <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开所有答案</button>
@@ -463,8 +543,8 @@
                 <option value="1.3">字号: 130%</option>
             </select>
             <select class="btn" id="select-layout" onchange="changeLayout(this.value)">
-                <option value="1000px">版面: 居中标准</option>
-                <option value="1300px">版面: 宽屏全景</option>
+                <option value="1100px">版面: 居中标准</option>
+                <option value="1400px">版面: 宽屏全景</option>
             </select>
             <button class="btn" onclick="toggleDarkMode()">🌓 护眼模式</button>
             <button class="btn" onclick="window.print()">🖨️ 打印学案</button>
@@ -473,241 +553,417 @@
 
     <main class="container" id="main-container">
         
-        <!-- 章节头部 -->
+        <!-- 章节概览与学习目标 -->
         <section class="section-card">
             <h1 class="main-title">第 8 章 氧化还原反应 (Redox Reactions)</h1>
-            <p style="color: var(--text-sub); margin-bottom: 16px;">本章从得氧失氧的宏观表象，深入微观本质（电子转移），并掌握利用氧化数分析、判断与配平各类化学反应的方法。</p>
+            <p style="color: var(--text-sub); margin-bottom: 16px;">
+                本章系统探讨化学反应中元素化合价变化的实质，建立从得氧失氧、化合价升降到电子转移的完整微观模型，并掌握利用氧化数分析、判断与配平各类化学反应的方法。
+            </p>
             
-            <h2 class="section-title">🎯 章节核心素养与学习目标</h2>
-            <div class="goals-grid">
-                <div class="goal-item"><span class="goal-badge">目标 1</span> 从得氧失氧、化合价升降及电子转移多重维度界定氧化还原反应。</div>
-                <div class="goal-item"><span class="goal-badge">目标 2</span> 理解氧化还原反应的微观本质是<span class="inline-ans">电子的得失或偏移</span>。</div>
-                <div class="goal-item"><span class="goal-badge">目标 3</span> 牢固掌握氧化数的计算规则及代数和运算法则。</div>
-                <div class="goal-item"><span class="goal-badge">目标 4</span> 能熟练识别氧化剂、还原剂、氧化产物与还原产物。</div>
-                <div class="goal-item"><span class="goal-badge">目标 5</span> 会用“单线桥法”和“双线桥法”清晰表达电子转移的方向与数目。</div>
-                <div class="goal-item"><span class="goal-badge">目标 6</span> 掌握金属活动性顺序及非金属活性对氧化性/还原性强弱的判定规律。</div>
-                <div class="goal-item"><span class="goal-badge">目标 7</span> 熟练运用<span class="inline-ans">氧化数升降法</span>配平复杂氧化还原化学方程式。</div>
-                <div class="goal-item"><span class="goal-badge">目标 8</span> 理解酸性/碱性介质在离子-电子法半反应方程式配平中的守恒作用。</div>
-            </div>
+            <h2 class="section-title">🎯 章节核心教学与考试目标</h2>
+            <ul style="padding-left: 22px; line-height: 1.9; color: var(--text-main);">
+                <li>从得氧失氧、失氢得氢、化合价升降及电子转移多角度认识氧化还原反应。</li>
+                <li>明确氧化反应与还原反应必然同时发生，其实质是<strong>电子转移（得失或共用电子对偏移）</strong>。</li>
+                <li>掌握确定元素氧化数的通用规则，能熟练计算复杂化合物与离子中各元素的氧化数。</li>
+                <li>牢固掌握氧化剂、还原剂、氧化产物与还原产物的概念，熟练运用核心口诀分析反应。</li>
+                <li>掌握金属活动性顺序、非金属活性及反应自发方向等氧化性与还原性强弱的判断规律。</li>
+                <li>熟练掌握“双线桥法”与“写半反应式法（离子-电子法）”配平各类复杂的氧化还原反应方程式。</li>
+            </ul>
         </section>
 
-        <!-- 核心考点点读与互动探究 -->
+        <!-- 8.1 氧化还原反应 -->
         <section class="section-card">
-            <h2 class="section-title">📖 核心考点点读与特征辨析</h2>
-            <p style="margin-bottom: 12px;">
-                1. <strong>基本特征与本质</strong>：在反应中，物质失去电子的反应叫做<span class="inline-ans">氧化反应</span>，化合价（氧化数）<span class="inline-ans">升高</span>；物质得到电子的反应叫做<span class="inline-ans">还原反应</span>，化合价（氧化数）<span class="inline-ans">降低</span>。
-            </p>
-            <p style="margin-bottom: 12px;">
-                2. <strong>核心口诀助记</strong>：<span class="inline-ans">升失氧，降得还；剂性相反，产物相同</span>。（升-失-氧-还原剂-具有还原性-生成氧化产物）。
-            </p>
-            <p style="margin-bottom: 12px;">
-                3. <strong>四大基本反应类型关联</strong>：<span class="inline-ans">置换反应</span>一定是氧化还原反应；<span class="inline-ans">复分解反应</span>一定不是氧化还原反应；有单质参加的化合反应或有单质生成的分解反应是氧化还原反应。
-            </p>
-        </section>
-
-        <!-- 热区探究器：双线桥分析示意图 -->
-        <section class="section-card">
-            <h2 class="section-title">🔍 探究器：双线桥模型与电子转移微观解剖</h2>
-            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 16px;">点击反应方程式中的不同区域标记点，探究其微观得失电子与半反应归属：</p>
+            <h2 class="section-title">8.1 氧化还原反应的概念与微观本质</h2>
             
-            <div class="explorer-layout">
-                <div class="hotspot-viewer">
-                    <!-- 预留课本图片插槽：如放入图片将覆盖占位 -->
-                    <img src="image/ch08_redox_bridge.jpg" alt="氧化还原双线桥分析示意图" onerror="this.style.display='none'">
-                    <div class="placeholder-text">
-                        🧪 <strong>方程式微观图解容器</strong><br>
-                        <code>2Na + Cl₂ ➔ 2NaCl</code><br>
-                        <small>（如已导入课本图 <code>image/ch08_redox_bridge.jpg</code> 将自动呈现图解背景）</small>
-                    </div>
+            <h3 class="sub-title">1. 氧化反应与还原反应的基本定义</h3>
+            <p style="margin-bottom: 10px;">
+                氧化和还原是同时发生的两个相反过程。一种物质被氧化，必然有另一种物质被还原：
+            </p>
+            <ul style="padding-left: 22px; margin-bottom: 14px; line-height: 1.8;">
+                <li><strong>氧化反应 (Oxidation)</strong>：物质得到氧、失去氢或<span class="inline-ans">失去电子</span>的过程，表现为所含元素氧化数（化合价）<span class="inline-ans">升高</span>。</li>
+                <li><strong>还原反应 (Reduction)</strong>：物质失去氧、得到氢或<span class="inline-ans">得到电子</span>的过程，表现为所含元素氧化数（化合价）<span class="inline-ans">降低</span>。</li>
+                <li><strong>反应的微观本质</strong>：氧化还原反应的实质是<span class="inline-ans">电子的转移（得失或共用电子对偏移）</span>。</li>
+            </ul>
 
-                    <!-- 响应式百分比热区标记 -->
-                    <div class="hotspot-point" style="top: 35%; left: 25%;" onclick="selectHotspot(0)">1</div>
-                    <div class="hotspot-point" style="top: 35%; left: 55%;" onclick="selectHotspot(1)">2</div>
-                    <div class="hotspot-point" style="top: 75%; left: 82%;" onclick="selectHotspot(2)">3</div>
-                </div>
-
-                <div class="hotspot-detail-panel" id="hotspot-panel">
-                    <h3 id="hotspot-title" style="color: var(--primary); margin-bottom: 8px;">👈 请点击左侧标记点进行微观解析</h3>
-                    <div id="hotspot-desc" style="color: var(--text-sub); font-size: 0.95rem;">
-                        通过点击标记点，可逐项剖析反应物失去电子（被氧化）与得到电子（被还原）的双线桥标准写法。
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Canvas 动态微观模拟：电子转移路径 -->
-        <section class="section-card">
-            <h2 class="section-title">⚡ 宏观/微观动画：电子得失与离子迁移流向</h2>
-            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 12px;">以 <strong>Zn + Cu²⁺ ➔ Zn²⁺ + Cu</strong> 为例，观察还原剂向氧化剂传递电子形成金属析出的微观过程：</p>
+            <!-- 微观模拟器：Na与Cl电子转移分步演变 -->
+            <h3 class="sub-title">2. 微观模拟器：钠与氯反应的电子转移分步演变 (2Na(s) + Cl₂(g) ➔ 2NaCl(s))</h3>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">
+                观察钠原子失去价电子转移给氯原子，随后自动形成带正负电荷的离子并结合为晶体的全过程：
+            </p>
             
             <div class="canvas-box">
-                <canvas id="redoxCanvas"></canvas>
+                <canvas id="naClCanvas" style="width: 100%; height: 280px;"></canvas>
                 <div class="canvas-toolbar">
-                    <div style="display:flex; align-items:center; gap: 10px;">
-                        <button class="btn" id="btn-anim-pause" onclick="toggleCanvasAnimation()" style="padding: 2px 8px; font-size: 0.8rem;">⏸️ 暂停动画</button>
-                        <span>电子流速:</span>
-                        <input type="range" id="anim-speed" min="0.5" max="3" step="0.1" value="1" style="width: 100px;">
+                    <div style="display:flex; align-items:center; gap: 8px;">
+                        <span>演变阶段:</span>
+                        <button class="btn btn-sm" id="btn-stage-0" onclick="setSimStage(0)">1. 反应前中性原子</button>
+                        <button class="btn btn-sm" id="btn-stage-1" onclick="setSimStage(1)">2. 电子转移过程 (单次迁移)</button>
+                        <button class="btn btn-sm" id="btn-stage-2" onclick="setSimStage(2)">3. 形成阴阳离子与晶体</button>
                     </div>
-                    <div>微观模型：<span style="color:#60a5fa">● 锌原子(Zn)</span> ➔ 转移 2e⁻ ➔ <span style="color:#f87171">● 铜离子(Cu²⁺)</span></div>
+                    <div style="display:flex; align-items:center; gap: 8px;">
+                        <button class="btn btn-sm btn-primary" onclick="replaySimulation()">🔄 重新演示全过程</button>
+                    </div>
+                </div>
+            </div>
+            <div id="sim-stage-desc" style="font-size: 0.9rem; background: var(--bg-card-sub); padding: 12px; border-radius: 6px; color: var(--text-sub); line-height: 1.7;">
+                <strong>阶段 1 说明</strong>：中性钠原子 Na (核电荷 +11，电子构型 2,8,1) 最外层有 1 个价电子；中性氯原子 Cl (核电荷 +17，电子构型 2,8,7) 最外层有 7 个价电子，各自呈电中性。
+            </div>
+
+            <!-- 双线桥表达方式与热区探究 -->
+            <h3 class="sub-title">3. 双线桥标准表达与课本图解热区探究</h3>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 10px;">
+                双线桥法用于标明反应前后同种元素电子转移的方向、数目以及氧化数升降情况。点击图片上的标记圆圈进行深度解读：
+            </p>
+            
+            <div class="bridge-layout" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; margin: 14px 0;">
+                <div class="hotspot-viewer-box">
+                    <img src="image/Screenshot 2026-08-14 165742.jpg" alt="双线桥标准方程式微观图解" onerror="this.style.display='none'; document.getElementById('bridge-ph').style.display='block';">
+                    <div id="bridge-ph" style="display:none; text-align:center; padding: 20px; color: var(--text-sub);">
+                        🧪 <strong>双线桥标准方程式图解容器</strong><br>
+                        <code>2Na(s) + Cl₂(g) ➔ 2NaCl(s)</code><br>
+                        <small>（放置 <code>image/Screenshot 2026-08-14 165742.jpg</code> 将呈现原图）</small>
+                    </div>
+
+                    <!-- 精确对应原图标记点 -->
+                    <div class="hotspot-point" style="top: 32%; left: 33%;" onclick="selectHotspot(0)">1</div>
+                    <div class="hotspot-point" style="top: 75%; left: 54%;" onclick="selectHotspot(1)">2</div>
+                    <div class="hotspot-point" style="top: 52%; left: 84%;" onclick="selectHotspot(2)">3</div>
+                </div>
+
+                <div class="interactive-quiz-card" style="margin: 0; display:flex; flex-direction:column; justify-content:center;">
+                    <h4 id="hotspot-title" style="color: var(--primary); margin-bottom: 8px;">👈 点击左侧热区标记点剖析</h4>
+                    <div id="hotspot-desc" style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.8;">
+                        点击图片上的呼吸标记圆圈，将分别对应展示氧化半反应（失电子）、还原半反应（得电子）以及生成物处箭头的标准落点。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 引导式互动：一步一步画出双线桥 (多题目切换) -->
+            <h3 class="sub-title">4. 引导式互动：一步步构建双线桥 (多案例实操)</h3>
+            <div class="guide-stepper">
+                <!-- 题目选择器 -->
+                <div style="margin-bottom: 12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span style="font-weight:700; font-size:0.9rem;">选择实操案例：</span>
+                    <button class="step-btn active" id="case-btn-0" onclick="switchBridgeCase(0)">案例 1: 2Na + Cl₂ ➔ 2NaCl</button>
+                    <button class="step-btn" id="case-btn-1" onclick="switchBridgeCase(1)">案例 2: Zn + CuSO₄ ➔ ZnSO₄ + Cu</button>
+                    <button class="step-btn" id="case-btn-2" onclick="switchBridgeCase(2)">案例 3: 2FeCl₃ + H₂S ➔ 2FeCl₂ + 2HCl + S↓</button>
+                </div>
+
+                <!-- 步骤切换导航 -->
+                <div class="stepper-nav">
+                    <button class="step-btn active" id="step-btn-0" onclick="switchBridgeStep(0)">第 1 步：正上方标出变价氧化数</button>
+                    <button class="step-btn" id="step-btn-1" onclick="switchBridgeStep(1)">第 2 步：画出指向线桥</button>
+                    <button class="step-btn" id="step-btn-2" onclick="switchBridgeStep(2)">第 3 步：标明电子数与升降过程</button>
+                </div>
+                
+                <div class="bridge-display-box" id="bridge-interactive-display">
+                    <!-- 动态精确渲染 SVG 双线桥 -->
+                </div>
+                <div id="bridge-step-note" style="margin-top: 12px; font-size: 0.88rem; color: var(--text-sub); line-height: 1.7;">
+                    说明：首先在方程式中找出化合价发生改变的元素，并在元素符号的正上方精确标出其反应前后的氧化数。
                 </div>
             </div>
         </section>
 
-        <!-- 参数化实验/定量分析模拟器 -->
+        <!-- 8.2 氧化数 -->
         <section class="section-card">
-            <h2 class="section-title">🧮 模拟器：常见含硫/含锰/含氮物质氧化数与角色实时诊断</h2>
-            <div class="sim-container">
-                <div class="sim-controls">
-                    <div class="control-group">
-                        <label for="species-select">选择探究的化学物种：</label>
-                        <select id="species-select" onchange="calculateRedoxProperties()">
-                            <option value="H2S">H₂S (硫化氢)</option>
-                            <option value="S">S (单质硫)</option>
-                            <option value="SO2">SO₂ (二氧化硫)</option>
-                            <option value="H2SO4" selected>H₂SO₄ (浓硫酸)</option>
-                            <option value="KMnO4">KMnO₄ (高锰酸钾)</option>
-                            <option value="MnO2">MnO₂ (二氧化锰)</option>
-                            <option value="MnSO4">MnSO₄ (硫酸锰)</option>
-                            <option value="NH3">NH₃ (氨气)</option>
-                            <option value="HNO3">HNO₃ (硝酸)</option>
-                        </select>
-                    </div>
+            <h2 class="section-title">8.2 氧化数 (Oxidation Number) 与计算法则</h2>
+            <p style="margin-bottom: 10px;">
+                氧化数是用来描述化合物中原子形式电荷数的一个数值。在共价化合物中，把成键电子对完全归属于电负性较大原子的形式电荷即为氧化数。
+            </p>
 
-                    <div class="control-group">
-                        <label for="target-role">设定预期反应环境/角色：</label>
-                        <select id="target-role" onchange="calculateRedoxProperties()">
-                            <option value="neutral">常规环境表现</option>
-                            <option value="strong_ox">遇强氧化剂 (如酸性高锰酸钾)</option>
-                            <option value="strong_red">遇强还原剂 (如金属锌、碳)</option>
-                        </select>
-                    </div>
+            <h3 class="sub-title">1. 氧化数计算的通用规则</h3>
+            <ul style="padding-left: 22px; margin-bottom: 16px; line-height: 1.85;">
+                <li>单质中元素的氧化数恒等于 <span class="inline-ans">0</span>（例如 O₂、S₈、Fe 中的元素氧化数均为 0）。</li>
+                <li>在化合物中，第 ⅠA 族金属元素恒为 <span class="inline-ans">+1</span>；第 ⅡA 族金属元素恒为 <span class="inline-ans">+2</span>。</li>
+                <li><strong>氟 (F)</strong>：是电负性最强的元素，在所有化合物中氧化数永远是 <span class="inline-ans">-1</span>。</li>
+                <li><strong>氢 (H)</strong>：在大多数化合物中为 <span class="inline-ans">+1</span>；在活泼金属氢化物（如 NaH、CaH₂）中为 <span class="inline-ans">-1</span>。</li>
+                <li><strong>氧 (O)</strong>：通常为 <span class="inline-ans">-2</span>；在 OF₂ 中为 <span class="inline-ans">+2</span>；在过氧化物（如 H₂O₂、Na₂O₂）中为 <span class="inline-ans">-1</span>；在超氧化物（如 KO₂）中为 <span class="inline-ans">-1/2</span>。</li>
+                <li><strong>代数和守恒</strong>：中性化合物中各元素氧化数的代数和恒为 <span class="inline-ans">0</span>；多原子离子中各元素氧化数的代数和等于 <span class="inline-ans">该离子所带的电荷数</span>。</li>
+            </ul>
 
-                    <div style="font-size: 0.85rem; color: var(--text-sub); background: var(--bg-card-secondary); padding: 10px; border-radius: 6px;">
-                        💡 <strong>规律小结</strong>：元素处于最高氧化数时只有<span class="inline-ans">氧化</span>性；处于最低氧化数时只有<span class="inline-ans">还原</span>性；处于中间价态时既有氧化性又有还原性。
-                    </div>
+            <!-- 互动训练：氧化数计算 (无乱码纯净版) -->
+            <h3 class="sub-title">2. 互动训练：计算指定物质中的元素氧化数（附详细解题步骤）</h3>
+            
+            <div class="interactive-quiz-card">
+                <div class="quiz-header">练习 1：高氯酸 HClO₄ 中氯元素 (Cl) 的氧化数</div>
+                <div>
+                    Cl 的氧化数 = <input type="text" id="ox-in-1" class="quiz-input" placeholder="如 +7" style="width:70px;">
+                    <button class="btn btn-primary btn-sm" onclick="checkOxQ('ox-in-1', '+7', 'ox-sol-1', 'ox-tag-1')">提交答案</button>
+                    <span id="ox-tag-1" class="feedback-tag"></span>
                 </div>
+                <div id="ox-sol-1" class="solution-box">
+                    <strong>💡 解题思路与步骤：</strong><br>
+                    1. 设 HClO₄ 中 Cl 的氧化数为 x。<br>
+                    2. H 为 +1 价，O 为 -2 价。中性化合物各元素氧化数代数和为 0。<br>
+                    3. 代数计算式：(+1) + x + 4 &times; (-2) = 0 ➔ 1 + x - 8 = 0 ➔ x = +7。
+                </div>
+            </div>
 
-                <div class="sim-screen">
-                    <div class="calc-row">
-                        <span>核心元素及其氧化态：</span>
-                        <strong id="diag-element-ox" style="color: var(--primary);">S (+6)</strong>
-                    </div>
-                    <div class="calc-row">
-                        <span>价态区间位置：</span>
-                        <span id="diag-val-pos">处于最高价态 (+6)</span>
-                    </div>
-                    <div class="calc-row">
-                        <span>该物质理论上具备的性质：</span>
-                        <strong id="diag-theoretical">仅具有氧化性</strong>
-                    </div>
-                    <div class="calc-row">
-                        <span>在当前设定条件下的表现诊断：</span>
-                        <span class="status-badge" id="diag-badge" style="background:#fee2e2; color:#991b1b;">表现为强氧化剂</span>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.9rem; color: var(--text-sub);" id="diag-explanation">
-                        由于S已处于最高价态（+6），不能继续失去电子，只能得到电子被还原为较低价态（如 SO₂, S, H₂S）。
-                    </div>
+            <div class="interactive-quiz-card">
+                <div class="quiz-header">练习 2：重铬酸根离子 Cr₂O₇²⁻ 中铬元素 (Cr) 的氧化数</div>
+                <div>
+                    Cr 的氧化数 = <input type="text" id="ox-in-2" class="quiz-input" placeholder="如 +6" style="width:70px;">
+                    <button class="btn btn-primary btn-sm" onclick="checkOxQ('ox-in-2', '+6', 'ox-sol-2', 'ox-tag-2')">提交答案</button>
+                    <span id="ox-tag-2" class="feedback-tag"></span>
+                </div>
+                <div id="ox-sol-2" class="solution-box">
+                    <strong>💡 解题思路与步骤：</strong><br>
+                    1. 设 Cr 的氧化数为 x。该原子团离子的总电荷数为 -2。<br>
+                    2. 每个 O 的氧化数为 -2。<br>
+                    3. 代数计算式：2x + 7 &times; (-2) = -2 ➔ 2x - 14 = -2 ➔ 2x = 12 ➔ x = +6。
+                </div>
+            </div>
+
+            <div class="interactive-quiz-card">
+                <div class="quiz-header">练习 3：过氧化氢 H₂O₂ 与超氧化钾 KO₂ 中氧元素 (O) 的氧化数</div>
+                <div>
+                    H₂O₂ 中 O = <input type="text" id="ox-in-3a" class="quiz-input" placeholder="-1" style="width:60px;">，
+                    KO₂ 中 O = <input type="text" id="ox-in-3b" class="quiz-input" placeholder="-1/2 或 -0.5" style="width:110px;">
+                    <button class="btn btn-primary btn-sm" onclick="checkOxQPair('ox-in-3a', '-1', 'ox-in-3b', ['-1/2', '-0.5', '-.5'], 'ox-sol-3', 'ox-tag-3')">提交答案</button>
+                    <span id="ox-tag-3" class="feedback-tag"></span>
+                </div>
+                <div id="ox-sol-3" class="solution-box">
+                    <strong>💡 解题思路与步骤：</strong><br>
+                    1. H₂O₂ 中 H 为 +1，设 O 为 x：2 &times; (+1) + 2x = 0 ➔ x = -1（分子中含有过氧键 -O-O-）。<br>
+                    2. KO₂ 中 K 为第 ⅠA 族碱金属必为 +1，设 O 为 y：(+1) + 2y = 0 ➔ y = -1/2（或 -0.5，属于超氧化物）。
                 </div>
             </div>
         </section>
 
-        <!-- NotebookLM 风格树状思维导图 -->
+        <!-- 8.3 氧化剂与还原剂 -->
         <section class="section-card">
-            <h2 class="section-title">🌳 章节考点系统架构导图 (可折叠 NotebookLM 风格)</h2>
+            <h2 class="section-title">8.3 氧化剂与还原剂及其强弱判断</h2>
+            
+            <h3 class="sub-title">1. 定义与核心口诀填空</h3>
+            <p style="margin-bottom: 10px;">
+                在氧化还原反应中，根据电子得失及氧化数变化，可将反应物明确划分为氧化剂与还原剂：
+            </p>
+            <ul style="padding-left: 22px; margin-bottom: 12px;">
+                <li><strong>氧化剂 (Oxidizing Agent)</strong>：在反应中<span class="inline-ans">得到电子</span>、所含元素氧化数<span class="inline-ans">下降</span>、本身被<span class="inline-ans">还原</span>的物质。</li>
+                <li><strong>还原剂 (Reducing Agent)</strong>：在反应中<span class="inline-ans">失去电子</span>、所含元素氧化数<span class="inline-ans">上升</span>、本身被<span class="inline-ans">氧化</span>的物质。</li>
+            </ul>
+
+            <!-- 完整填空版核心口诀 -->
+            <div class="motto-banner">
+                <strong>📝 核心口诀点读填空：</strong><br>
+                <span class="inline-ans">失电子</span>，氧化数<span class="inline-ans">上升</span>，被<span class="inline-ans">氧化</span>，作为<span class="inline-ans">还原剂</span>，具有<span class="inline-ans">还原性</span>。<br>
+                <span class="inline-ans">得电子</span>，氧化数<span class="inline-ans">下降</span>，被<span class="inline-ans">还原</span>，作为<span class="inline-ans">氧化剂</span>，具有<span class="inline-ans">氧化性</span>。
+            </div>
+
+            <!-- 课本图 8-3 插图展示插槽 -->
+            <div class="img-container">
+                <img src="image/Screenshot 2026-08-14 170145.jpg" alt="氧化剂与还原剂电子转移微观示意图" onerror="this.style.display='none'; document.getElementById('transfer-ph').style.display='block';">
+                <div id="transfer-ph" style="display:none; color: var(--text-sub); padding: 14px;">
+                    🖼️ <strong>图 8-3 氧化剂与还原剂微观作用示意图容器</strong><br>
+                    <small>（放入 <code>image/Screenshot 2026-08-14 170145.jpg</code> 显示插图）</small>
+                </div>
+                <div class="img-caption">图 8-3 氧化还原反应中化合物 A（还原剂）失电子被氧化，化合物 B（氧化剂）得电子被还原的微观模型</div>
+            </div>
+
+            <h3 class="sub-title">2. 氧化剂与还原剂相对强弱的判断依据</h3>
+            <ul style="padding-left: 22px; margin-bottom: 16px; line-height: 1.85;">
+                <li><strong>“强制弱”自发规律</strong>：氧化剂 + 还原剂 ➔ 还原产物 + 氧化产物。若反应能自发正向进行，则必有：<strong>氧化性：氧化剂 > 氧化产物</strong>；<strong>还原性：还原剂 > 还原产物</strong>。</li>
+                <li><strong>金属活动性顺序</strong>：K > Ca > Na > Mg > Al > Zn > Fe > Sn > Pb > (H) > Cu > Hg > Ag > Pt > Au。<br>单质还原性依次<span class="inline-ans">减弱</span>，对应阳离子的氧化性依次<span class="inline-ans">增强</span>（例如：Ag⁺ > Cu²⁺ > Fe²⁺ > Zn²⁺）。</li>
+                <li><strong>非金属活动性（卤素单质）</strong>：氧化性强弱：F₂ > Cl₂ > Br₂ > I₂；对应阴离子的还原性强弱：I⁻ > Br⁻ > Cl⁻ > F⁻。</li>
+                <li><strong>价态极值规律</strong>：元素处于最高氧化数时只具有<span class="inline-ans">氧化性</span>（例如：HNO₃, KMnO₄, H₂SO₄）；处于最低氧化数时只具有<span class="inline-ans">还原性</span>（例如：H₂S, NH₃, KI）；处于中间氧化数时<span class="inline-ans">既有氧化性又有还原性</span>（例如：SO₂, H₂O₂, Fe²⁺）。</li>
+            </ul>
+
+            <!-- 互动识别训练：反应中的四种角色分析 (Tab 选项卡紧凑模式) -->
+            <h3 class="sub-title">3. 互动识别训练：反应中的四种角色分析（全标注物质状态）</h3>
+            
+            <div class="tab-box">
+                <button class="tab-btn active" id="tab-role-0" onclick="switchRoleTab(0)">题目 1: 高炉炼铁</button>
+                <button class="tab-btn" id="tab-role-1" onclick="switchRoleTab(1)">题目 2: 实验室制氯气</button>
+                <button class="tab-btn" id="tab-role-2" onclick="switchRoleTab(2)">题目 3: H₂O₂ 歧化反应</button>
+                <button class="tab-btn" id="tab-role-3" onclick="switchRoleTab(3)">题目 4: 活泼金属氢化物与水</button>
+            </div>
+
+            <!-- 角色题目容器 -->
+            <div class="interactive-quiz-card" id="role-quiz-display">
+                <!-- 动态渲染题目内容 -->
+            </div>
+        </section>
+
+        <!-- 8.4 氧化还原反应方程式的配平 -->
+        <section class="section-card">
+            <h2 class="section-title">8.4 氧化还原反应方程式的配平</h2>
+            <p style="margin-bottom: 12px;">
+                氧化还原反应方程式配平的核心依据是：<strong>氧化数升高总数等于氧化数降低总数（电子得失守恒）</strong>，同时满足<strong>质量守恒</strong>与<strong>电荷守恒</strong>。
+            </p>
+
+            <h3 class="sub-title">1. 氧化数升降法配平标准操作规程 (SOP)</h3>
+            <div class="sop-grid">
+                <div class="sop-step">
+                    <strong>Step 1: 标变价</strong>
+                    准确标出反应前后化合价发生改变的元素氧化数。
+                </div>
+                <div class="sop-step">
+                    <strong>Step 2: 列升降</strong>
+                    计算每个分子/离子中该元素升高或降低的化合价总数。
+                </div>
+                <div class="sop-step">
+                    <strong>Step 3: 求最小公倍数</strong>
+                    使氧化数升降总数相等，确定氧化剂与还原剂的基准计量系数。
+                </div>
+                <div class="sop-step">
+                    <strong>Step 4: 观察法配平其余</strong>
+                    按 金属 ➔ 非金属 ➔ 氢 ➔ 氧 的顺序配平未变价原子与介质（H⁺/OH⁻/H₂O）。
+                </div>
+            </div>
+
+            <h3 class="sub-title">2. 两种主流配平表达方式展示（高精度矢量微观对齐）</h3>
+            
+            <!-- 方式一：精确坐标双线桥图解 -->
+            <div class="bridge-vector-card">
+                <strong style="color:var(--primary); font-size:1.05rem;">方式一：双线桥法表达配平 (化合价精准居中对齐于元素正上方)</strong>
+                <div style="margin-top: 14px; display:flex; justify-content:center;">
+                    <svg width="680" height="150" viewBox="0 0 680 150">
+                        <!-- 方程式主体 (等宽字体精确定位) -->
+                        <text x="340" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                            2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
+                        </text>
+
+                        <!-- 精确氧化数标注 (对应字符 X 坐标) -->
+                        <!-- Fe in 2FeCl3 at X=120 -->
+                        <text x="120" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                        <!-- S in H2S at X=248 -->
+                        <text x="248" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                        <!-- Fe in 2FeCl2 at X=378 -->
+                        <text x="378" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                        <!-- S in S(s) at X=615 -->
+                        <text x="615" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+
+                        <!-- 上桥线：S(-2) ➔ S(0) 失电子 / 被氧化 (起点 X=248, 终点 X=615) -->
+                        <path d="M 248,65 L 248,25 L 615,25 L 615,65" fill="none" stroke="#2563eb" stroke-width="2"/>
+                        <polygon points="615,72 610,62 620,62" fill="#2563eb"/>
+                        <text x="431" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
+
+                        <!-- 下桥线：Fe(+3) ➔ Fe(+2) 得电子 / 被还原 (起点 X=120, 终点 X=378) -->
+                        <path d="M 120,95 L 120,132 L 378,132 L 378,95" fill="none" stroke="#ef4444" stroke-width="2"/>
+                        <polygon points="378,88 373,98 383,98" fill="#ef4444"/>
+                        <text x="249" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 方式二：离子-电子半反应法 -->
+            <div class="interactive-quiz-card" style="line-height: 1.85;">
+                <strong style="color:var(--primary); font-size:1.05rem;">方式二：离子-电子法（写半反应式与加和配平）</strong>
+                <div style="font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; margin-top: 8px;">
+                    氧化半反应（失电子）：S²⁻(aq) ➔ S(s) + 2e⁻<br>
+                    还原半反应（得电子）：Fe³⁺(aq) + e⁻ ➔ Fe²⁺(aq) &nbsp;&nbsp;(&times; 2)<br>
+                    ————————————————————————————————————<br>
+                    两式相加消去电子：2Fe³⁺(aq) + S²⁻(aq) ➔ 2Fe²⁺(aq) + S(s)↓
+                </div>
+            </div>
+
+            <!-- 互动配平题库 (Tab 模式) -->
+            <h3 class="sub-title">3. 互动方程式配平实战训练（带完整解题思路与推导解析）</h3>
+
+            <div class="tab-box">
+                <button class="tab-btn active" id="tab-bal-0" onclick="switchBalTab(0)">配平 1: KMnO₄ + HCl</button>
+                <button class="tab-btn" id="tab-bal-1" onclick="switchBalTab(1)">配平 2: K₂Cr₂O₇ + FeSO₄</button>
+                <button class="tab-btn" id="tab-bal-2" onclick="switchBalTab(2)">配平 3: Cu + 稀HNO₃</button>
+                <button class="tab-btn" id="tab-bal-3" onclick="switchBalTab(3)">配平 4: S + 浓KOH歧化</button>
+            </div>
+
+            <div class="interactive-quiz-card" id="bal-quiz-display">
+                <!-- 动态渲染配平题目内容 -->
+            </div>
+        </section>
+
+        <!-- 思维导图 -->
+        <section class="section-card">
+            <h2 class="section-title">🌳 章节系统架构导图 (NotebookLM 风格多级折叠)</h2>
             <div style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 12px;">点击 [ + ] / [ - ] 节点可逐层展开或收起知识子树：</div>
 
             <div class="mindmap-root">
-                <!-- 节点 1 -->
                 <div class="mindmap-node">
                     <div class="mindmap-header" onclick="toggleMindNode(this)">
                         <span class="mindmap-toggle">[-]</span> 8.1 氧化还原反应的基本概念
                     </div>
                     <div class="mindmap-content">
                         <div class="mindmap-node">
-                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 历史与定义演变</div>
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 概念演变与微观本质</div>
                             <div class="mindmap-content">
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 得氧为氧化，失氧为还原</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 失氢为氧化，得氢为还原</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>现代微观本质</strong>：<span class="inline-ans">电子转移（得失或共用电子对偏移）</span></div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 得氧/失氢/失电子 ➔ 氧化反应（氧化数升高）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 失氧/得氢/得电子 ➔ 还原反应（氧化数降低）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>微观本质</strong>：<span class="inline-ans">电子转移（得失或偏移）</span></div>
                             </div>
                         </div>
                         <div class="mindmap-node">
-                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 与四大基本反应关系</div>
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 与四大基本反应类型关系</div>
                             <div class="mindmap-content collapsed">
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 置换反应 ➔ 100% 属于氧化还原反应</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 复分解反应 ➔ 100% 不属于氧化还原反应</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 化合/分解反应 ➔ 部分属于（有单质参加或生成即是）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 置换反应 ➔ 100% 属于氧化还原反应</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 复分解反应 ➔ 100% 不属于氧化还原反应</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 化合/分解反应 ➔ 有单质参加或生成的属于氧化还原反应</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 节点 2 -->
                 <div class="mindmap-node">
                     <div class="mindmap-header" onclick="toggleMindNode(this)">
-                        <span class="mindmap-toggle">[-]</span> 8.2 氧化数 (Oxidation Number) 的确定
+                        <span class="mindmap-toggle">[-]</span> 8.2 氧化数 (Oxidation Number) 确定规则
                     </div>
                     <div class="mindmap-content">
                         <div class="mindmap-node">
-                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 计算通用核心规则</div>
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 系统计算通用法则</div>
                             <div class="mindmap-content">
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 单质中元素氧化数永远为 <span class="inline-ans">0</span></div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• ⅠA 族（碱金属）化合物中恒为 <span class="inline-ans">+1</span>，ⅡA 族恒为 <span class="inline-ans">+2</span></div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 氢(H)：一般为 +1；在活泼金属氢化物(NaH)中为 <span class="inline-ans">-1</span></div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 氧(O)：一般为 -2；在 OF₂ 中为 +2；在过氧化物(H₂O₂)中为 <span class="inline-ans">-1</span>；在超氧化物(KO₂)中为 -1/2</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• 电中性化合物各元素氧化数代数和等于 <span class="inline-ans">0</span>；多原子离子等于 <span class="inline-ans">其离子所带电荷数</span></div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 单质元素恒为 <span class="inline-ans">0</span></div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• ⅠA 族恒为 +1，ⅡA 族恒为 +2，F 恒为 -1</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 氢(H)：通常 +1；活泼金属氢化物(NaH)中为 <span class="inline-ans">-1</span></div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 氧(O)：通常 -2；在 OF₂ 中为 +2；过氧化物(H₂O₂)中为 <span class="inline-ans">-1</span>；超氧化物中为 -1/2</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• 化合物各元素代数和为 0；多原子离子代数和等于其所带电荷数</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 节点 3 -->
                 <div class="mindmap-node">
                     <div class="mindmap-header" onclick="toggleMindNode(this)">
                         <span class="mindmap-toggle">[-]</span> 8.3 氧化剂与还原剂及其强弱规律
                     </div>
                     <div class="mindmap-content">
                         <div class="mindmap-node">
-                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 氧化性/还原性强弱判定法则</div>
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 氧化性与还原性强弱规律</div>
                             <div class="mindmap-content collapsed">
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>金属活动性顺序</strong>：K > Ca > Na > Mg > Al > Zn > Fe > Sn > Pb > (H) > Cu > Hg > Ag > Pt > Au (单质还原性依次减弱，离子氧化性依次增强)</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>卤素单质氧化性</strong>：F₂ > Cl₂ > Br₂ > I₂ (对应阴离子还原性：I⁻ > Br⁻ > Cl⁻ > F⁻)</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>反应自发方向规律</strong>：强氧化剂 + 强还原剂 ➔ 弱氧化产物 + 弱还原产物</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>金属活动性</strong>：K > Ca > Na > Mg > Al > Zn > Fe ...（单质还原性递减，阳离子氧化性递增）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>卤素单质</strong>：F₂ > Cl₂ > Br₂ > I₂（氧化性递减，卤离子还原性 I⁻ > Br⁻ > Cl⁻ > F⁻）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>自发反应规律</strong>：强氧化剂 + 强还原剂 ➔ 弱还原产物 + 弱氧化产物</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 节点 4 -->
                 <div class="mindmap-node">
                     <div class="mindmap-header" onclick="toggleMindNode(this)">
-                        <span class="mindmap-toggle">[-]</span> 8.4 氧化还原反应方程式的配平方法
+                        <span class="mindmap-toggle">[-]</span> 8.4 氧化还原反应方程式的配平
                     </div>
                     <div class="mindmap-content">
                         <div class="mindmap-node">
-                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 步骤与两大核心原则</div>
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 配平关键准则</div>
                             <div class="mindmap-content">
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>原则 1</strong>：氧化数升高总数 = <span class="inline-ans">氧化数降低总数</span>（电子得失守恒）</div>
-                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>原则 2</strong>：质量守恒与电荷守恒（酸性介质补 H⁺/H₂O，碱性介质补 OH⁻/H₂O）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>原则 1</strong>：氧化数升高总数 = 氧化数降低总数（得失电子守恒）</div>
+                                <div style="font-size: 0.9rem; padding: 3px 0;">• <strong>原则 2</strong>：反应前后质量守恒与电荷守恒（酸性补 H⁺/H₂O，碱性补 OH⁻/H₂O）</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
     </main>
 
-    <!-- JavaScript 交互引擎 -->
+    <!-- 交互与动画引擎脚本 -->
     <script>
         /* 1. 答案显隐全局控制器 */
         let allAnswersVisible = false;
 
         function toggleAllAnswers() {
             allAnswersVisible = !allAnswersVisible;
-            const answers = document.querySelectorAll('.inline-ans');
-            answers.forEach(ans => {
+            document.querySelectorAll('.inline-ans').forEach(ans => {
                 if (allAnswersVisible) {
                     ans.classList.add('revealed');
                 } else {
@@ -718,20 +974,19 @@
             btn.innerHTML = allAnswersVisible ? '🔒 隐藏所有答案' : '🔓 展开所有答案';
         }
 
-        // 单个挖空项点击事件绑定
         document.addEventListener('DOMContentLoaded', () => {
-            const answers = document.querySelectorAll('.inline-ans');
-            answers.forEach(ans => {
-                ans.addEventListener('click', function(e) {
-                    // 如果已被全局展开，点击单项允许手动收起
+            document.querySelectorAll('.inline-ans').forEach(ans => {
+                ans.addEventListener('click', function() {
                     this.classList.toggle('revealed');
                 });
             });
-            calculateRedoxProperties();
-            initCanvas();
+            initNaClCanvas();
+            renderBridgeCaseDisplay();
+            renderRoleTabContent(0);
+            renderBalTabContent(0);
         });
 
-        /* 2. 工具栏设置：字号、排版与主题 */
+        /* 2. 界面控制 */
         function changeFontSize(scale) {
             document.documentElement.style.setProperty('--font-scale', scale);
         }
@@ -744,101 +999,624 @@
             document.body.classList.toggle('dark-mode');
         }
 
-        /* 3. 热区探究器数据与交互 */
-        const hotspotData = [
+        /* 3. 钠与氯微观电子转移动画 (Canvas 单次演变与自动进入离子态) */
+        let naCanvas, naCtx;
+        let simStage = 0; // 0: 原料原子, 1: 电子迁移, 2: 离子态与晶体
+        let animProgress = 0;
+        let animId;
+
+        const stageDescriptions = [
+            "<strong>阶段 1 说明</strong>：中性钠原子 Na (核电荷 +11，电子构型 2,8,1) 最外层有 1 个价电子；中性氯原子 Cl (核电荷 +17，电子构型 2,8,7) 最外层有 7 个价电子，各自呈电中性。",
+            "<strong>阶段 2 说明</strong>：活泼金属钠原子将其最外层的 1 个电子转移给氯原子。电子迁移完成后，将自动进入阶段 3 形成离子与晶体。",
+            "<strong>阶段 3 说明</strong>：钠失去电子后形成带正电的 Na⁺ (2,8 八隅体稳定结构)；氯得到电子后形成带负电的 Cl⁻ (2,8,8 八隅体稳定结构)，正负离子通过强烈静电引力结合成稳定的 NaCl 离子晶体。"
+        ];
+
+        function initNaClCanvas() {
+            naCanvas = document.getElementById('naClCanvas');
+            naCtx = naCanvas.getContext('2d');
+            
+            const dpr = window.devicePixelRatio || 1;
+            const rect = naCanvas.getBoundingClientRect();
+            naCanvas.width = rect.width * dpr;
+            naCanvas.height = 280 * dpr;
+            naCtx.scale(dpr, dpr);
+
+            renderNaClSim();
+        }
+
+        function updateStageButtons() {
+            document.getElementById('btn-stage-0').className = simStage === 0 ? 'btn btn-sm btn-primary' : 'btn btn-sm';
+            document.getElementById('btn-stage-1').className = simStage === 1 ? 'btn btn-sm btn-primary' : 'btn btn-sm';
+            document.getElementById('btn-stage-2').className = simStage === 2 ? 'btn btn-sm btn-primary' : 'btn btn-sm';
+        }
+
+        function setSimStage(stage) {
+            simStage = stage;
+            animProgress = 0;
+            updateStageButtons();
+            document.getElementById('sim-stage-desc').innerHTML = stageDescriptions[stage];
+        }
+
+        function replaySimulation() {
+            setSimStage(0);
+            setTimeout(() => {
+                setSimStage(1);
+            }, 700);
+        }
+
+        function renderNaClSim() {
+            const rect = naCanvas.getBoundingClientRect();
+            const w = rect.width;
+            const h = 280;
+
+            naCtx.clearRect(0, 0, w, h);
+
+            const leftX = w * 0.28;
+            const rightX = w * 0.72;
+            const centerY = h * 0.5;
+
+            // 绘制左侧：钠物种
+            naCtx.fillStyle = '#3b82f6';
+            naCtx.beginPath();
+            const naRadius = simStage === 2 ? 30 : 42;
+            naCtx.arc(leftX, centerY, naRadius, 0, Math.PI * 2);
+            naCtx.fill();
+            naCtx.strokeStyle = '#60a5fa';
+            naCtx.lineWidth = 2;
+            naCtx.stroke();
+
+            naCtx.fillStyle = '#ffffff';
+            naCtx.font = 'bold 15px sans-serif';
+            naCtx.textAlign = 'center';
+            if (simStage === 2) {
+                naCtx.fillText('Na⁺ (钠离子)', leftX, centerY - 5);
+                naCtx.font = '12px sans-serif';
+                naCtx.fillText('电子层: [2, 8]⁺', leftX, centerY + 15);
+            } else {
+                naCtx.fillText('Na (中性原子)', leftX, centerY - 5);
+                naCtx.font = '12px sans-serif';
+                naCtx.fillText('价电子: 1', leftX, centerY + 15);
+            }
+
+            // 绘制右侧：氯物种
+            naCtx.fillStyle = '#10b981';
+            naCtx.beginPath();
+            const clRadius = simStage === 2 ? 46 : 38;
+            naCtx.arc(rightX, centerY, clRadius, 0, Math.PI * 2);
+            naCtx.fill();
+            naCtx.strokeStyle = '#34d399';
+            naCtx.lineWidth = 2;
+            naCtx.stroke();
+
+            naCtx.fillStyle = '#ffffff';
+            naCtx.font = 'bold 15px sans-serif';
+            if (simStage === 2) {
+                naCtx.fillText('Cl⁻ (氯离子)', rightX, centerY - 5);
+                naCtx.font = '12px sans-serif';
+                naCtx.fillText('电子层: [2, 8, 8]⁻', rightX, centerY + 15);
+            } else {
+                naCtx.fillText('Cl (中性原子)', rightX, centerY - 5);
+                naCtx.font = '12px sans-serif';
+                naCtx.fillText('价电子: 7', rightX, centerY + 15);
+            }
+
+            // 阶段 1：静态价电子在 Na 边缘
+            if (simStage === 0) {
+                const ex = leftX + naRadius + 6;
+                const ey = centerY;
+                drawElectron(ex, ey);
+            } 
+            // 阶段 2：单次飞跃迁移，到达后自动切换到阶段 3
+            else if (simStage === 1) {
+                naCtx.strokeStyle = '#64748b';
+                naCtx.setLineDash([4, 4]);
+                naCtx.beginPath();
+                naCtx.moveTo(leftX + 42, centerY - 10);
+                naCtx.quadraticCurveTo(w * 0.5, 30, rightX - 38, centerY - 10);
+                naCtx.stroke();
+                naCtx.setLineDash([]);
+
+                animProgress += 0.016;
+
+                const t = Math.min(animProgress, 1);
+                const sx = leftX + 42, sy = centerY - 10;
+                const cpx = w * 0.5, cpy = 30;
+                const ex = rightX - 38, ey = centerY - 10;
+                const curX = (1 - t) * (1 - t) * sx + 2 * (1 - t) * t * cpx + t * t * ex;
+                const curY = (1 - t) * (1 - t) * sy + 2 * (1 - t) * t * cpy + t * t * ey;
+                drawElectron(curX, curY);
+
+                naCtx.fillStyle = '#facc15';
+                naCtx.font = 'bold 13px sans-serif';
+                naCtx.fillText('⚡ 电子 (e⁻) 转移中 ➔ 还原剂失去，氧化剂得到', w * 0.5, h - 25);
+
+                if (animProgress >= 1) {
+                    setSimStage(2);
+                }
+            } 
+            // 阶段 3：静电引力离子键结合
+            else if (simStage === 2) {
+                naCtx.fillStyle = '#f87171';
+                naCtx.font = 'bold 14px sans-serif';
+                naCtx.fillText('💖 强烈静电引力结合形成 NaCl 晶体', w * 0.5, 35);
+                
+                naCtx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+                naCtx.lineWidth = 3;
+                naCtx.beginPath();
+                naCtx.moveTo(leftX + naRadius + 10, centerY);
+                naCtx.lineTo(rightX - clRadius - 10, centerY);
+                naCtx.stroke();
+            }
+
+            animId = requestAnimationFrame(renderNaClSim);
+        }
+
+        function drawElectron(x, y) {
+            naCtx.fillStyle = '#facc15';
+            naCtx.beginPath();
+            naCtx.arc(x, y, 7, 0, Math.PI * 2);
+            naCtx.fill();
+            naCtx.fillStyle = '#000000';
+            naCtx.font = 'bold 10px sans-serif';
+            naCtx.fillText('e⁻', x, y + 3);
+        }
+
+        /* 4. 双线桥热区探究器 */
+        const hotspotDetails = [
             {
-                title: "标记点 1：钠单质 (Na) 失去电子（氧化半反应）",
-                desc: "在反应中，金属钠 (Na) 的氧化数从 <span class='inline-ans'>0</span> 升高到 <span class='inline-ans'>+1</span>，失去 1 个电子。钠是该反应的<span class='inline-ans'>还原剂</span>，发生氧化反应生成 NaCl 中的 Na⁺。"
+                title: "标记点 1：钠单质失去电子（氧化半反应）",
+                desc: "钠原子 (Na) 反应前氧化数为 0，反应后在 NaCl 中为 +1。化合价升高，2 个 Na 共失去 2e⁻，发生氧化反应，钠是还原剂。"
             },
             {
-                title: "标记点 2：氯气分子 (Cl₂) 得到电子（还原半反应）",
-                desc: "氯分子中的 Cl 氧化数从 <span class='inline-ans'>0</span> 降低到 <span class='inline-ans'>-1</span>，每个 Cl 原子得到 1 个电子。氯气是该反应的<span class='inline-ans'>氧化剂</span>，发生还原反应生成 Cl⁻。"
+                title: "标记点 2：氯分子得到电子（还原半反应）",
+                desc: "氯分子 (Cl₂) 反应前氧化数为 0，反应后在 NaCl 中为 -1。化合价降低，1 个 Cl₂ 共得到 2×1e⁻ = 2e⁻，发生还原反应，氯气是氧化剂。"
             },
             {
-                title: "标记点 3：氯化钠 (NaCl) 生成物与电子转移总量",
-                desc: "微观上 2 个 Na 原子共失去 2e⁻，恰好转移给 1 个 Cl₂ 分子生成 2 个 NaCl 离子晶体单位。总反应中转移电子数为 <span class='inline-ans'>2e⁻</span>。"
+                title: "标记点 3：氯化钠 (NaCl) 生成物与守恒",
+                desc: "反应前后电子转移总数相等（失 2e⁻ = 得 2e⁻），箭头精确指向生成物中对应的元素符号，满足电荷与质量守恒。"
             }
         ];
 
-        function selectHotspot(index) {
-            const points = document.querySelectorAll('.hotspot-point');
-            points.forEach((p, i) => {
-                if (i === index) p.classList.add('active');
+        function selectHotspot(idx) {
+            document.querySelectorAll('.hotspot-point').forEach((p, i) => {
+                if (i === idx) p.classList.add('active');
                 else p.classList.remove('active');
             });
+            document.getElementById('hotspot-title').innerText = hotspotDetails[idx].title;
+            document.getElementById('hotspot-desc').innerHTML = hotspotDetails[idx].desc;
+        }
 
-            const panelTitle = document.getElementById('hotspot-title');
-            const panelDesc = document.getElementById('hotspot-desc');
-            panelTitle.innerHTML = hotspotData[index].title;
-            panelDesc.innerHTML = hotspotData[index].desc;
+        /* 5. 引导式双线桥画法构建器 (多题目高精度 SVG 渲染) */
+        let currentBridgeCase = 0;
+        let currentBridgeStep = 0;
 
-            // 重新为动态插入的 inline-ans 绑定单项点击事件
-            panelDesc.querySelectorAll('.inline-ans').forEach(ans => {
-                if (allAnswersVisible) ans.classList.add('revealed');
-                ans.addEventListener('click', function() {
-                    this.classList.toggle('revealed');
-                });
+        const bridgeCasesData = [
+            // 案例 1: 2Na + Cl2 -> 2NaCl
+            {
+                equation: "2Na(s) + Cl₂(g) ➔ 2NaCl(s)",
+                steps: [
+                    {
+                        svg: `<svg width="520" height="110" viewBox="0 0 520 110">
+                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
+                                </text>
+                                <text x="140" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="240" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="370" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="392" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                              </svg>`,
+                        note: "<strong>第 1 步【标变价】</strong>：在变价元素符号正上方精确标出化合价。反应前 Na 为 0，Cl 为 0；反应后 Na 为 +1，Cl 为 -1。"
+                    },
+                    {
+                        svg: `<svg width="520" height="135" viewBox="0 0 520 135">
+                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
+                                </text>
+                                <text x="140" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="240" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="370" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="392" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <path d="M 140,55 L 140,25 L 370,25 L 370,55" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="370,62 365,52 375,52" fill="#ef4444"/>
+                                <path d="M 240,85 L 240,115 L 392,115 L 392,85" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="392,78 387,88 397,88" fill="#2563eb"/>
+                              </svg>`,
+                        note: "<strong>第 2 步【连线桥】</strong>：箭头从反应物的变价元素（Na、Cl）精准出发，分别指向产物中对应的变价元素符号（Na、Cl）。"
+                    },
+                    {
+                        svg: `<svg width="550" height="150" viewBox="0 0 550 150">
+                                <text x="275" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
+                                </text>
+                                <text x="155" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="255" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="385" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="407" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <path d="M 155,65 L 155,25 L 385,25 L 385,65" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="385,72 380,62 390,62" fill="#ef4444"/>
+                                <text x="270" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2×1e⁻ = 2e⁻，化合价升高，被氧化</text>
+                                <path d="M 255,95 L 255,130 L 407,130 L 407,95" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="407,88 402,98 412,98" fill="#2563eb"/>
+                                <text x="331" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2×1e⁻ = 2e⁻，化合价降低，被还原</text>
+                              </svg>`,
+                        note: "<strong>第 3 步【注得失】</strong>：在线桥上必须准确写明“失/得”几电子（如 2×1e⁻）、“化合价升高/降低”及“被氧化/被还原”。"
+                    }
+                ]
+            },
+            // 案例 2: Zn + CuSO4 -> ZnSO4 + Cu
+            {
+                equation: "Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)",
+                steps: [
+                    {
+                        svg: `<svg width="560" height="110" viewBox="0 0 560 110">
+                                <text x="280" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
+                                </text>
+                                <text x="135" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="228" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="345" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="450" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                              </svg>`,
+                        note: "<strong>第 1 步【标变价】</strong>：标出变价元素：Zn 从 0 升至 +2；Cu 从 +2 降至 0。"
+                    },
+                    {
+                        svg: `<svg width="560" height="135" viewBox="0 0 560 135">
+                                <text x="280" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
+                                </text>
+                                <text x="135" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="228" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="345" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="450" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <path d="M 135,55 L 135,25 L 345,25 L 345,55" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="345,62 340,52 350,52" fill="#ef4444"/>
+                                <path d="M 228,85 L 228,115 L 450,115 L 450,85" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="450,78 445,88 455,88" fill="#2563eb"/>
+                              </svg>`,
+                        note: "<strong>第 2 步【连线桥】</strong>：Zn 指向 ZnSO₄ 中的 Zn；CuSO₄ 中的 Cu 指向单质 Cu。"
+                    },
+                    {
+                        svg: `<svg width="580" height="150" viewBox="0 0 580 150">
+                                <text x="290" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
+                                </text>
+                                <text x="145" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="238" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="355" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="460" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <path d="M 145,65 L 145,25 L 355,25 L 355,65" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="355,72 350,62 360,62" fill="#ef4444"/>
+                                <text x="250" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2e⁻，化合价升高，被氧化</text>
+                                <path d="M 238,95 L 238,130 L 460,130 L 460,95" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="460,88 455,98 465,98" fill="#2563eb"/>
+                                <text x="349" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2e⁻，化合价降低，被还原</text>
+                              </svg>`,
+                        note: "<strong>第 3 步【注得失】</strong>：标明 Zn 失去 2e⁻ 被氧化；Cu²⁺ 得到 2e⁻ 被还原。"
+                    }
+                ]
+            },
+            // 案例 3: 2FeCl3 + H2S -> 2FeCl2 + 2HCl + S
+            {
+                equation: "2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓",
+                steps: [
+                    {
+                        svg: `<svg width="680" height="110" viewBox="0 0 680 110">
+                                <text x="340" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
+                                </text>
+                                <text x="120" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="248" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="378" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="615" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                              </svg>`,
+                        note: "<strong>第 1 步【标变价】</strong>：Fe 从 +3 降至 +2；S 从 -2 升至 0。"
+                    },
+                    {
+                        svg: `<svg width="680" height="135" viewBox="0 0 680 135">
+                                <text x="340" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
+                                </text>
+                                <text x="120" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="248" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="378" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="615" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <path d="M 248,55 L 248,25 L 615,25 L 615,55" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="615,62 610,52 620,52" fill="#2563eb"/>
+                                <path d="M 120,85 L 120,115 L 378,115 L 378,85" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="378,78 373,88 383,88" fill="#ef4444"/>
+                              </svg>`,
+                        note: "<strong>第 2 步【连线桥】</strong>：H₂S 中的 S 指向单质 S；FeCl₃ 中的 Fe 指向 FeCl₂ 中的 Fe。"
+                    },
+                    {
+                        svg: `<svg width="680" height="150" viewBox="0 0 680 150">
+                                <text x="340" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
+                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
+                                </text>
+                                <text x="120" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="248" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="378" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="615" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <path d="M 248,65 L 248,25 L 615,25 L 615,65" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="615,72 610,62 620,62" fill="#2563eb"/>
+                                <text x="431" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
+                                <path d="M 120,95 L 120,132 L 378,132 L 378,95" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="378,88 373,98 383,98" fill="#ef4444"/>
+                                <text x="249" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
+                              </svg>`,
+                        note: "<strong>第 3 步【注得失】</strong>：标明 S²⁻ 失去 2e⁻ 被氧化，2 个 Fe³⁺ 共得到 2e⁻ 被还原。"
+                    }
+                ]
+            }
+        ];
+
+        function switchBridgeCase(cIdx) {
+            currentBridgeCase = cIdx;
+            currentBridgeStep = 0;
+            document.querySelectorAll('[id^="case-btn-"]').forEach((b, i) => {
+                b.className = i === cIdx ? 'step-btn active' : 'step-btn';
+            });
+            updateBridgeStepUI();
+            renderBridgeCaseDisplay();
+        }
+
+        function switchBridgeStep(sIdx) {
+            currentBridgeStep = sIdx;
+            updateBridgeStepUI();
+            renderBridgeCaseDisplay();
+        }
+
+        function updateBridgeStepUI() {
+            document.querySelectorAll('[id^="step-btn-"]').forEach((b, i) => {
+                b.className = i === currentBridgeStep ? 'step-btn active' : 'step-btn';
             });
         }
 
-        /* 4. 氧化数与性质实时诊断模拟器 */
-        const speciesDB = {
-            "H2S": { el: "S (-2)", pos: "最低价态", role: "仅具有还原性", desc: "S已达最低价态（-2），只能失去电子被氧化为 S、SO₂ 等，是极好的还原剂。" },
-            "S": { el: "S (0)", pos: "中间价态", role: "既有氧化性又有还原性", desc: "S处于中间氧化数0，遇强氧化剂（如O₂、浓HNO₃）被氧化；遇活泼金属（如Fe、Na）被还原。" },
-            "SO2": { el: "S (+4)", pos: "中间价态", role: "既有氧化性又有还原性（以还原性为主）", desc: "可被酸性KMnO₄氧化为SO₄²⁻；也可将H₂S氧化析出单质S。" },
-            "H2SO4": { el: "S (+6)", pos: "最高价态", role: "仅具有氧化性", desc: "浓硫酸中+6价S具有强氧化能力，能将Cu、C等非活泼物种氧化。" },
-            "KMnO4": { el: "Mn (+7)", pos: "最高价态", role: "极强氧化性", desc: "酸性介质中 Mn从+7降至+2价（肉眼观察紫红色褪为近无色），是实验室最经典的强氧化剂。" },
-            "MnO2": { el: "Mn (+4)", pos: "中间价态", role: "具有氧化性（也可作催化剂）", desc: "在浓盐酸加热条件下可氧化 Cl⁻ 生成 Cl₂（实验室制氯气）。" },
-            "MnSO4": { el: "Mn (+2)", pos: "较稳定低价态", role: "在特定强氧化剂下表现还原性", desc: "Mn²⁺在常规环境下非常稳定，但在强氧化剂（如铋酸钠 NaBiO₃）作用下可被氧化回 MnO₄⁻。" },
-            "NH3": { el: "N (-3)", pos: "最低价态", role: "仅具有还原性", desc: "N处于-3价最低态，如催化氧化反应中失去电子生成 NO。" },
-            "HNO3": { el: "N (+5)", pos: "最高价态", role: "极强氧化性", desc: "浓/稀硝酸均具有极强的氧化能力，与金属反应不产生 H₂，而是生成 NO 或 NO₂。" }
-        };
+        function renderBridgeCaseDisplay() {
+            const data = bridgeCasesData[currentBridgeCase].steps[currentBridgeStep];
+            document.getElementById('bridge-interactive-display').innerHTML = data.svg;
+            document.getElementById('bridge-step-note').innerHTML = data.note;
+        }
 
-        function calculateRedoxProperties() {
-            const specKey = document.getElementById('species-select').value;
-            const env = document.getElementById('target-role').value;
-            const data = speciesDB[specKey];
+        /* 6. 氧化数填空校验与解析展开 */
+        function checkOxQ(inId, correct, solId, tagId) {
+            const val = document.getElementById(inId).value.trim();
+            const tag = document.getElementById(tagId);
+            const sol = document.getElementById(solId);
+            sol.style.display = 'block';
 
-            document.getElementById('diag-element-ox').innerText = data.el;
-            document.getElementById('diag-val-pos').innerText = `处于${data.pos}`;
-            document.getElementById('diag-theoretical').innerText = data.role;
-
-            const badge = document.getElementById('diag-badge');
-            const explanation = document.getElementById('diag-explanation');
-
-            if (env === "strong_ox") {
-                if (data.pos === "最高价态") {
-                    badge.style.background = "#fee2e2";
-                    badge.style.color = "#991b1b";
-                    badge.innerText = "❌ 无法反应（两者均为高价氧化性）";
-                    explanation.innerText = `诊断：${specKey} 中的核心元素已达最高价，不能被外加氧化剂继续氧化。`;
-                } else {
-                    badge.style.background = "#dcfce7";
-                    badge.style.color = "#166534";
-                    badge.innerText = "✅ 表现为还原剂（被氧化，价态上升）";
-                    explanation.innerText = `诊断：${specKey} 中的元素会被强氧化剂抽走电子，氧化数向更高状态跃迁。`;
-                }
-            } else if (env === "strong_red") {
-                if (data.pos === "最低价态") {
-                    badge.style.background = "#fee2e2";
-                    badge.style.color = "#991b1b";
-                    badge.innerText = "❌ 无法反应（两者均为低价还原性）";
-                    explanation.innerText = `诊断：${specKey} 中的核心元素已达最低价，无法继续接受电子。`;
-                } else {
-                    badge.style.background = "#dbeafe";
-                    badge.style.color = "#1e40af";
-                    badge.innerText = "✅ 表现为氧化剂（被还原，价态降低）";
-                    explanation.innerText = `诊断：${specKey} 会夺取强还原剂的电子，核心元素氧化数发生下降。`;
-                }
+            if (val === correct || val === correct.replace('+', '')) {
+                tag.className = 'feedback-tag feedback-correct';
+                tag.innerText = '✅ 正确！';
             } else {
-                badge.style.background = "#f1f5f9";
-                badge.style.color = "#334155";
-                badge.innerText = `基准状态：${data.role}`;
-                explanation.innerText = data.desc;
+                tag.className = 'feedback-tag feedback-wrong';
+                tag.innerText = '❌ 不太对哦，请查看下方解析';
             }
         }
 
-        /* 5. Mindmap 树状折叠交互 */
+        function checkOxQPair(inA, corA, inB, corBList, solId, tagId) {
+            const valA = document.getElementById(inA).value.trim();
+            const valB = document.getElementById(inB).value.trim();
+            const tag = document.getElementById(tagId);
+            const sol = document.getElementById(solId);
+            sol.style.display = 'block';
+
+            const okA = (valA === corA || valA === corA.replace('+', ''));
+            const okB = corBList.includes(valB);
+
+            if (okA && okB) {
+                tag.className = 'feedback-tag feedback-correct';
+                tag.innerText = '🎉 完全正确！';
+            } else {
+                tag.className = 'feedback-tag feedback-wrong';
+                tag.innerText = '❌ 部分有误，请查阅思路';
+            }
+        }
+
+        /* 7. 四种角色综合判定题目数据 (Tab 模式) */
+        const roleQuizData = [
+            {
+                title: "题目 1：高炉炼铁核心反应",
+                eq: "Fe₂O₃(s) + 3CO(g) ➔ 2Fe(s) + 3CO₂(g)",
+                oxList: ["Fe2O3", "fe2o3"],
+                redList: ["CO", "co"],
+                oxpList: ["CO2", "co2"],
+                redpList: ["Fe", "fe"],
+                sol: "• Fe 的氧化数从 +3 降至 0（得电子，被还原）➔ <strong>Fe₂O₃ 为氧化剂，Fe 为还原产物</strong>。<br>• C 的氧化数从 +2 升至 +4（失电子，被氧化）➔ <strong>CO 为还原剂，CO₂ 为氧化产物</strong>。"
+            },
+            {
+                title: "题目 2：实验室制备氯气",
+                eq: "MnO₂(s) + 4HCl(aq, 浓) ➔ MnCl₂(aq) + Cl₂(g)↑ + 2H₂O(l)",
+                oxList: ["MnO2", "mno2"],
+                redList: ["HCl", "hcl"],
+                oxpList: ["Cl2", "cl2"],
+                redpList: ["MnCl2", "mncl2"],
+                sol: "• Mn 从 +4 降至 +2（得电子）➔ <strong>MnO₂ 为氧化剂，MnCl₂ 为还原产物</strong>。<br>• 部分 Cl 从 -1 升至 0 生成 Cl₂（失电子）➔ <strong>HCl 为还原剂，Cl₂ 为氧化产物</strong>（注：另有 2 个 HCl 起酸性成盐作用）。"
+            },
+            {
+                title: "题目 3：过氧化氢自身歧化反应",
+                eq: "2H₂O₂(aq) ➔ 2H₂O(l) + O₂(g)↑",
+                oxList: ["H2O2", "h2o2"],
+                redList: ["H2O2", "h2o2"],
+                oxpList: ["O2", "o2"],
+                redpList: ["H2O", "h2o"],
+                sol: "• H₂O₂ 中 O 为 -1 价。一部分 O 升至 0 价（生成 O₂，失电子被氧化）；一部分 O 降至 -2 价（生成 H₂O，得电子被还原）。<br>• <strong>H₂O₂ 既是氧化剂又是还原剂</strong>，属于自身氧化还原反应（歧化反应）。"
+            },
+            {
+                title: "题目 4：活泼金属氢化物与水反应 (归中反应)",
+                eq: "NaH(s) + H₂O(l) ➔ NaOH(aq) + H₂(g)↑",
+                oxList: ["H2O", "h2o"],
+                redList: ["NaH", "nah"],
+                oxpList: ["H2", "h2"],
+                redpList: ["H2", "h2"],
+                sol: "• NaH 中的 H 为 -1 价，升至 0 价生成 H₂（失电子被氧化）➔ <strong>NaH 为还原剂，H₂ 为氧化产物</strong>。<br>• H₂O 中的 H 为 +1 价，降至 0 价生成 H₂（得电子被还原）➔ <strong>H₂O 为氧化剂，H₂ 为还原产物</strong>。"
+            }
+        ];
+
+        function switchRoleTab(tabIdx) {
+            document.querySelectorAll('[id^="tab-role-"]').forEach((b, i) => {
+                b.className = i === tabIdx ? 'tab-btn active' : 'tab-btn';
+            });
+            renderRoleTabContent(tabIdx);
+        }
+
+        function renderRoleTabContent(idx) {
+            const d = roleQuizData[idx];
+            document.getElementById('role-quiz-display').innerHTML = `
+                <div class="quiz-header">${d.title}</div>
+                <p style="font-family: 'Courier New', monospace; font-size: 1.05rem; font-weight: bold; margin-bottom: 12px; color: var(--primary);">
+                    ${d.eq}
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>氧化剂：<input type="text" id="tab-role-ox" class="quiz-input" placeholder="如 Fe2O3"></div>
+                    <div>还原剂：<input type="text" id="tab-role-red" class="quiz-input" placeholder="如 CO"></div>
+                    <div>氧化产物：<input type="text" id="tab-role-oxp" class="quiz-input" placeholder="如 CO2"></div>
+                    <div>还原产物：<input type="text" id="tab-role-redp" class="quiz-input" placeholder="如 Fe"></div>
+                </div>
+                <div style="margin-top: 14px;">
+                    <button class="btn btn-primary btn-sm" onclick="checkRoleTabItem(${idx})">核对解答</button>
+                    <span id="tab-role-tag" class="feedback-tag"></span>
+                </div>
+                <div id="tab-role-sol" class="solution-box">
+                    <strong>💡 详细解析与思路：</strong><br>
+                    ${d.sol}
+                </div>
+            `;
+        }
+
+        function checkRoleTabItem(idx) {
+            const d = roleQuizData[idx];
+            const ox = document.getElementById('tab-role-ox').value.trim();
+            const red = document.getElementById('tab-role-red').value.trim();
+            const oxp = document.getElementById('tab-role-oxp').value.trim();
+            const redp = document.getElementById('tab-role-redp').value.trim();
+            const tag = document.getElementById('tab-role-tag');
+            const sol = document.getElementById('tab-role-sol');
+            sol.style.display = 'block';
+
+            const ok1 = d.oxList.includes(ox);
+            const ok2 = d.redList.includes(red);
+            const ok3 = d.oxpList.includes(oxp);
+            const ok4 = d.redpList.includes(redp);
+
+            if (ok1 && ok2 && ok3 && ok4) {
+                tag.className = 'feedback-tag feedback-correct';
+                tag.innerText = '🎉 判定全部正确！';
+            } else {
+                tag.className = 'feedback-tag feedback-wrong';
+                tag.innerText = '❌ 存在错误，已为你展开解析';
+            }
+        }
+
+        /* 8. 方程式配平题库数据 (Tab 模式) */
+        const balQuizData = [
+            {
+                title: "配平 1：高锰酸钾与浓盐酸反应制氯气",
+                inputs: [
+                    { label: "KMnO₄(s) +", id: "b1-a", w: 38 },
+                    { label: "HCl(aq, 浓) ➔", id: "b1-b", w: 38 },
+                    { label: "KCl(aq) +", id: "b1-c", w: 38 },
+                    { label: "MnCl₂(aq) +", id: "b1-d", w: 38 },
+                    { label: "Cl₂(g)↑ +", id: "b1-e", w: 38 },
+                    { label: "H₂O(l)", id: "b1-f", w: 38 }
+                ],
+                correct: ["2", "16", "2", "2", "5", "8"],
+                sol: "1. <strong>找变价</strong>：Mn⁺⁷ ➔ Mn⁺²（得 5e⁻，降 5）；2Cl⁻ ➔ Cl₂⁰（失 2e⁻，升 2）。<br>2. <strong>求最小公倍数</strong>：升降守恒为 10。故 2KMnO₄ 对应 5Cl₂。<br>3. <strong>产物系数</strong>：2KMnO₄ ➔ 2KCl + 2MnCl₂ + 5Cl₂。<br>4. <strong>平酸根与 H/O</strong>：生成物含 2(K) + 4(Mn) + 10(Cl₂) = 16 个 Cl，需 16HCl；补 8H₂O。<br><strong>配平结果</strong>：2KMnO₄ + 16HCl ➔ 2KCl + 2MnCl₂ + 5Cl₂↑ + 8H₂O"
+            },
+            {
+                title: "配平 2：重铬酸钾氧化硫酸亚铁（酸性介质）",
+                inputs: [
+                    { label: "K₂Cr₂O₇(aq) +", id: "b2-a", w: 38 },
+                    { label: "FeSO₄(aq) +", id: "b2-b", w: 38 },
+                    { label: "H₂SO₄(aq) ➔", id: "b2-c", w: 38 },
+                    { label: "Cr₂(SO₄)₃(aq) +", id: "b2-d", w: 38 },
+                    { label: "Fe₂(SO₄)₃(aq) +", id: "b2-e", w: 38 },
+                    { label: "K₂SO₄(aq) +", id: "b2-f", w: 38 },
+                    { label: "H₂O(l)", id: "b2-g", w: 38 }
+                ],
+                correct: ["1", "6", "7", "1", "3", "1", "7"],
+                sol: "1. <strong>找变价</strong>：Cr₂⁺⁶ ➔ 2Cr⁺³（得 6e⁻，降 6）；Fe⁺² ➔ Fe⁺³（失 1e⁻，升 1）。<br>2. <strong>求最小公倍数</strong>：升降守恒为 6。故 1K₂Cr₂O₇ 对应 6FeSO₄。<br>3. <strong>产物对应</strong>：6FeSO₄ 生成 3Fe₂(SO₄)₃；1K₂Cr₂O₇ 生成 1Cr₂(SO₄)₃ + 1K₂SO₄。<br>4. <strong>平硫酸根与 H/O</strong>：生成物总 SO₄²⁻ 为 3 + 9 + 1 = 13 个，已有 6FeSO₄，故需 7H₂SO₄；生成 7H₂O。<br><strong>配平结果</strong>：1K₂Cr₂O₇ + 6FeSO₄ + 7H₂SO₄ ➔ 1Cr₂(SO₄)₃ + 3Fe₂(SO₄)₃ + 1K₂SO₄ + 7H₂O"
+            },
+            {
+                title: "配平 3：铜与稀硝酸反应",
+                inputs: [
+                    { label: "Cu(s) +", id: "b3-a", w: 38 },
+                    { label: "HNO₃(aq, 稀) ➔", id: "b3-b", w: 38 },
+                    { label: "Cu(NO₃)₂(aq) +", id: "b3-c", w: 38 },
+                    { label: "NO(g)↑ +", id: "b3-d", w: 38 },
+                    { label: "H₂O(l)", id: "b3-e", w: 38 }
+                ],
+                correct: ["3", "8", "3", "2", "4"],
+                sol: "1. <strong>找变价</strong>：Cu⁰ ➔ Cu⁺²（失 2e⁻，升 2）；N⁺⁵ ➔ N⁺²(NO)（得 3e⁻，降 3）。<br>2. <strong>最小公倍数</strong>：升降守恒为 6。故 3Cu 对应生成 2NO。<br>3. <strong>未变价酸</strong>：3Cu(NO₃)₂ 含 6 个 NO₃⁻，加上被还原的 2NO，共需 8HNO₃；生成 4H₂O。<br><strong>配平结果</strong>：3Cu + 8HNO₃ ➔ 3Cu(NO₃)₂ + 2NO↑ + 4H₂O"
+            },
+            {
+                title: "配平 4：单质硫与浓热强碱歧化反应",
+                inputs: [
+                    { label: "S(s) +", id: "b4-a", w: 38 },
+                    { label: "KOH(aq, 浓) ➔", id: "b4-b", w: 38 },
+                    { label: "K₂S(aq) +", id: "b4-c", w: 38 },
+                    { label: "K₂SO₃(aq) +", id: "b4-d", w: 38 },
+                    { label: "H₂O(l)", id: "b4-e", w: 38 }
+                ],
+                correct: ["3", "6", "2", "1", "3"],
+                sol: "1. <strong>歧化规律</strong>：S⁰ ➔ S⁻²(K₂S)（得 2e⁻，降 2）；S⁰ ➔ S⁺⁴(K₂SO₃)（失 4e⁻，升 4）。<br>2. <strong>得失守恒</strong>：生成 2K₂S 对应生成 1K₂SO₃（得失均为 4e⁻）。<br>3. <strong>定反应物</strong>：S 原子总数为 2 + 1 = 3；产物含 2×2 + 2 = 6 个 K，故需 6KOH；补 3H₂O。<br><strong>配平结果</strong>：3S + 6KOH ➔ 2K₂S + 1K₂SO₃ + 3H₂O"
+            }
+        ];
+
+        function switchBalTab(tabIdx) {
+            document.querySelectorAll('[id^="tab-bal-"]').forEach((b, i) => {
+                b.className = i === tabIdx ? 'tab-btn active' : 'tab-btn';
+            });
+            renderBalTabContent(tabIdx);
+        }
+
+        function renderBalTabContent(idx) {
+            const d = balQuizData[idx];
+            let inputHtml = '';
+            d.inputs.forEach((item, i) => {
+                inputHtml += `<input type="text" id="${item.id}" class="quiz-input" style="width:${item.w}px;" placeholder="系数"> <span>${item.label}</span> `;
+            });
+
+            document.getElementById('bal-quiz-display').innerHTML = `
+                <div class="quiz-header">${d.title}</div>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:12px 0;">
+                    ${inputHtml}
+                </div>
+                <div style="margin-top:12px;">
+                    <button class="btn btn-primary btn-sm" onclick="checkBalTabItem(${idx})">检查配平</button>
+                    <span id="tab-bal-tag" class="feedback-tag"></span>
+                </div>
+                <div id="tab-bal-sol" class="solution-box">
+                    <strong>💡 配平推导步骤与思路：</strong><br>
+                    ${d.sol}
+                </div>
+            `;
+        }
+
+        function checkBalTabItem(idx) {
+            const d = balQuizData[idx];
+            const tag = document.getElementById('tab-bal-tag');
+            const sol = document.getElementById('tab-bal-sol');
+            sol.style.display = 'block';
+
+            let ok = true;
+            for (let i = 0; i < d.inputs.length; i++) {
+                const val = document.getElementById(d.inputs[i].id).value.trim();
+                if (val !== d.correct[i]) {
+                    ok = false;
+                    break;
+                }
+            }
+
+            if (ok) {
+                tag.className = 'feedback-tag feedback-correct';
+                tag.innerText = '🎉 完美配平！';
+            } else {
+                tag.className = 'feedback-tag feedback-wrong';
+                tag.innerText = '❌ 系数有误，请参考下方配平推导步骤';
+            }
+        }
+
+        /* 9. 思维导图折叠交互 */
         function toggleMindNode(headerElement) {
             const toggle = headerElement.querySelector('.mindmap-toggle');
             const content = headerElement.nextElementSibling;
@@ -853,121 +1631,13 @@
             }
         }
 
-        /* 6. Canvas 电子转移微观模拟动画 */
-        let canvas, ctx;
-        let animRunning = true;
-        let electrons = [];
-        let animId;
-
-        function initCanvas() {
-            canvas = document.getElementById('redoxCanvas');
-            ctx = canvas.getContext('2d');
-            
-            // 处理高分屏清晰度
-            const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = 260 * dpr;
-            ctx.scale(dpr, dpr);
-
-            // 初始化电子粒子池
-            electrons = [];
-            for(let i = 0; i < 8; i++) {
-                electrons.push({
-                    x: 100 + Math.random() * 20,
-                    y: 130 + (Math.random() - 0.5) * 40,
-                    progress: Math.random(),
-                    speed: 0.006 + Math.random() * 0.004
-                });
-            }
-            renderCanvas();
-        }
-
-        function renderCanvas() {
-            const rect = canvas.getBoundingClientRect();
-            const w = rect.width;
-            const h = 260;
-            const speedMultiplier = parseFloat(document.getElementById('anim-speed').value) || 1;
-
-            ctx.clearRect(0, 0, w, h);
-
-            // 绘制左侧：锌电极 / 锌原子
-            ctx.fillStyle = '#3b82f6';
-            ctx.beginPath();
-            ctx.arc(w * 0.2, h * 0.5, 45, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Zn (原子)', w * 0.2, h * 0.5 + 5);
-            ctx.font = '12px sans-serif';
-            ctx.fillText('失去 2e⁻ (氧化)', w * 0.2, h * 0.5 + 25);
-
-            // 绘制右侧：铜离子溶液区
-            ctx.fillStyle = '#ef4444';
-            ctx.beginPath();
-            ctx.arc(w * 0.8, h * 0.5, 45, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText('Cu²⁺ (离子)', w * 0.8, h * 0.5 + 5);
-            ctx.font = '12px sans-serif';
-            ctx.fillText('得到 2e⁻ (还原)', w * 0.8, h * 0.5 + 25);
-
-            // 绘制电子转移传输导线桥弧线
-            ctx.strokeStyle = '#475569';
-            ctx.setLineDash([6, 6]);
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(w * 0.2, h * 0.5 - 45);
-            ctx.quadraticCurveTo(w * 0.5, 20, w * 0.8, h * 0.5 - 45);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // 更新并绘制移动的电子 (e⁻)
-            electrons.forEach(e => {
-                if (animRunning) {
-                    e.progress += e.speed * speedMultiplier;
-                    if (e.progress > 1) e.progress = 0;
-                }
-
-                // 二次贝塞尔曲线插值坐标计算
-                const startX = w * 0.2;
-                const startY = h * 0.5 - 45;
-                const cpX = w * 0.5;
-                const cpY = 20;
-                const endX = w * 0.8;
-                const endY = h * 0.5 - 45;
-
-                const t = e.progress;
-                const curX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * cpX + t * t * endX;
-                const curY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * cpY + t * t * endY;
-
-                ctx.fillStyle = '#facc15';
-                ctx.beginPath();
-                ctx.arc(curX, curY, 6, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#000';
-                ctx.font = 'bold 9px sans-serif';
-                ctx.fillText('e⁻', curX, curY + 3);
-            });
-
-            animId = requestAnimationFrame(renderCanvas);
-        }
-
-        function toggleCanvasAnimation() {
-            animRunning = !animRunning;
-            const btn = document.getElementById('btn-anim-pause');
-            btn.innerHTML = animRunning ? '⏸️ 暂停动画' : '▶️ 继续动画';
-        }
-
         window.addEventListener('resize', () => {
-            if (canvas) {
+            if (naCanvas) {
                 const dpr = window.devicePixelRatio || 1;
-                const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width * dpr;
-                canvas.height = 260 * dpr;
-                ctx.scale(dpr, dpr);
+                const rect = naCanvas.getBoundingClientRect();
+                naCanvas.width = rect.width * dpr;
+                naCanvas.height = 280 * dpr;
+                naCtx.scale(dpr, dpr);
             }
         });
     </script>
