@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第8章 氧化还原反应 - 互动学习工作台</title>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-secondary: #f1f5f9;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --border-color: #e2e8f0;
+            --font-scale: 1;
+            --layout-max-width: 1000px;
+            --ans-bg: #fef08a;
+            --ans-text: #854d0e;
+            --ans-border: #facc15;
+            --canvas-bg: #0f172a;
+        }
+
+        body.dark-mode {
+            --bg-primary: #090d16;
+            --bg-card: #131b2e;
+            --bg-card-secondary: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --border-color: #334155;
+            --ans-bg: #854d0e;
+            --ans-text: #fef08a;
+            --ans-border: #eab308;
+            --canvas-bg: #030712;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-size: calc(1rem * var(--font-scale));
+            line-height: 1.65;
+            padding-bottom: 80px;
+        }
+
+        /* 顶部悬浮工具栏 */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            background: var(--bg-card-secondary);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff !important;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        /* 容器排版 */
+        .container {
+            max-width: var(--layout-max-width);
+            margin: 24px auto;
+            padding: 0 20px;
+            transition: max-width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        h1.main-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        h2.section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        /* 核心点读挖空组件 (.inline-ans) */
+        .inline-ans {
+            display: inline-block;
+            min-width: 50px;
+            padding: 1px 8px;
+            margin: 0 3px;
+            background: var(--bg-card-secondary);
+            border-bottom: 2px dashed var(--primary);
+            color: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-weight: 600;
+            vertical-align: baseline;
+            transition: all 0.2s ease;
+        }
+
+        .inline-ans::before {
+            content: " [ 点此查看 ] ";
+            color: var(--text-sub);
+            font-size: 0.85em;
+            font-weight: normal;
+            display: inline;
+        }
+
+        .inline-ans.revealed {
+            background: var(--ans-bg);
+            color: var(--ans-text) !important;
+            border-bottom: 2px solid var(--ans-border);
+            user-select: text;
+        }
+
+        .inline-ans.revealed::before {
+            display: none;
+        }
+
+        /* 学习目标卡片 */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--bg-card-secondary);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .goal-badge {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* 热区探究器 (Hotspot Explorer) */
+        .explorer-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .explorer-layout { grid-template-columns: 1fr; }
+        }
+
+        .hotspot-viewer {
+            position: relative;
+            width: 100%;
+            background: #0f172a;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            aspect-ratio: 16 / 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hotspot-viewer img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .hotspot-viewer .placeholder-text {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hotspot-point {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.9);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
+            z-index: 10;
+        }
+
+        .hotspot-point::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #60a5fa;
+            animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .hotspot-point.active {
+            background: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.9);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        .hotspot-detail-panel {
+            background: var(--bg-card-secondary);
+            border-radius: 8px;
+            padding: 18px;
+            min-height: 240px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 模拟器 (Simulator) */
+        .sim-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sim-container { grid-template-columns: 1fr; }
+        }
+
+        .sim-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .control-group select, .control-group input[type="range"] {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .sim-screen {
+            background: var(--bg-card-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* Canvas 动画容器 */
+        .canvas-box {
+            position: relative;
+            background: var(--canvas-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 260px;
+        }
+
+        .canvas-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 16px;
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        /* NotebookLM 风格思维导图 (Tree Foldable) */
+        .mindmap-node {
+            margin-left: 20px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 14px;
+            margin-top: 8px;
+        }
+
+        .mindmap-header {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: var(--bg-card-secondary);
+            font-weight: 600;
+            user-select: none;
+            font-size: 0.95rem;
+        }
+
+        .mindmap-header:hover {
+            background: var(--border-color);
+        }
+
+        .mindmap-toggle {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .mindmap-content {
+            padding-top: 6px;
+        }
+
+        .mindmap-content.collapsed {
+            display: none;
+        }
+
+        /* 打印样式支持 */
+        @media print {
+            .toolbar, .canvas-toolbar, .sim-controls button, .btn {
+                display: none !important;
+            }
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                font-size: 11pt;
+            }
+            .section-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+            .inline-ans {
+                background: transparent !important;
+                color: #000 !important;
+                border-bottom: 1px solid #000 !important;
+            }
+            .inline-ans::before {
+                display: none !important;
+            }
+            .mindmap-content.collapsed {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部固定工具栏 -->
+    <header class="toolbar">
+        <div class="toolbar-group">
+            <span style="font-weight: 700; color: var(--primary);">🧪 ChemInteractive</span>
+            <span style="color: var(--text-sub);">| 高一化学 第8章</span>
+        </div>
+        <div class="toolbar-group">
+            <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开所有答案</button>
+            <select class="btn" id="select-fontsize" onchange="changeFontSize(this.value)">
+                <option value="1">字号: 100%</option>
+                <option value="1.15">字号: 115%</option>
+                <option value="1.3">字号: 130%</option>
+            </select>
+            <select class="btn" id="select-layout" onchange="changeLayout(this.value)">
+                <option value="1000px">版面: 居中标准</option>
+                <option value="1300px">版面: 宽屏全景</option>
+            </select>
+            <button class="btn" onclick="toggleDarkMode()">🌓 护眼模式</button>
+            <button class="btn" onclick="window.print()">🖨️ 打印学案</button>
+        </div>
+    </header>
+
+    <main class="container" id="main-container">
+        
+        <!-- 章节头部 -->
+        <section class="section-card">
+            <h1 class="main-title">第 8 章 氧化还原反应 (Redox Reactions)</h1>
+            <p style="color: var(--text-sub); margin-bottom: 16px;">本章从得氧失氧的宏观表象，深入微观本质（电子转移），并掌握利用氧化数分析、判断与配平各类化学反应的方法。</p>
+            
+            <h2 class="section-title">🎯 章节核心素养与学习目标</h2>
+            <div class="goals-grid">
+                <div class="goal-item"><span class="goal-badge">目标 1</span> 从得氧失氧、化合价升降及电子转移多重维度界定氧化还原反应。</div>
+                <div class="goal-item"><span class="goal-badge">目标 2</span> 理解氧化还原反应的微观本质是<span class="inline-ans">电子的得失或偏移</span>。</div>
+                <div class="goal-item"><span class="goal-badge">目标 3</span> 牢固掌握氧化数的计算规则及代数和运算法则。</div>
+                <div class="goal-item"><span class="goal-badge">目标 4</span> 能熟练识别氧化剂、还原剂、氧化产物与还原产物。</div>
+                <div class="goal-item"><span class="goal-badge">目标 5</span> 会用“单线桥法”和“双线桥法”清晰表达电子转移的方向与数目。</div>
+                <div class="goal-item"><span class="goal-badge">目标 6</span> 掌握金属活动性顺序及非金属活性对氧化性/还原性强弱的判定规律。</div>
+                <div class="goal-item"><span class="goal-badge">目标 7</span> 熟练运用<span class="inline-ans">氧化数升降法</span>配平复杂氧化还原化学方程式。</div>
+                <div class="goal-item"><span class="goal-badge">目标 8</span> 理解酸性/碱性介质在离子-电子法半反应方程式配平中的守恒作用。</div>
+            </div>
+        </section>
+
+        <!-- 核心考点点读与互动探究 -->
+        <section class="section-card">
+            <h2 class="section-title">📖 核心考点点读与特征辨析</h2>
+            <p style="margin-bottom: 12px;">
+                1. <strong>基本特征与本质</strong>：在反应中，物质失去电子的反应叫做<span class="inline-ans">氧化反应</span>，化合价（氧化数）<span class="inline-ans">升高</span>；物质得到电子的反应叫做<span class="inline-ans">还原反应</span>，化合价（氧化数）<span class="inline-ans">降低</span>。
+            </p>
+            <p style="margin-bottom: 12px;">
+                2. <strong>核心口诀助记</strong>：<span class="inline-ans">升失氧，降得还；剂性相反，产物相同</span>。（升-失-氧-还原剂-具有还原性-生成氧化产物）。
+            </p>
+            <p style="margin-bottom: 12px;">
+                3. <strong>四大基本反应类型关联</strong>：<span class="inline-ans">置换反应</span>一定是氧化还原反应；<span class="inline-ans">复分解反应</span>一定不是氧化还原反应；有单质参加的化合反应或有单质生成的分解反应是氧化还原反应。
+            </p>
+        </section>
+
+        <!-- 热区探究器：双线桥分析示意图 -->
+        <section class="section-card">
+            <h2 class="section-title">🔍 探究器：双线桥模型与电子转移微观解剖</h2>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 16px;">点击反应方程式中的不同区域标记点，探究其微观得失电子与半反应归属：</p>
+            
+            <div class="explorer-layout">
+                <div class="hotspot-viewer">
+                    <!-- 预留课本图片插槽：如放入图片将覆盖占位 -->
+                    <img src="image/ch08_redox_bridge.jpg" alt="氧化还原双线桥分析示意图" onerror="this.style.display='none'">
+                    <div class="placeholder-text">
+                        🧪 <strong>方程式微观图解容器</strong><br>
+                        <code>2Na + Cl₂ ➔ 2NaCl</code><br>
+                        <small>（如已导入课本图 <code>image/ch08_redox_bridge.jpg</code> 将自动呈现图解背景）</small>
+                    </div>
+
+                    <!-- 响应式百分比热区标记 -->
+                    <div class="hotspot-point" style="top: 35%; left: 25%;" onclick="selectHotspot(0)">1</div>
+                    <div class="hotspot-point" style="top: 35%; left: 55%;" onclick="selectHotspot(1)">2</div>
+                    <div class="hotspot-point" style="top: 75%; left: 82%;" onclick="selectHotspot(2)">3</div>
+                </div>
+
+                <div class="hotspot-detail-panel" id="hotspot-panel">
+                    <h3 id="hotspot-title" style="color: var(--primary); margin-bottom: 8px;">👈 请点击左侧标记点进行微观解析</h3>
+                    <div id="hotspot-desc" style="color: var(--text-sub); font-size: 0.95rem;">
+                        通过点击标记点，可逐项剖析反应物失去电子（被氧化）与得到电子（被还原）的双线桥标准写法。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Canvas 动态微观模拟：电子转移路径 -->
+        <section class="section-card">
+            <h2 class="section-title">⚡ 宏观/微观动画：电子得失与离子迁移流向</h2>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 12px;">以 <strong>Zn + Cu²⁺ ➔ Zn²⁺ + Cu</strong> 为例，观察还原剂向氧化剂传递电子形成金属析出的微观过程：</p>
+            
+            <div class="canvas-box">
+                <canvas id="redoxCanvas"></canvas>
+                <div class="canvas-toolbar">
+                    <div style="display:flex; align-items:center; gap: 10px;">
+                        <button class="btn" id="btn-anim-pause" onclick="toggleCanvasAnimation()" style="padding: 2px 8px; font-size: 0.8rem;">⏸️ 暂停动画</button>
+                        <span>电子流速:</span>
+                        <input type="range" id="anim-speed" min="0.5" max="3" step="0.1" value="1" style="width: 100px;">
+                    </div>
+                    <div>微观模型：<span style="color:#60a5fa">● 锌原子(Zn)</span> ➔ 转移 2e⁻ ➔ <span style="color:#f87171">● 铜离子(Cu²⁺)</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 参数化实验/定量分析模拟器 -->
+        <section class="section-card">
+            <h2 class="section-title">🧮 模拟器：常见含硫/含锰/含氮物质氧化数与角色实时诊断</h2>
+            <div class="sim-container">
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label for="species-select">选择探究的化学物种：</label>
+                        <select id="species-select" onchange="calculateRedoxProperties()">
+                            <option value="H2S">H₂S (硫化氢)</option>
+                            <option value="S">S (单质硫)</option>
+                            <option value="SO2">SO₂ (二氧化硫)</option>
+                            <option value="H2SO4" selected>H₂SO₄ (浓硫酸)</option>
+                            <option value="KMnO4">KMnO₄ (高锰酸钾)</option>
+                            <option value="MnO2">MnO₂ (二氧化锰)</option>
+                            <option value="MnSO4">MnSO₄ (硫酸锰)</option>
+                            <option value="NH3">NH₃ (氨气)</option>
+                            <option value="HNO3">HNO₃ (硝酸)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="target-role">设定预期反应环境/角色：</label>
+                        <select id="target-role" onchange="calculateRedoxProperties()">
+                            <option value="neutral">常规环境表现</option>
+                            <option value="strong_ox">遇强氧化剂 (如酸性高锰酸钾)</option>
+                            <option value="strong_red">遇强还原剂 (如金属锌、碳)</option>
+                        </select>
+                    </div>
+
+                    <div style="font-size: 0.85rem; color: var(--text-sub); background: var(--bg-card-secondary); padding: 10px; border-radius: 6px;">
+                        💡 <strong>规律小结</strong>：元素处于最高氧化数时只有<span class="inline-ans">氧化</span>性；处于最低氧化数时只有<span class="inline-ans">还原</span>性；处于中间价态时既有氧化性又有还原性。
+                    </div>
+                </div>
+
+                <div class="sim-screen">
+                    <div class="calc-row">
+                        <span>核心元素及其氧化态：</span>
+                        <strong id="diag-element-ox" style="color: var(--primary);">S (+6)</strong>
+                    </div>
+                    <div class="calc-row">
+                        <span>价态区间位置：</span>
+                        <span id="diag-val-pos">处于最高价态 (+6)</span>
+                    </div>
+                    <div class="calc-row">
+                        <span>该物质理论上具备的性质：</span>
+                        <strong id="diag-theoretical">仅具有氧化性</strong>
+                    </div>
+                    <div class="calc-row">
+                        <span>在当前设定条件下的表现诊断：</span>
+                        <span class="status-badge" id="diag-badge" style="background:#fee2e2; color:#991b1b;">表现为强氧化剂</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.9rem; color: var(--text-sub);" id="diag-explanation">
+                        由于S已处于最高价态（+6），不能继续失去电子，只能得到电子被还原为较低价态（如 SO₂, S, H₂S）。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NotebookLM 风格树状思维导图 -->
+        <section class="section-card">
+            <h2 class="section-title">🌳 章节考点系统架构导图 (可折叠 NotebookLM 风格)</h2>
+            <div style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 12px;">点击 [ + ] / [ - ] 节点可逐层展开或收起知识子树：</div>
+
+            <div class="mindmap-root">
+                <!-- 节点 1 -->
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 8.1 氧化还原反应的基本概念
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 历史与定义演变</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 得氧为氧化，失氧为还原</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 失氢为氧化，得氢为还原</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>现代微观本质</strong>：<span class="inline-ans">电子转移（得失或共用电子对偏移）</span></div>
+                            </div>
+                        </div>
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 与四大基本反应关系</div>
+                            <div class="mindmap-content collapsed">
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 置换反应 ➔ 100% 属于氧化还原反应</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 复分解反应 ➔ 100% 不属于氧化还原反应</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 化合/分解反应 ➔ 部分属于（有单质参加或生成即是）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 节点 2 -->
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 8.2 氧化数 (Oxidation Number) 的确定
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 计算通用核心规则</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 单质中元素氧化数永远为 <span class="inline-ans">0</span></div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• ⅠA 族（碱金属）化合物中恒为 <span class="inline-ans">+1</span>，ⅡA 族恒为 <span class="inline-ans">+2</span></div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 氢(H)：一般为 +1；在活泼金属氢化物(NaH)中为 <span class="inline-ans">-1</span></div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 氧(O)：一般为 -2；在 OF₂ 中为 +2；在过氧化物(H₂O₂)中为 <span class="inline-ans">-1</span>；在超氧化物(KO₂)中为 -1/2</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• 电中性化合物各元素氧化数代数和等于 <span class="inline-ans">0</span>；多原子离子等于 <span class="inline-ans">其离子所带电荷数</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 节点 3 -->
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 8.3 氧化剂与还原剂及其强弱规律
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 氧化性/还原性强弱判定法则</div>
+                            <div class="mindmap-content collapsed">
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>金属活动性顺序</strong>：K > Ca > Na > Mg > Al > Zn > Fe > Sn > Pb > (H) > Cu > Hg > Ag > Pt > Au (单质还原性依次减弱，离子氧化性依次增强)</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>卤素单质氧化性</strong>：F₂ > Cl₂ > Br₂ > I₂ (对应阴离子还原性：I⁻ > Br⁻ > Cl⁻ > F⁻)</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>反应自发方向规律</strong>：强氧化剂 + 强还原剂 ➔ 弱氧化产物 + 弱还原产物</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 节点 4 -->
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 8.4 氧化还原反应方程式的配平方法
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 步骤与两大核心原则</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>原则 1</strong>：氧化数升高总数 = <span class="inline-ans">氧化数降低总数</span>（电子得失守恒）</div>
+                                <div style="font-size: 0.9rem; padding: 4px 0;">• <strong>原则 2</strong>：质量守恒与电荷守恒（酸性介质补 H⁺/H₂O，碱性介质补 OH⁻/H₂O）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript 交互引擎 -->
+    <script>
+        /* 1. 答案显隐全局控制器 */
+        let allAnswersVisible = false;
+
+        function toggleAllAnswers() {
+            allAnswersVisible = !allAnswersVisible;
+            const answers = document.querySelectorAll('.inline-ans');
+            answers.forEach(ans => {
+                if (allAnswersVisible) {
+                    ans.classList.add('revealed');
+                } else {
+                    ans.classList.remove('revealed');
+                }
+            });
+            const btn = document.getElementById('btn-toggle-all');
+            btn.innerHTML = allAnswersVisible ? '🔒 隐藏所有答案' : '🔓 展开所有答案';
+        }
+
+        // 单个挖空项点击事件绑定
+        document.addEventListener('DOMContentLoaded', () => {
+            const answers = document.querySelectorAll('.inline-ans');
+            answers.forEach(ans => {
+                ans.addEventListener('click', function(e) {
+                    // 如果已被全局展开，点击单项允许手动收起
+                    this.classList.toggle('revealed');
+                });
+            });
+            calculateRedoxProperties();
+            initCanvas();
+        });
+
+        /* 2. 工具栏设置：字号、排版与主题 */
+        function changeFontSize(scale) {
+            document.documentElement.style.setProperty('--font-scale', scale);
+        }
+
+        function changeLayout(width) {
+            document.documentElement.style.setProperty('--layout-max-width', width);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        /* 3. 热区探究器数据与交互 */
+        const hotspotData = [
+            {
+                title: "标记点 1：钠单质 (Na) 失去电子（氧化半反应）",
+                desc: "在反应中，金属钠 (Na) 的氧化数从 <span class='inline-ans'>0</span> 升高到 <span class='inline-ans'>+1</span>，失去 1 个电子。钠是该反应的<span class='inline-ans'>还原剂</span>，发生氧化反应生成 NaCl 中的 Na⁺。"
+            },
+            {
+                title: "标记点 2：氯气分子 (Cl₂) 得到电子（还原半反应）",
+                desc: "氯分子中的 Cl 氧化数从 <span class='inline-ans'>0</span> 降低到 <span class='inline-ans'>-1</span>，每个 Cl 原子得到 1 个电子。氯气是该反应的<span class='inline-ans'>氧化剂</span>，发生还原反应生成 Cl⁻。"
+            },
+            {
+                title: "标记点 3：氯化钠 (NaCl) 生成物与电子转移总量",
+                desc: "微观上 2 个 Na 原子共失去 2e⁻，恰好转移给 1 个 Cl₂ 分子生成 2 个 NaCl 离子晶体单位。总反应中转移电子数为 <span class='inline-ans'>2e⁻</span>。"
+            }
+        ];
+
+        function selectHotspot(index) {
+            const points = document.querySelectorAll('.hotspot-point');
+            points.forEach((p, i) => {
+                if (i === index) p.classList.add('active');
+                else p.classList.remove('active');
+            });
+
+            const panelTitle = document.getElementById('hotspot-title');
+            const panelDesc = document.getElementById('hotspot-desc');
+            panelTitle.innerHTML = hotspotData[index].title;
+            panelDesc.innerHTML = hotspotData[index].desc;
+
+            // 重新为动态插入的 inline-ans 绑定单项点击事件
+            panelDesc.querySelectorAll('.inline-ans').forEach(ans => {
+                if (allAnswersVisible) ans.classList.add('revealed');
+                ans.addEventListener('click', function() {
+                    this.classList.toggle('revealed');
+                });
+            });
+        }
+
+        /* 4. 氧化数与性质实时诊断模拟器 */
+        const speciesDB = {
+            "H2S": { el: "S (-2)", pos: "最低价态", role: "仅具有还原性", desc: "S已达最低价态（-2），只能失去电子被氧化为 S、SO₂ 等，是极好的还原剂。" },
+            "S": { el: "S (0)", pos: "中间价态", role: "既有氧化性又有还原性", desc: "S处于中间氧化数0，遇强氧化剂（如O₂、浓HNO₃）被氧化；遇活泼金属（如Fe、Na）被还原。" },
+            "SO2": { el: "S (+4)", pos: "中间价态", role: "既有氧化性又有还原性（以还原性为主）", desc: "可被酸性KMnO₄氧化为SO₄²⁻；也可将H₂S氧化析出单质S。" },
+            "H2SO4": { el: "S (+6)", pos: "最高价态", role: "仅具有氧化性", desc: "浓硫酸中+6价S具有强氧化能力，能将Cu、C等非活泼物种氧化。" },
+            "KMnO4": { el: "Mn (+7)", pos: "最高价态", role: "极强氧化性", desc: "酸性介质中 Mn从+7降至+2价（肉眼观察紫红色褪为近无色），是实验室最经典的强氧化剂。" },
+            "MnO2": { el: "Mn (+4)", pos: "中间价态", role: "具有氧化性（也可作催化剂）", desc: "在浓盐酸加热条件下可氧化 Cl⁻ 生成 Cl₂（实验室制氯气）。" },
+            "MnSO4": { el: "Mn (+2)", pos: "较稳定低价态", role: "在特定强氧化剂下表现还原性", desc: "Mn²⁺在常规环境下非常稳定，但在强氧化剂（如铋酸钠 NaBiO₃）作用下可被氧化回 MnO₄⁻。" },
+            "NH3": { el: "N (-3)", pos: "最低价态", role: "仅具有还原性", desc: "N处于-3价最低态，如催化氧化反应中失去电子生成 NO。" },
+            "HNO3": { el: "N (+5)", pos: "最高价态", role: "极强氧化性", desc: "浓/稀硝酸均具有极强的氧化能力，与金属反应不产生 H₂，而是生成 NO 或 NO₂。" }
+        };
+
+        function calculateRedoxProperties() {
+            const specKey = document.getElementById('species-select').value;
+            const env = document.getElementById('target-role').value;
+            const data = speciesDB[specKey];
+
+            document.getElementById('diag-element-ox').innerText = data.el;
+            document.getElementById('diag-val-pos').innerText = `处于${data.pos}`;
+            document.getElementById('diag-theoretical').innerText = data.role;
+
+            const badge = document.getElementById('diag-badge');
+            const explanation = document.getElementById('diag-explanation');
+
+            if (env === "strong_ox") {
+                if (data.pos === "最高价态") {
+                    badge.style.background = "#fee2e2";
+                    badge.style.color = "#991b1b";
+                    badge.innerText = "❌ 无法反应（两者均为高价氧化性）";
+                    explanation.innerText = `诊断：${specKey} 中的核心元素已达最高价，不能被外加氧化剂继续氧化。`;
+                } else {
+                    badge.style.background = "#dcfce7";
+                    badge.style.color = "#166534";
+                    badge.innerText = "✅ 表现为还原剂（被氧化，价态上升）";
+                    explanation.innerText = `诊断：${specKey} 中的元素会被强氧化剂抽走电子，氧化数向更高状态跃迁。`;
+                }
+            } else if (env === "strong_red") {
+                if (data.pos === "最低价态") {
+                    badge.style.background = "#fee2e2";
+                    badge.style.color = "#991b1b";
+                    badge.innerText = "❌ 无法反应（两者均为低价还原性）";
+                    explanation.innerText = `诊断：${specKey} 中的核心元素已达最低价，无法继续接受电子。`;
+                } else {
+                    badge.style.background = "#dbeafe";
+                    badge.style.color = "#1e40af";
+                    badge.innerText = "✅ 表现为氧化剂（被还原，价态降低）";
+                    explanation.innerText = `诊断：${specKey} 会夺取强还原剂的电子，核心元素氧化数发生下降。`;
+                }
+            } else {
+                badge.style.background = "#f1f5f9";
+                badge.style.color = "#334155";
+                badge.innerText = `基准状态：${data.role}`;
+                explanation.innerText = data.desc;
+            }
+        }
+
+        /* 5. Mindmap 树状折叠交互 */
+        function toggleMindNode(headerElement) {
+            const toggle = headerElement.querySelector('.mindmap-toggle');
+            const content = headerElement.nextElementSibling;
+            if (!content) return;
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.innerText = '[-]';
+            } else {
+                content.classList.add('collapsed');
+                toggle.innerText = '[+]';
+            }
+        }
+
+        /* 6. Canvas 电子转移微观模拟动画 */
+        let canvas, ctx;
+        let animRunning = true;
+        let electrons = [];
+        let animId;
+
+        function initCanvas() {
+            canvas = document.getElementById('redoxCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // 处理高分屏清晰度
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = 260 * dpr;
+            ctx.scale(dpr, dpr);
+
+            // 初始化电子粒子池
+            electrons = [];
+            for(let i = 0; i < 8; i++) {
+                electrons.push({
+                    x: 100 + Math.random() * 20,
+                    y: 130 + (Math.random() - 0.5) * 40,
+                    progress: Math.random(),
+                    speed: 0.006 + Math.random() * 0.004
+                });
+            }
+            renderCanvas();
+        }
+
+        function renderCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const w = rect.width;
+            const h = 260;
+            const speedMultiplier = parseFloat(document.getElementById('anim-speed').value) || 1;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // 绘制左侧：锌电极 / 锌原子
+            ctx.fillStyle = '#3b82f6';
+            ctx.beginPath();
+            ctx.arc(w * 0.2, h * 0.5, 45, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Zn (原子)', w * 0.2, h * 0.5 + 5);
+            ctx.font = '12px sans-serif';
+            ctx.fillText('失去 2e⁻ (氧化)', w * 0.2, h * 0.5 + 25);
+
+            // 绘制右侧：铜离子溶液区
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(w * 0.8, h * 0.5, 45, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.fillText('Cu²⁺ (离子)', w * 0.8, h * 0.5 + 5);
+            ctx.font = '12px sans-serif';
+            ctx.fillText('得到 2e⁻ (还原)', w * 0.8, h * 0.5 + 25);
+
+            // 绘制电子转移传输导线桥弧线
+            ctx.strokeStyle = '#475569';
+            ctx.setLineDash([6, 6]);
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(w * 0.2, h * 0.5 - 45);
+            ctx.quadraticCurveTo(w * 0.5, 20, w * 0.8, h * 0.5 - 45);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // 更新并绘制移动的电子 (e⁻)
+            electrons.forEach(e => {
+                if (animRunning) {
+                    e.progress += e.speed * speedMultiplier;
+                    if (e.progress > 1) e.progress = 0;
+                }
+
+                // 二次贝塞尔曲线插值坐标计算
+                const startX = w * 0.2;
+                const startY = h * 0.5 - 45;
+                const cpX = w * 0.5;
+                const cpY = 20;
+                const endX = w * 0.8;
+                const endY = h * 0.5 - 45;
+
+                const t = e.progress;
+                const curX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * cpX + t * t * endX;
+                const curY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * cpY + t * t * endY;
+
+                ctx.fillStyle = '#facc15';
+                ctx.beginPath();
+                ctx.arc(curX, curY, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.font = 'bold 9px sans-serif';
+                ctx.fillText('e⁻', curX, curY + 3);
+            });
+
+            animId = requestAnimationFrame(renderCanvas);
+        }
+
+        function toggleCanvasAnimation() {
+            animRunning = !animRunning;
+            const btn = document.getElementById('btn-anim-pause');
+            btn.innerHTML = animRunning ? '⏸️ 暂停动画' : '▶️ 继续动画';
+        }
+
+        window.addEventListener('resize', () => {
+            if (canvas) {
+                const dpr = window.devicePixelRatio || 1;
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * dpr;
+                canvas.height = 260 * dpr;
+                ctx.scale(dpr, dpr);
+            }
+        });
+    </script>
+</body>
+</html>
