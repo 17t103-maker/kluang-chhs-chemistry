@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7章 化学键与分子间作用力 - 互动学习平台</title>
+  <style>
+    /* ==========================================================================
+       CSS 变量设计与主题系统
+       ========================================================================== */
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-inverse: #ffffff;
+      --border-color: #e2e8f0;
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent-color: #0284c7;
+      --accent-bg: #e0f2fe;
+      --accent-ans: #d97706;
+      --ans-bg: #fef3c7;
+      --ans-revealed: #059669;
+      --ans-revealed-bg: #d1fae5;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --font-scale: 1;
+      --container-max-w: 1200px;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-subtle: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-inverse: #0f172a;
+      --border-color: #334155;
+      --primary-color: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent-color: #38bdf8;
+      --accent-bg: rgba(56, 189, 248, 0.15);
+      --accent-ans: #fbbf24;
+      --ans-bg: rgba(251, 191, 36, 0.2);
+      --ans-revealed: #34d399;
+      --ans-revealed-bg: rgba(52, 211, 153, 0.2);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.5);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.6);
+    }
+
+    /* 基础重置与排版 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-size: calc(16px * var(--font-scale));
+      line-height: 1.65;
+      padding-top: 75px;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: var(--container-max-w);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ==========================================================================
+       顶部固定工具栏 (Toolbar)
+       ========================================================================== */
+    .top-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .toolbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .toolbar-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--text-inverse);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      color: var(--text-inverse);
+    }
+
+    .select-control {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       隐形挖空点读组件 (.inline-ans)
+       ========================================================================== */
+    .inline-ans {
+      display: inline-block;
+      min-width: 60px;
+      padding: 1px 8px;
+      margin: 0 3px;
+      border-bottom: 2px dashed var(--accent-ans);
+      background-color: var(--ans-bg);
+      color: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .inline-ans::after {
+      content: '❓';
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .inline-ans.revealed, 
+    body.reveal-all .inline-ans {
+      color: var(--ans-revealed);
+      background-color: var(--ans-revealed-bg);
+      border-bottom: 2px solid var(--ans-revealed);
+      user-select: text;
+    }
+
+    .inline-ans.revealed::after,
+    body.reveal-all .inline-ans::after {
+      content: '';
+    }
+
+    /* ==========================================================================
+       卡片与内容结构
+       ========================================================================== */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--accent-bg);
+      padding-bottom: 10px;
+    }
+
+    /* 学习目标卡片 */
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .goal-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--bg-card-subtle);
+      padding: 14px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .goal-num {
+      background: var(--primary-color);
+      color: var(--text-inverse);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       解剖/结构/装置热区探究器 (Hotspot Explorer)
+       ========================================================================== */
+    .hotspot-explorer {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .hotspot-stage {
+      position: relative;
+      background: var(--bg-card-subtle);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hotspot-stage img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* 图片未就绪时的占位展示 */
+    .img-placeholder {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .hotspot-pin {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      transform: translate(-50%, -50%);
+      background: var(--primary-color);
+      color: var(--text-inverse);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3);
+      z-index: 10;
+      border: 2px solid #ffffff;
+      animation: pulse-ring 2s infinite;
+    }
+
+    .hotspot-pin.active {
+      background: var(--accent-ans);
+      box-shadow: 0 0 0 6px rgba(217, 119, 6, 0.4);
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+      70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    .hotspot-info-panel {
+      background: var(--bg-card-subtle);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      min-height: 380px;
+    }
+
+    .hotspot-info-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--accent-bg);
+      color: var(--accent-color);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .hotspot-info-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* ==========================================================================
+       参数化模拟器 & Canvas 动态模拟器
+       ========================================================================== */
+    .simulator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-label-wrap {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .range-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border-color);
+      outline: none;
+      accent-color: var(--primary-color);
+    }
+
+    .sim-diagnosis-box {
+      background: var(--bg-card-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      border-left: 4px solid var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .canvas-container {
+      position: relative;
+      background: var(--bg-card-subtle);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 280px;
+      background: #0f172a;
+    }
+
+    .canvas-toolbar {
+      width: 100%;
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       比较表格组件
+       ========================================================================== */
+    .table-container {
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .compare-table th {
+      background: var(--bg-card-subtle);
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       NotebookLM 风格可折叠思维导图
+       ========================================================================== */
+    .mindmap-wrapper {
+      background: #090d16;
+      color: #e2e8f0;
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid #1e293b;
+    }
+
+    .mindmap-tree, .mindmap-tree ul {
+      list-style: none;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .mindmap-tree ul {
+      margin-top: 8px;
+      border-left: 1px dashed #334155;
+    }
+
+    .mindmap-node {
+      margin: 8px 0;
+      position: relative;
+    }
+
+    .node-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e293b;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border: 1px solid #334155;
+      transition: all 0.2s ease;
+    }
+
+    .node-header:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .toggle-btn {
+      font-family: monospace;
+      font-weight: bold;
+      color: #38bdf8;
+      width: 16px;
+      text-align: center;
+    }
+
+    .node-content {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+
+    .node-children.collapsed {
+      display: none;
+    }
+
+    /* ==========================================================================
+       响应式与打印适配
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .hotspot-explorer, .simulator-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+        color: #000000;
+        font-size: 12pt;
+      }
+      .top-toolbar, .canvas-toolbar, .sim-controls, .btn {
+        display: none !important;
+      }
+      .card {
+        border: none;
+        box-shadow: none;
+        padding: 10px 0;
+        page-break-inside: avoid;
+      }
+      .inline-ans {
+        color: #000000 !important;
+        background: transparent !important;
+        border-bottom: 1px solid #000000 !important;
+      }
+      .inline-ans::after {
+        display: none !important;
+      }
+      .mindmap-wrapper {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #cccccc;
+      }
+      .node-header {
+        background: #f1f5f9;
+        color: #000000;
+        border: 1px solid #cccccc;
+      }
+      .node-children.collapsed {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 顶部交互工具栏 ==================== -->
+  <header class="top-toolbar">
+    <div class="container toolbar-content">
+      <div class="toolbar-title">
+        <span>🧪</span>
+        <span>高中化学 · 第7章 互动平台</span>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn btn-primary" id="btn-toggle-ans" onclick="toggleGlobalAnswers()">
+          <span id="ans-lock-icon">🔓</span>
+          <span id="ans-btn-text">展开所有答案</span>
+        </button>
+
+        <select class="select-control" id="font-scale-select" onchange="changeFontScale(this.value)" title="字号调节">
+          <option value="1">字号: 正常 (100%)</option>
+          <option value="1.15">字号: 中等 (115%)</option>
+          <option value="1.3">字号: 较大 (130%)</option>
+        </select>
+
+        <select class="select-control" id="layout-select" onchange="changeLayout(this.value)" title="版面宽度">
+          <option value="1200px">版面: 居中标准</option>
+          <option value="96%">版面: 宽屏全展</option>
+        </select>
+
+        <button class="btn" onclick="toggleDarkMode()" title="护眼模式切换">
+          <span id="theme-icon">🌙</span> 护眼模式
+        </button>
+
+        <button class="btn" onclick="window.print()" title="打印整章复习学案">
+          🖨️ 打印导学案
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== 🎯 章节学习目标卡片 ==================== -->
+    <section class="card">
+      <h2 class="card-title">🎯 本章核心学习与应试目标</h2>
+      <div class="goals-grid">
+        <div class="goal-item">
+          <div class="goal-num">1</div>
+          <div>理解<span class="inline-ans">化学键</span>的本质是相邻原子或离子间强烈的相互作用。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">2</div>
+          <div>掌握<span class="inline-ans">离子键</span>与<span class="inline-ans">共价键</span>的形成机理及电子式书写规则。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">3</div>
+          <div>理解利用<span class="inline-ans">电负性差值</span>判断化学键类型（非极性键、极性键、离子键）。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">4</div>
+          <div>能够使用<span class="inline-ans">价层电子对互斥理论(VSEPR)</span>推导分子的立体几何构型。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">5</div>
+          <div>理解金属键的<span class="inline-ans">电子海模型</span>及其优良延展性与导电性的微观机理。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">6</div>
+          <div>区分<span class="inline-ans">范德华力</span>与<span class="inline-ans">氢键</span>，分析其对物质熔沸点及反常物理性质的影响。</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-num">7</div>
+          <div>系统对比<span class="inline-ans">离子、原子、分子、金属</span>四大晶体的构成微粒与物理特性。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7.1 化学键与微观结构探究器 ==================== -->
+    <section class="card">
+      <h2 class="card-title">🔍 7.1 典型微观结构与化学键探究</h2>
+      <p style="margin-bottom: 16px; color: var(--text-muted);">
+        点击图中的脉冲热区标记点（① ~ ④），探索氯化钠水合晶胞中的微观离子与相互作用机理：
+      </p>
+
+      <div class="hotspot-explorer">
+        <!-- 热区舞台 -->
+        <div class="hotspot-stage" id="hotspot-container">
+          <!-- 预留标准化课本插图路径 -->
+          <img src="image/nacl_crystal_hydration.jpg" alt="氯化钠晶体结构及水合作用示意图" onerror="this.style.display='none'; document.getElementById('hotspot-fallback').style.display='block';">
+          
+          <div id="hotspot-fallback" class="img-placeholder" style="display:none;">
+            <div style="font-size: 3rem; margin-bottom: 8px;">🧊 🔬</div>
+            <strong>【氯化钠晶体与水合作用结构示意图】</strong>
+            <p style="font-size: 0.85rem; margin-top: 6px;">若未加载本地图片，请参考文末说明放入 <code>image/nacl_crystal_hydration.jpg</code></p>
+          </div>
+
+          <!-- 热区响应标记点 -->
+          <div class="hotspot-pin active" style="top: 32%; left: 35%;" onclick="showHotspot(1)">1</div>
+          <div class="hotspot-pin" style="top: 55%; left: 62%;" onclick="showHotspot(2)">2</div>
+          <div class="hotspot-pin" style="top: 25%; left: 78%;" onclick="showHotspot(3)">3</div>
+          <div class="hotspot-pin" style="top: 75%; left: 28%;" onclick="showHotspot(4)">4</div>
+        </div>
+
+        <!-- 详细信息展示面板 -->
+        <div class="hotspot-info-panel" id="hotspot-details">
+          <!-- 动态 JS 填充内容 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7.2 电负性与化学键极性模拟器 ==================== -->
+    <section class="card">
+      <h2 class="card-title">⚡ 7.2 成键原子电负性与化学键极性预测器</h2>
+      <div class="simulator-grid">
+        <div class="sim-controls">
+          <div class="control-group">
+            <div class="control-label-wrap">
+              <span>原子 A 电负性 ($\chi_A$)：</span>
+              <span id="val-en-a" style="color: var(--primary-color); font-weight: bold;">2.1 (H)</span>
+            </div>
+            <input type="range" class="range-slider" id="slider-en-a" min="0.7" max="4.0" step="0.1" value="2.1" oninput="updateBondSimulator()">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label-wrap">
+              <span>原子 B 电负性 ($\chi_B$)：</span>
+              <span id="val-en-b" style="color: var(--primary-color); font-weight: bold;">3.0 (Cl)</span>
+            </div>
+            <input type="range" class="range-slider" id="slider-en-b" min="0.7" max="4.0" step="0.1" value="3.0" oninput="updateBondSimulator()">
+          </div>
+
+          <div class="sim-diagnosis-box">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">理论计算差值与断键机理：</div>
+            <div style="font-size: 1.1rem; font-weight: bold;" id="sim-diff-display">电负性差值 $\Delta\chi = 0.9$</div>
+            <div id="sim-bond-type" style="color: var(--primary-color); font-weight: bold;">键型判断：极性共价键 (Polar Covalent Bond)</div>
+            <p id="sim-bond-desc" style="font-size: 0.85rem; color: var(--text-muted);">
+              共用电子对发生偏移，靠近电负性较大的原子，形成局部偶极 $\delta^+$ 与 $\delta^-$。
+            </p>
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <h4 style="font-size: 1rem; margin-bottom: 8px;">💡 经典化学键定量判别法则：</h4>
+          <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+            <li>$\Delta\chi = 0$：<span class="inline-ans">非极性共价键</span>（如 $H_2, Cl_2$）</li>
+            <li>$0 < \Delta\chi < 1.7$：<span class="inline-ans">极性共价键</span>（如 $HCl, H_2O$）</li>
+            <li>$\Delta\chi \ge 1.7$：<span class="inline-ans">离子键</span>（如 $NaCl, MgO$）</li>
+            <li>特别提醒：成键类型为连续谱带，$\Delta\chi \approx 1.7$ 具有部分共价与离子双重特性。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7.3 分子热运动与氢键 Canvas 动画 ==================== -->
+    <section class="card">
+      <h2 class="card-title">🌊 7.3 水分子间作用力与氢键动态微观模拟</h2>
+      <div class="canvas-container">
+        <canvas id="water-sim-canvas"></canvas>
+        <div class="canvas-toolbar">
+          <div style="display:flex; align-items:center; gap: 12px;">
+            <button class="btn" id="btn-canvas-play" onclick="toggleCanvasPlay()">⏸️ 暂停动画</button>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">热运动速率：</span>
+            <input type="range" class="range-slider" style="width: 100px;" id="canvas-speed-slider" min="0.2" max="3" step="0.1" value="1" oninput="changeCanvasSpeed(this.value)">
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            🔵 氧原子 ($\delta^-$) | ⚪ 氢原子 ($\delta^+$) | <span style="color:#38bdf8">-- 动态氢键</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7.4 四大晶体结构与特性对比 ==================== -->
+    <section class="card">
+      <h2 class="card-title">📊 7.4 四大晶体类型与性质对比复习表</h2>
+      <div class="table-container">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>晶体类型</th>
+              <th>构成微粒</th>
+              <th>微粒间作用力</th>
+              <th>熔沸点与硬度</th>
+              <th>导电导热性</th>
+              <th>典型实例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>离子晶体</strong></td>
+              <td><span class="inline-ans">阴、阳离子</span></td>
+              <td><span class="inline-ans">离子键</span></td>
+              <td>较高熔沸点，硬而脆</td>
+              <td>固态<span class="inline-ans">不导电</span>，水溶液/熔融<span class="inline-ans">导电</span></td>
+              <td>$NaCl, MgO$</td>
+            </tr>
+            <tr>
+              <td><strong>原子晶体</strong></td>
+              <td><span class="inline-ans">原子</span></td>
+              <td><span class="inline-ans">共价键</span></td>
+              <td><span class="inline-ans">极高</span>熔沸点，极硬</td>
+              <td>一般<span class="inline-ans">不导电</span>（硅为半导体）</td>
+              <td>金刚石, $SiO_2, SiC$</td>
+            </tr>
+            <tr>
+              <td><strong>分子晶体</strong></td>
+              <td><span class="inline-ans">分子</span></td>
+              <td><span class="inline-ans">分子间作用力</span></td>
+              <td><span class="inline-ans">较低</span>熔沸点，硬度小</td>
+              <td>固态和熔融态均<span class="inline-ans">不导电</span></td>
+              <td>干冰, 冰, $I_2, C_{60}$</td>
+            </tr>
+            <tr>
+              <td><strong>金属晶体</strong></td>
+              <td><span class="inline-ans">金属阳离子与自由电子</span></td>
+              <td><span class="inline-ans">金属键</span></td>
+              <td>熔沸点跨度大，具延展性</td>
+              <td>固态和熔融态均<span class="inline-ans">良导体</span></td>
+              <td>$Fe, Cu, Al, Na$</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== NotebookLM 风格整章考点思维导图 ==================== -->
+    <section class="card" style="padding: 0; background: transparent; border: none;">
+      <div class="mindmap-wrapper">
+        <h3 style="color: #38bdf8; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <span>🧠</span> 第7章 核心考点体系思维导图 (点击 [+] / [-] 节点可折叠展开)
+        </h3>
+
+        <div class="mindmap-tree">
+          <div class="mindmap-node">
+            <span class="node-header" onclick="toggleMindmapNode(this)">
+              <span class="toggle-btn">[-]</span>
+              <strong>第7章 化学键与分子间作用力</strong>
+            </span>
+            <div class="node-children">
+              <ul>
+                <!-- 7.1 化学键 -->
+                <li class="mindmap-node">
+                  <span class="node-header" onclick="toggleMindmapNode(this)">
+                    <span class="toggle-btn">[-]</span>
+                    <strong>7.1 化学键 (Chemical Bonds)</strong>
+                  </span>
+                  <div class="node-children">
+                    <ul>
+                      <li><span class="node-content"><strong>离子键</strong>：活泼金属与活泼非金属，静电引力与斥力平衡，遵循八隅体规则</span></li>
+                      <li><span class="node-content"><strong>共价键</strong>：共用电子对（极性键 / 非极性键 / 配位键），以键长、键能、键角衡量</span></li>
+                      <li><span class="node-content"><strong>金属键</strong>：金属阳离子浸润在“自由电子海”中，赋予延展性与导电导热性</span></li>
+                    </ul>
+                  </div>
+                </li>
+
+                <!-- 7.2 分子间作用力 -->
+                <li class="mindmap-node">
+                  <span class="node-header" onclick="toggleMindmapNode(this)">
+                    <span class="toggle-btn">[-]</span>
+                    <strong>7.2 分子间作用力 (Intermolecular Forces)</strong>
+                  </span>
+                  <div class="node-children">
+                    <ul>
+                      <li><span class="node-content"><strong>范德华力</strong>：瞬时与固有偶极引力，随分子量增大、接触面积增大而增强</span></li>
+                      <li><span class="node-content"><strong>氢键 ($X-H\cdots Y$)</strong>：强极性（$N, O, F$），引起水、氨气、$HF$ 的反常高沸点与冰的密度反常</span></li>
+                    </ul>
+                  </div>
+                </li>
+
+                <!-- 7.3 晶体结构 -->
+                <li class="mindmap-node">
+                  <span class="node-header" onclick="toggleMindmapNode(this)">
+                    <span class="toggle-btn">[-]</span>
+                    <strong>7.3 晶体及特性 (Crystal Structures)</strong>
+                  </span>
+                  <div class="node-children">
+                    <ul>
+                      <li><span class="node-content"><strong>离子晶体</strong>：无单个分子，熔融或溶水水合破坏离子键可导电</span></li>
+                      <li><span class="node-content"><strong>原子晶体</strong>：空间网状共价键，熔化需断共价键（高熔点、高硬度）</span></li>
+                      <li><span class="node-content"><strong>分子晶体</strong>：熔化仅克服范德华力/氢键，分子内共价键不破坏</span></li>
+                      <li><span class="node-content"><strong>金属晶体</strong>：同主族向下熔点降低，同周期向右熔点升高（价电子增多、半径减小）</span></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 纯前端 JS 交互业务逻辑 ==================== -->
+  <script>
+    /* ==========================================================================
+       1. 答案挖空与全局点读开关
+       ========================================================================== */
+    let isAllRevealed = false;
+
+    // 单个挖空点击
+    document.addEventListener('DOMContentLoaded', () => {
+      const inlineAnsList = document.querySelectorAll('.inline-ans');
+      inlineAnsList.forEach(ans => {
+        ans.addEventListener('click', (e) => {
+          e.stopPropagation();
+          ans.classList.toggle('revealed');
+        });
+      });
+
+      // 初始化热区信息
+      showHotspot(1);
+
+      // 初始化模拟器与动画
+      updateBondSimulator();
+      initWaterCanvas();
+    });
+
+    function toggleGlobalAnswers() {
+      isAllRevealed = !isAllRevealed;
+      const body = document.body;
+      const btnText = document.getElementById('ans-btn-text');
+      const lockIcon = document.getElementById('ans-lock-icon');
+
+      if (isAllRevealed) {
+        body.classList.add('reveal-all');
+        btnText.innerText = '🔒 隐藏所有答案';
+        lockIcon.innerText = '🔒';
+      } else {
+        body.classList.remove('reveal-all');
+        btnText.innerText = '🔓 展开所有答案';
+        lockIcon.innerText = '🔓';
+        // 清理各个已单独打开的状态
+        document.querySelectorAll('.inline-ans.revealed').forEach(el => el.classList.remove('revealed'));
+      }
+    }
+
+    /* ==========================================================================
+       2. 工具栏外观与模式切换
+       ========================================================================== */
+    function toggleDarkMode() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const themeIcon = document.getElementById('theme-icon');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.innerText = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.innerText = '☀️';
+      }
+    }
+
+    function changeFontScale(val) {
+      document.documentElement.style.setProperty('--font-scale', val);
+    }
+
+    function changeLayout(val) {
+      document.documentElement.style.setProperty('--container-max-w', val);
+    }
+
+    /* ==========================================================================
+       3. 热区探究器 (Hotspot Explorer)
+       ========================================================================== */
+    const hotspotData = {
+      1: {
+        badge: "阳离子 · 核心微粒",
+        title: "钠离子 (Na⁺) 及八隅体构型",
+        desc: "钠原子失去最外层的 1 个价电子，达成次外层 8 电子的稀有气体 Neon 稳定构型。在晶胞中，每个 $Na^+$ 周围等距离紧密包围着 <span class='inline-ans'>6 个 Cl⁻</span> 离子。"
+      },
+      2: {
+        badge: "阴离子 · 核心微粒",
+        title: "氯离子 (Cl⁻) 及配位环境",
+        desc: "氯原子获得来自钠的一个电子，达成最外层 8 电子 Argon 稳定排布。在 NaCl 立方晶体中，每个 $Cl^-$ 同样紧邻包围着 <span class='inline-ans'>6 个 Na⁺</span>，两者离子个数比严格为 <span class='inline-ans'>1 : 1</span>。"
+      },
+      3: {
+        badge: "水合作用 · 极性结合",
+        title: "水分子对阴离子的定向包裹",
+        desc: "由于水分子具有强极性，氧端显负电 ($\delta^-$)，氢端显正电 ($\delta^+$)。水分子以 <span class='inline-ans'>氢原子端 (δ+)</span> 朝向并紧密包围 $Cl^-$，削弱离子间的静电引力使其发生水合解离。"
+      },
+      4: {
+        badge: "水合作用 · 极性结合",
+        title: "水分子对阳离子的水合定向",
+        desc: "水分子以带有部分负电荷的 <span class='inline-ans'>氧原子端 (δ-)</span> 紧密朝向带正电的 $Na^+$ 离子，形成水合钠离子，该过程释放大量的 <span class='inline-ans'>水合热</span>。"
+      }
+    };
+
+    function showHotspot(id) {
+      // 切换 pin 高亮
+      const pins = document.querySelectorAll('.hotspot-pin');
+      pins.forEach((pin, index) => {
+        pin.classList.toggle('active', index + 1 === id);
+      });
+
+      const data = hotspotData[id];
+      const panel = document.getElementById('hotspot-details');
+      panel.innerHTML = `
+        <span class="hotspot-info-badge">${data.badge}</span>
+        <h3 class="hotspot-info-title">${data.title}</h3>
+        <p style="margin-top: 12px; font-size: 0.95rem; color: var(--text-main); line-height: 1.7;">
+          ${data.desc}
+        </p>
+        <div style="margin-top: 24px; padding: 12px; background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+          💡 <strong>考点提醒</strong>：NaCl 固态晶体中不存在单个的“NaCl 分子”，其化学式仅表示正负离子的最简整数比。
+        </div>
+      `;
+
+      // 绑定新生成的挖空事件
+      panel.querySelectorAll('.inline-ans').forEach(ans => {
+        ans.addEventListener('click', (e) => {
+          e.stopPropagation();
+          ans.classList.toggle('revealed');
+        });
+      });
+    }
+
+    /* ==========================================================================
+       4. 参数化模拟器：电负性计算与键型诊断
+       ========================================================================== */
+    function updateBondSimulator() {
+      const enA = parseFloat(document.getElementById('slider-en-a').value);
+      const enB = parseFloat(document.getElementById('slider-en-b').value);
+
+      document.getElementById('val-en-a').innerText = enA.toFixed(1);
+      document.getElementById('val-en-b').innerText = enB.toFixed(1);
+
+      const diff = Math.abs(enA - enB).toFixed(1);
+      document.getElementById('sim-diff-display').innerText = `电负性差值 Δχ = ${diff}`;
+
+      const typeEl = document.getElementById('sim-bond-type');
+      const descEl = document.getElementById('sim-bond-desc');
+
+      if (diff == 0) {
+        typeEl.innerText = "键型判断：非极性共价键 (Non-polar Covalent Bond)";
+        typeEl.style.color = "#10b981";
+        descEl.innerText = "成键原子吸引电子的能力完全相同，共用电子对对称分布在核间中心，无局部偶极电荷。";
+      } else if (diff < 1.7) {
+        typeEl.innerText = "键型判断：极性共价键 (Polar Covalent Bond)";
+        typeEl.style.color = "#0284c7";
+        descEl.innerText = "共用电子对偏向电负性较大的原子，形成正负极性差（δ+ 与 δ-），差值越大键的极性越强。";
+      } else {
+        typeEl.innerText = "键型判断：离子键 (Ionic Bond)";
+        typeEl.style.color = "#d97706";
+        descEl.innerText = "电负性差距过大，发生实质性的电子转移，形成带正负电荷的阴阳离子，依靠库仑静电引力结合。";
+      }
+    }
+
+    /* ==========================================================================
+       5. Canvas 动态微观水分子与氢键模拟器
+       ========================================================================== */
+    let canvas, ctx;
+    let molecules = [];
+    let isPlaying = true;
+    let animSpeed = 1;
+
+    function initWaterCanvas() {
+      canvas = document.getElementById('water-sim-canvas');
+      ctx = canvas.getContext('2d');
+
+      // 调整画布物理分辨率
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio || 800;
+      canvas.height = 280 * window.devicePixelRatio;
+
+      // 生成水分子集群
+      molecules = [];
+      const numMolecules = 18;
+      for (let i = 0; i < numMolecules; i++) {
+        molecules.push({
+          x: Math.random() * (canvas.width - 100) + 50,
+          y: Math.random() * (canvas.height - 100) + 50,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          angle: Math.random() * Math.PI * 2,
+          va: (Math.random() - 0.5) * 0.03
+        });
+      }
+
+      requestAnimationFrame(renderCanvas);
+    }
+
+    function renderCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 更新位置与碰撞
+      if (isPlaying) {
+        molecules.forEach(m => {
+          m.x += m.vx * animSpeed;
+          m.y += m.vy * animSpeed;
+          m.angle += m.va * animSpeed;
+
+          if (m.x < 40 || m.x > canvas.width - 40) m.vx *= -1;
+          if (m.y < 40 || m.y > canvas.height - 40) m.vy *= -1;
+        });
+      }
+
+      // 计算并绘制水分子间的动态氢键 (O-H 距离判断)
+      for (let i = 0; i < molecules.length; i++) {
+        for (let j = i + 1; j < molecules.length; j++) {
+          const dx = molecules[i].x - molecules[j].x;
+          const dy = molecules[i].y - molecules[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110 * window.devicePixelRatio) {
+            ctx.beginPath();
+            ctx.setLineDash([4 * window.devicePixelRatio, 4 * window.devicePixelRatio]);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${1 - dist / (110 * window.devicePixelRatio)})`;
+            ctx.lineWidth = 2 * window.devicePixelRatio;
+            ctx.moveTo(molecules[i].x, molecules[i].y);
+            ctx.lineTo(molecules[j].x, molecules[j].y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        }
+      }
+
+      // 绘制水分子 (红球为O，白球为H)
+      molecules.forEach(m => {
+        ctx.save();
+        ctx.translate(m.x, m.y);
+        ctx.rotate(m.angle);
+
+        const rO = 14 * window.devicePixelRatio;
+        const rH = 8 * window.devicePixelRatio;
+        const bondDist = 18 * window.devicePixelRatio;
+        const halfAngle = (104.5 / 2) * (Math.PI / 180);
+
+        // 共价键
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 3 * window.devicePixelRatio;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(bondDist * Math.cos(halfAngle), bondDist * Math.sin(halfAngle));
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-bondDist * Math.cos(halfAngle), bondDist * Math.sin(halfAngle));
+        ctx.stroke();
+
+        // 两个 H 原子
+        ctx.fillStyle = "#e2e8f0";
+        ctx.beginPath();
+        ctx.arc(bondDist * Math.cos(halfAngle), bondDist * Math.sin(halfAngle), rH, 0, Math.PI * 2);
+        ctx.arc(-bondDist * Math.cos(halfAngle), bondDist * Math.sin(halfAngle), rH, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 中心 O 原子
+        ctx.fillStyle = "#ef4444";
+        ctx.beginPath();
+        ctx.arc(0, 0, rO, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      });
+
+      requestAnimationFrame(renderCanvas);
+    }
+
+    function toggleCanvasPlay() {
+      isPlaying = !isPlaying;
+      document.getElementById('btn-canvas-play').innerText = isPlaying ? '⏸️ 暂停动画' : '▶️ 播放动画';
+    }
+
+    function changeCanvasSpeed(val) {
+      animSpeed = parseFloat(val);
+    }
+
+    /* ==========================================================================
+       6. 思维导图折叠/展开逻辑
+       ========================================================================== */
+    function toggleMindmapNode(headerEl) {
+      const node = headerEl.parentElement;
+      const children = node.querySelector('.node-children');
+      const toggleBtn = headerEl.querySelector('.toggle-btn');
+
+      if (children) {
+        children.classList.toggle('collapsed');
+        toggleBtn.innerText = children.classList.contains('collapsed') ? '[+]' : '[-]';
+      }
+    }
+  </script>
+</body>
+</html>
