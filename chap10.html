@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第10章 IIA 族元素：镁和钙 - 互动探究学习工作台</title>
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-sub: #f1f5f9;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --border-color: #e2e8f0;
+            --font-scale: 1;
+            --layout-max-width: 1150px;
+            --ans-bg: #fef08a;
+            --ans-text: #854d0e;
+            --ans-border: #facc15;
+            --canvas-bg: #090d16;
+        }
+
+        body.dark-mode {
+            --bg-body: #090d16;
+            --bg-card: #131b2e;
+            --bg-card-sub: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --primary: #38bdf8;
+            --primary-hover: #7dd3fc;
+            --border-color: #334155;
+            --ans-bg: #854d0e;
+            --ans-text: #fef08a;
+            --ans-border: #eab308;
+            --canvas-bg: #030712;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-size: calc(1rem * var(--font-scale));
+            line-height: 1.75;
+            padding-bottom: 90px;
+        }
+
+        /* 顶部悬浮工具栏 */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--bg-card-sub);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff !important;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 0.8rem;
+        }
+
+        .container {
+            max-width: var(--layout-max-width);
+            margin: 24px auto;
+            padding: 0 20px;
+            transition: max-width 0.3s ease;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 26px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        h1.main-title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        h2.section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        h3.sub-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 隐形挖空点读组件 */
+        .inline-ans {
+            display: inline-block;
+            min-width: 48px;
+            padding: 1px 8px;
+            margin: 0 3px;
+            background: var(--bg-card-sub);
+            border-bottom: 2px dashed var(--primary);
+            color: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+            font-weight: 600;
+            vertical-align: baseline;
+            transition: all 0.2s ease;
+        }
+
+        .inline-ans::before {
+            content: "[ 点击显示产物 / 答案 ]";
+            color: var(--text-sub);
+            font-size: 0.85em;
+            font-weight: normal;
+            display: inline;
+        }
+
+        .inline-ans.revealed {
+            background: var(--ans-bg);
+            color: var(--ans-text) !important;
+            border-bottom: 2px solid var(--ans-border);
+            user-select: text;
+        }
+
+        .inline-ans.revealed::before {
+            display: none;
+        }
+
+        /* 高亮卡片与对比表格 */
+        .highlight-banner {
+            background: linear-gradient(135deg, rgba(2,132,199,0.08), rgba(16,185,129,0.08));
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 0.95rem;
+            line-height: 1.85;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 0.92rem;
+        }
+
+        .custom-table th, .custom-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background: var(--bg-card-sub);
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* 流程步骤网格 */
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .process-step {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 14px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .process-step.active {
+            border-color: var(--primary);
+            background: rgba(2,132,199,0.05);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .process-step-num {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        /* 选项卡卡片组件 */
+        .tab-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card-sub);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: #ffffff !important;
+            border-color: var(--primary);
+        }
+
+        .interactive-quiz-card {
+            background: var(--bg-card-sub);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        /* Canvas 动画容器 */
+        .canvas-box {
+            position: relative;
+            background: var(--canvas-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin: 16px 0;
+        }
+
+        .canvas-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* 试管虚拟实验台容器 */
+        .test-tube-rack {
+            display: flex;
+            justify-content: space-around;
+            background: var(--bg-card-sub);
+            padding: 24px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 14px 0;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .test-tube {
+            width: 140px;
+            height: 220px;
+            border: 3px solid #94a3b8;
+            border-top: none;
+            border-radius: 0 0 70px 70px;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .liquid {
+            width: 100%;
+            height: 45%;
+            background: rgba(56, 189, 248, 0.25);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .precipitate {
+            width: 100%;
+            height: 0px;
+            position: absolute;
+            bottom: 0;
+            background: #ffffff;
+            opacity: 0;
+            transition: all 0.5s ease;
+            box-shadow: 0 -2px 6px rgba(255,255,255,0.8);
+        }
+
+        /* 思维导图 */
+        .mindmap-node {
+            margin-left: 20px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 14px;
+            margin-top: 8px;
+        }
+
+        .mindmap-header {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: var(--bg-card-sub);
+            font-weight: 600;
+            user-select: none;
+            font-size: 0.95rem;
+        }
+
+        .mindmap-header:hover {
+            background: var(--border-color);
+        }
+
+        .mindmap-toggle {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .mindmap-content.collapsed {
+            display: none;
+        }
+
+        @media print {
+            .toolbar, .canvas-toolbar, .btn, .canvas-box, .tab-box, .test-tube-rack {
+                display: none !important;
+            }
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                font-size: 11pt;
+            }
+            .section-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+            .inline-ans {
+                background: transparent !important;
+                color: #000 !important;
+                border-bottom: 1px solid #000 !important;
+            }
+            .inline-ans::before {
+                display: none !important;
+            }
+            .mindmap-content.collapsed {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部固定工具栏 -->
+    <header class="toolbar">
+        <div class="toolbar-group">
+            <span style="font-weight: 800; color: var(--primary);">⚗️ ChemInteract Studio</span>
+            <span style="color: var(--text-sub);">| 高一化学 第10章 IIA 族元素：镁和钙</span>
+        </div>
+        <div class="toolbar-group">
+            <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开所有答案</button>
+            <select class="btn" id="select-fontsize" onchange="changeFontSize(this.value)">
+                <option value="1">字号: 100%</option>
+                <option value="1.15">字号: 115%</option>
+                <option value="1.3">字号: 130%</option>
+            </select>
+            <select class="btn" id="select-layout" onchange="changeLayout(this.value)">
+                <option value="1150px">版面: 居中标准</option>
+                <option value="1450px">版面: 宽屏全景</option>
+            </select>
+            <button class="btn" onclick="toggleDarkMode()">🌓 护眼模式</button>
+            <button class="btn" onclick="window.print()">🖨️ 打印学案</button>
+        </div>
+    </header>
+
+    <main class="container" id="main-container">
+        
+        <!-- 章节概览与学习目标 -->
+        <section class="section-card">
+            <h1 class="main-title">第 10 章 IIA 族元素：镁和钙 (Alkaline Earth Metals)</h1>
+            <p style="color: var(--text-sub); margin-bottom: 16px;">
+                本章探讨元素周期表第 IIA 族（碱土金属）的原子结构特征、元素递变规律，重点掌握镁（Mg）与钙（Ca）及其重要化合物的物理化学性质、工业提取制备方法及离子定性检定技术。
+            </p>
+            
+            <h2 class="section-title">🎯 章节核心教学与考试目标</h2>
+            <ul style="padding-left: 22px; line-height: 1.9; color: var(--text-main);">
+                <li>掌握 IIA 族元素原子结构特征（最外层 2 个价电子 ns<sup>2</sup>）及化合价规律（+2 价）。</li>
+                <li>理解从铍到钡随原子序数增加，原子半径增大、金属性与还原性依次增强的递变规律。</li>
+                <li>牢固掌握 Mg、Ca 单质与非金属（O<sub>2</sub>、N<sub>2</sub>、Cl<sub>2</sub>）、水、CO<sub>2</sub> 及酸的化学反应。</li>
+                <li>掌握工业从海水中提取金属镁的完整工艺流程、反应原理与操作细节。</li>
+                <li>熟练掌握 MgO、CaO、Ca(OH)<sub>2</sub>、CaSO<sub>4</sub>·2H<sub>2</sub>O（石膏与熟石膏互变）及 CaCl<sub>2</sub> 的性质与用途。</li>
+                <li>掌握利用 NaOH 或氨水沉淀检定 Mg<sup>2+</sup>，以及利用草酸铵在不同酸性介质中检定 Ca<sup>2+</sup> 的方法。</li>
+            </ul>
+        </section>
+
+        <!-- 10.1 镁和钙的性质与 IIA 族元素递变 -->
+        <section class="section-card">
+            <h2 class="section-title">10.1 镁和钙的性质与 IIA 族元素递变规律</h2>
+            
+            <h3 class="sub-title">1. 原子结构与周期律特征</h3>
+            <p style="margin-bottom: 10px;">
+                IIA 族元素包括铍（Be）、镁（Mg）、钙（Ca）、锶（Sr）、钡（Ba）、镭（Ra，放射性元素），统称为<strong>碱土金属 (alkaline earth metals)</strong>：
+            </p>
+            <ul style="padding-left: 22px; margin-bottom: 14px; line-height: 1.85;">
+                <li><strong>价电子构型</strong>：最外层均有 <span class="inline-ans">2</span> 个价电子（ns<sup>2</sup>），化学反应中极易失去 2 个电子形成 <span class="inline-ans">+2</span> 价阳离子（M<sup>2+</sup>）。</li>
+                <li><strong>族内递变性</strong>：自上而下（Be ➔ Ba），电子层数依次递增，原子半径依次<span class="inline-ans">增大</span>，核对外层电子引力减弱，失电子能力（金属性/还原性）依次<span class="inline-ans">增强</span>。</li>
+                <li><strong>与同周期 IA 族对比</strong>：同周期碱土金属原子半径比碱金属<span class="inline-ans">小</span>，价电子数多，金属键更强，故密度、硬度、熔沸点均比碱金属<span class="inline-ans">更高</span>。</li>
+            </ul>
+
+            <!-- 动态演示：IIA 族金属活泼性与原子结构 -->
+            <div class="canvas-box">
+                <canvas id="alkalineCanvas" style="width: 100%; height: 260px;"></canvas>
+                <div class="canvas-toolbar">
+                    <div style="display:flex; align-items:center; gap: 8px;">
+                        <span>观察原子模型:</span>
+                        <button class="btn btn-sm btn-primary" id="btn-atom-mg" onclick="switchAtomSim('Mg')">镁原子 Mg (2,8,2)</button>
+                        <button class="btn btn-sm" id="btn-atom-ca" onclick="switchAtomSim('Ca')">钙原子 Ca (2,8,8,2)</button>
+                    </div>
+                    <div style="display:flex; align-items:center; gap: 8px;">
+                        <button class="btn btn-sm btn-primary" onclick="triggerIonization()">⚡ 模拟失去 2 个价电子形成 M²⁺</button>
+                    </div>
+                </div>
+            </div>
+            <div id="atom-desc-box" style="font-size: 0.9rem; background: var(--bg-card-sub); padding: 12px; border-radius: 6px; color: var(--text-sub); line-height: 1.7;">
+                <strong>原子参数解析</strong>：镁原子核电荷数 +12，电子层数 3 层；钙原子核电荷数 +20，电子层数 4 层。由于钙的原子半径明显大于镁，钙失去最外层 2 个电子所需的能量更低，因此钙的金属性强于镁。
+            </div>
+
+            <h3 class="sub-title">2. 镁和钙单质的化学反应方程式总结</h3>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 22%;">反应类别</th>
+                        <th style="width: 39%;">镁（Mg）反应方程式</th>
+                        <th style="width: 39%;">钙（Ca）反应方程式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>与氧气 O₂ 反应</strong></td>
+                        <td>2Mg(s) + O₂(g) <span style="font-size:0.85em;">—(点燃)→</span> <span class="inline-ans">2MgO(s)</span><br><small style="color:var(--text-sub);">耀眼白光，生成白色粉末</small></td>
+                        <td>2Ca(s) + O₂(g) <span style="font-size:0.85em;">—(点燃)→</span> <span class="inline-ans">2CaO(s)</span><br><small style="color:var(--text-sub);">常温氧化生成表面致密氧化膜</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>与氮气 N₂ 反应</strong></td>
+                        <td>3Mg(s) + N₂(g) <span style="font-size:0.85em;">—(点燃)→</span> <span class="inline-ans">Mg₃N₂(s)</span><br><small style="color:var(--text-sub);">生成淡黄色氮化镁粉末</small></td>
+                        <td>3Ca(s) + N₂(g) <span style="font-size:0.85em;">—(加热)→</span> <span class="inline-ans">Ca₃N₂(s)</span><br><small style="color:var(--text-sub);">生成氮化钙</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>与水 H₂O 反应</strong></td>
+                        <td>Mg(s) + 2H₂O(l) <span style="font-size:0.85em;">—(沸水)→</span> <span class="inline-ans">Mg(OH)₂(s) + H₂(g)↑</span><br><small style="color:var(--text-sub);">冷水中极其缓慢，沸水中较快</small></td>
+                        <td>Ca(s) + 2H₂O(l) → <span class="inline-ans">Ca(OH)₂(s) + H₂(g)↑</span><br><small style="color:var(--text-sub);">常温下剧烈反应，放热并析出微溶物</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>与二氧化碳 CO₂ 反应</strong></td>
+                        <td>2Mg(s) + CO₂(g) <span style="font-size:0.85em;">—(点燃)→</span> <span class="inline-ans">2MgO(s) + C(s)</span><br><small style="color:var(--text-sub);">剧烈燃烧，生成白色固体与黑色碳颗粒</small></td>
+                        <td>2Ca(s) + CO₂(g) <span style="font-size:0.85em;">—(高温)→</span> <span class="inline-ans">2CaO(s) + C(s)</span><br><small style="color:var(--text-sub);">高温下同样可反应生成 CaO 与 C</small></td>
+                    </tr>
+                    <tr>
+                        <td><strong>与酸反应</strong></td>
+                        <td>Mg(s) + 2HCl(aq) → <span class="inline-ans">MgCl₂(aq) + H₂(g)↑</span></td>
+                        <td>Ca(s) + 2HCl(aq) → <span class="inline-ans">CaCl₂(aq) + H₂(g)↑</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-banner">
+                <strong>🔥 考点辨析（为什么镁着火不能用 CO₂ 灭火器？）：</strong><br>
+                镁具有极强的还原性，在高温下能夺取 CO₂ 中的氧生成氧化镁和单质碳（2Mg + CO₂ <span style="font-size:0.85em;">—(点燃)→</span> 2MgO + C）。因此金属镁引发的火灾<strong>严禁使用二氧化碳灭火器或水</strong>扑灭，必须使用<strong>干燥的沙土</strong>覆盖灭火。
+            </div>
+
+            <!-- 工业提取金属镁全流程探究 -->
+            <h3 class="sub-title">3. 工业核心：从海水中提取金属镁的工艺流程 (SOP 交互分析)</h3>
+            <p style="font-size:0.9rem; color:var(--text-sub); margin-bottom: 10px;">点击下方工段步骤，查看其物料转化、反应原理及核心工程细节：</p>
+            
+            <div class="process-flow">
+                <div class="process-step active" id="mg-flow-0" onclick="showMgFlowStep(0)">
+                    <span class="process-step-num">1</span>
+                    <strong>贝壳制生石灰与石灰乳</strong>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">煅烧 CaCO₃ 沉淀剂</div>
+                </div>
+                <div class="process-step" id="mg-flow-1" onclick="showMgFlowStep(1)">
+                    <span class="process-step-num">2</span>
+                    <strong>海水沉淀氢氧化镁</strong>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">母液富集反应</div>
+                </div>
+                <div class="process-step" id="mg-flow-2" onclick="showMgFlowStep(2)">
+                    <span class="process-step-num">3</span>
+                    <strong>盐酸酸化与蒸发结晶</strong>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">MgCl₂·6H₂O 晶体制备</div>
+                </div>
+                <div class="process-step" id="mg-flow-3" onclick="showMgFlowStep(3)">
+                    <span class="process-step-num">4</span>
+                    <strong>HCl 气流中脱水与电解</strong>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">熔融电解得金属镁</div>
+                </div>
+            </div>
+
+            <div id="flow-detail-card" class="interactive-quiz-card" style="margin-top:0;">
+                <!-- 动态更新内容 -->
+            </div>
+        </section>
+
+        <!-- 10.2 & 10.3 镁和钙的重要化合物 -->
+        <section class="section-card">
+            <h2 class="section-title">10.2 & 10.3 镁与钙的重要化合物</h2>
+
+            <!-- 选项卡切换 -->
+            <div class="tab-box">
+                <button class="tab-btn active" id="tab-comp-0" onclick="switchCompTab(0)">1. 氧化镁与氧化钙 (MgO / CaO)</button>
+                <button class="tab-btn" id="tab-comp-1" onclick="switchCompTab(1)">2. 氢氧化镁与氢氧化钙 (Mg(OH)₂ / Ca(OH)₂)</button>
+                <button class="tab-btn" id="tab-comp-2" onclick="switchCompTab(2)">3. 硫酸钙与石膏转化 (CaSO₄·2H₂O)</button>
+                <button class="tab-btn" id="tab-comp-3" onclick="switchCompTab(3)">4. 氯化镁与氯化钙 (MgCl₂ / CaCl₂)</button>
+            </div>
+
+            <div id="comp-content-area" class="interactive-quiz-card" style="line-height: 1.85;">
+                <!-- 动态加载各化合物模块 -->
+            </div>
+        </section>
+
+        <!-- 10.4 镁离子和钙离子的定性检验与虚拟实验 -->
+        <section class="section-card">
+            <h2 class="section-title">10.4 镁离子 (Mg²⁺) 和钙离子 (Ca²⁺) 的定性检验</h2>
+            <p style="margin-bottom: 12px;">
+                在水溶液中，可以通过特征沉淀试剂（NaOH、氨水、草酸铵）及沉淀在酸中的溶解行为精确鉴别 Mg<sup>2+</sup> 和 Ca<sup>2+</sup>。
+            </p>
+
+            <div class="test-tube-rack">
+                <!-- 试管 1：Mg2+ 检验 -->
+                <div style="text-align:center;">
+                    <div class="test-tube" id="tube-mg">
+                        <div class="liquid" id="liquid-mg"></div>
+                        <div class="precipitate" id="ppt-mg"></div>
+                    </div>
+                    <div style="margin-top: 10px; font-weight: bold; font-size:0.9rem;">试管 A: Mg²⁺ 试液</div>
+                    <div style="margin-top: 6px; display:flex; gap:4px; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn btn-sm btn-primary" onclick="addReagentMg('NaOH')">+ NaOH 溶液</button>
+                        <button class="btn btn-sm btn-primary" onclick="addReagentMg('NH3')">+ 氨水 (NH₃·H₂O)</button>
+                        <button class="btn btn-sm" onclick="resetTube('mg')">清空</button>
+                    </div>
+                </div>
+
+                <!-- 试管 2：Ca2+ 检验 -->
+                <div style="text-align:center;">
+                    <div class="test-tube" id="tube-ca">
+                        <div class="liquid" id="liquid-ca"></div>
+                        <div class="precipitate" id="ppt-ca"></div>
+                    </div>
+                    <div style="margin-top: 10px; font-weight: bold; font-size:0.9rem;">试管 B: Ca²⁺ 试液</div>
+                    <div style="margin-top: 6px; display:flex; gap:4px; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn btn-sm btn-primary" onclick="addReagentCa('Oxalate')">+ (NH₄)₂C₂O₄ 溶液</button>
+                        <button class="btn btn-sm" onclick="addReagentCa('Acid')">+ 稀盐酸 (HCl)</button>
+                        <button class="btn btn-sm" onclick="resetTube('ca')">清空</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lab-phenomenon-desc" style="font-size:0.9rem; background: var(--bg-card-sub); padding:14px; border-radius:6px; line-height:1.8;">
+                <strong>🧪 检验原理操作指导：</strong><br>
+                1. <strong>Mg²⁺ 检定</strong>：向含 Mg²⁺ 溶液中加入 <strong>NaOH 溶液</strong> 或 <strong>氨水 (NH₃·H₂O)</strong>，均能析出白色胶状沉淀 Mg(OH)₂↓。该沉淀溶于 NH₄Cl 溶液。<br>
+                2. <strong>Ca²⁺ 检定</strong>：向含 Ca²⁺ 中性或微碱性溶液中加入草酸铵 (NH₄)₂C₂O₄，析出白色草酸钙结晶沉淀（Ca²⁺ + C₂O₄²⁻ → CaC₂O₄↓）。该沉淀<strong>不溶于稀乙酸（CH₃COOH）</strong>，但<strong>能溶于稀盐酸（HCl）</strong>。
+            </div>
+        </section>
+
+        <!-- 思维导图 -->
+        <section class="section-card">
+            <h2 class="section-title">🌳 章节系统架构导图 (多级折叠)</h2>
+            <div style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 12px;">点击 [ + ] / [ - ] 节点可逐层展开或收起知识子树：</div>
+
+            <div class="mindmap-root">
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 10.1 镁和钙的性质与周期律
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 结构与递变</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 价电子排布：<span class="inline-ans">ns²</span>（表现 +2 价）</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 族内金属性递变：Be &lt; Mg &lt; Ca &lt; Sr &lt; Ba</div>
+                            </div>
+                        </div>
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[+]</span> 化学反应特性</div>
+                            <div class="mindmap-content collapsed">
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 与 N₂ 反应生成氮化物（如 <span class="inline-ans">Mg₃N₂</span>）</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 与水反应：Ca 常温剧烈；Mg 需加热/沸水</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 镁在 CO₂ 中燃烧：2Mg + CO₂ <span style="font-size:0.85em;">—(点燃)→</span> <span class="inline-ans">2MgO + C</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 10.2 & 10.3 镁和钙的重要化合物
+                    </div>
+                    <div class="mindmap-content">
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 镁的化合物</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• MgO：熔点高达 2852°C，优质耐火材料</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• MgCl₂·6H₂O：需在 <span class="inline-ans">干燥 HCl 气流</span> 中脱水制无水盐</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• MgSO₄：泻盐（MgSO₄·7H₂O），印染与农业镁肥</div>
+                            </div>
+                        </div>
+                        <div class="mindmap-node">
+                            <div class="mindmap-header" onclick="toggleMindNode(this)"><span class="mindmap-toggle">[-]</span> 钙的化合物</div>
+                            <div class="mindmap-content">
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 生石灰 CaO 熟化为消石灰 Ca(OH)₂（剧烈放热）</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• 生石膏（CaSO₄·2H₂O）加热至 150°C ➔ 熟石膏（<span class="inline-ans">2CaSO₄·H₂O</span>）</div>
+                                <div style="font-size: 0.9rem; padding: 2px 0;">• CaCl₂：强吸湿性干燥剂（不可干燥氨气）、融雪剂</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mindmap-node">
+                    <div class="mindmap-header" onclick="toggleMindNode(this)">
+                        <span class="mindmap-toggle">[-]</span> 10.4 离子检验与工业应用
+                    </div>
+                    <div class="mindmap-content">
+                        <div style="font-size: 0.9rem; padding: 2px 0;">• <strong>Mg²⁺ 检定</strong>：加 NaOH 或氨水生成白色胶状 <span class="inline-ans">Mg(OH)₂↓</span></div>
+                        <div style="font-size: 0.9rem; padding: 2px 0;">• <strong>Ca²⁺ 检定</strong>：加草酸铵生成 <span class="inline-ans">CaC₂O₄↓</span>（不溶于醋酸，溶于盐酸）</div>
+                        <div style="font-size: 0.9rem; padding: 2px 0;">• <strong>工业制镁</strong>：电解熔融 <span class="inline-ans">无水 MgCl₂</span>（而非熔点过高的 MgO）</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 交互脚本引擎 -->
+    <script>
+        /* 1. 答案显隐控制器 */
+        let allAnswersVisible = false;
+
+        function toggleAllAnswers() {
+            allAnswersVisible = !allAnswersVisible;
+            document.querySelectorAll('.inline-ans').forEach(ans => {
+                if (allAnswersVisible) {
+                    ans.classList.add('revealed');
+                } else {
+                    ans.classList.remove('revealed');
+                }
+            });
+            const btn = document.getElementById('btn-toggle-all');
+            btn.innerHTML = allAnswersVisible ? '🔒 隐藏所有答案' : '🔓 展开所有答案';
+        }
+
+        function bindAnswerClick() {
+            document.querySelectorAll('.inline-ans').forEach(ans => {
+                ans.onclick = function() {
+                    this.classList.toggle('revealed');
+                };
+            });
+        }
+
+        /* 2. 界面控制 */
+        function changeFontSize(scale) {
+            document.documentElement.style.setProperty('--font-scale', scale);
+        }
+
+        function changeLayout(width) {
+            document.documentElement.style.setProperty('--layout-max-width', width);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        /* 3. 原子模型与失电子 Canvas 模拟 */
+        let alkCanvas, alkCtx;
+        let currentAtom = 'Mg';
+        let isIonized = false;
+        let ionProgress = 0;
+
+        function initAlkalineCanvas() {
+            alkCanvas = document.getElementById('alkalineCanvas');
+            if (!alkCanvas) return;
+            alkCtx = alkCanvas.getContext('2d');
+            resizeCanvas();
+            renderAtomSim();
+        }
+
+        function resizeCanvas() {
+            if (!alkCanvas) return;
+            const dpr = window.devicePixelRatio || 1;
+            const rect = alkCanvas.getBoundingClientRect();
+            alkCanvas.width = rect.width * dpr;
+            alkCanvas.height = 260 * dpr;
+            alkCtx.scale(dpr, dpr);
+        }
+
+        function switchAtomSim(atom) {
+            currentAtom = atom;
+            isIonized = false;
+            ionProgress = 0;
+            document.getElementById('btn-atom-mg').className = atom === 'Mg' ? 'btn btn-sm btn-primary' : 'btn btn-sm';
+            document.getElementById('btn-atom-ca').className = atom === 'Ca' ? 'btn btn-sm btn-primary' : 'btn btn-sm';
+            
+            const desc = atom === 'Mg' 
+                ? "<strong>镁原子 (Mg)</strong>：核电荷数 +12，电子层构型为 (2, 8, 2)。最外层有 2 个价电子，原子半径较小，失去 2 个价电子需要较高能量。"
+                : "<strong>钙原子 (Ca)</strong>：核电荷数 +20，电子层构型为 (2, 8, 8, 2)。拥有 4 个电子层，最外层 2 个电子受原子核束缚较弱，极易失去，表现出比镁更活泼的金属性。";
+            document.getElementById('atom-desc-box').innerHTML = desc;
+        }
+
+        function triggerIonization() {
+            isIonized = true;
+            ionProgress = 0;
+        }
+
+        function renderAtomSim() {
+            if (!alkCanvas || !alkCtx) return;
+            const rect = alkCanvas.getBoundingClientRect();
+            const w = rect.width;
+            const h = 260;
+            const cx = w * 0.5;
+            const cy = h * 0.5;
+
+            alkCtx.clearRect(0, 0, w, h);
+
+            const layers = currentAtom === 'Mg' ? [2, 8, 2] : [2, 8, 8, 2];
+            const baseRadii = currentAtom === 'Mg' ? [25, 50, 75] : [25, 48, 70, 95];
+
+            // 绘制原子核
+            alkCtx.fillStyle = '#ef4444';
+            alkCtx.beginPath();
+            alkCtx.arc(cx, cy, 14, 0, Math.PI * 2);
+            alkCtx.fill();
+            alkCtx.fillStyle = '#ffffff';
+            alkCtx.font = 'bold 11px sans-serif';
+            alkCtx.textAlign = 'center';
+            alkCtx.fillText(currentAtom === 'Mg' ? '+12' : '+20', cx, cy + 4);
+
+            // 绘制电子轨道及电子
+            for (let i = 0; i < layers.length; i++) {
+                const r = baseRadii[i];
+                const isOutermost = (i === layers.length - 1);
+
+                // 轨道
+                alkCtx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
+                alkCtx.lineWidth = 1.5;
+                alkCtx.beginPath();
+                alkCtx.arc(cx, cy, r, 0, Math.PI * 2);
+                alkCtx.stroke();
+
+                // 电子
+                const count = layers[i];
+                for (let j = 0; j < count; j++) {
+                    let angle = (j / count) * Math.PI * 2 + (Date.now() * 0.001 * (i + 1));
+                    let curR = r;
+
+                    if (isOutermost && isIonized) {
+                        ionProgress = Math.min(ionProgress + 0.0005, 1);
+                        curR = r + ionProgress * 80;
+                    }
+
+                    const ex = cx + Math.cos(angle) * curR;
+                    const ey = cy + Math.sin(angle) * curR;
+
+                    alkCtx.fillStyle = isOutermost ? '#facc15' : '#38bdf8';
+                    alkCtx.beginPath();
+                    alkCtx.arc(ex, ey, 5, 0, Math.PI * 2);
+                    alkCtx.fill();
+                }
+            }
+
+            // 状态文字说明
+            alkCtx.fillStyle = '#ffffff';
+            alkCtx.font = 'bold 13px sans-serif';
+            if (isIonized && ionProgress >= 0.95) {
+                alkCtx.fillText(`✨ 形成稳定八隅体结构的 ${currentAtom}²⁺ 阳离子 (表现 +2 价)`, cx, 25);
+            } else {
+                alkCtx.fillText(`中性 ${currentAtom} 原子 (最外层 2 个价电子)`, cx, 25);
+            }
+
+            requestAnimationFrame(renderAtomSim);
+        }
+
+        /* 4. 海水提镁工艺流程步骤互动 */
+        const mgFlowData = [
+            {
+                title: "步骤 1：贝壳煅烧制生石灰与石灰乳",
+                eq: "CaCO₃(s) <span style='font-size:0.85em;'>—(高温煅烧)→</span> <span class='inline-ans'>CaO(s) + CO₂(g)↑</span><br>CaO(s) + H₂O(l) → <span class='inline-ans'>Ca(OH)₂(s) (石灰乳)</span>",
+                desc: "<strong>工业智慧</strong>：利用沿海丰富的贝壳资源（主要成分为 CaCO₃）作为廉价易得的原料制取强碱性沉淀剂 Ca(OH)₂ 石灰乳，大幅降低生产成本。"
+            },
+            {
+                title: "步骤 2：沉淀海水中的镁离子富集 Mg(OH)₂",
+                eq: "MgCl₂(aq) + Ca(OH)₂(s) → <span class='inline-ans'>Mg(OH)₂(s)↓ + CaCl₂(aq)</span>",
+                desc: "<strong>核心原理</strong>：海水中 Mg²⁺ 浓度较低，加入过量石灰乳使 Mg²⁺ 转化为溶解度更小的 Mg(OH)₂ 沉淀析出，再经过滤、洗涤实现镁元素的浓缩与富集。"
+            },
+            {
+                title: "步骤 3：盐酸酸化溶解制备 MgCl₂ 溶液并结晶",
+                eq: "Mg(OH)₂(s) + 2HCl(aq) → <span class='inline-ans'>MgCl₂(aq) + 2H₂O(l)</span>",
+                desc: "<strong>操作要点</strong>：将洗净的 Mg(OH)₂ 用足量盐酸完全溶解，随后通过加热浓缩、冷却结晶得到高纯度六水合氯化镁结晶（MgCl₂·6H₂O）。"
+            },
+            {
+                title: "步骤 4：干燥 HCl 气流中脱水与电解熔融 MgCl₂",
+                eq: "MgCl₂·6H₂O(s) <span style='font-size:0.85em;'>—(干燥 HCl 气流/加热)→</span> <span class='inline-ans'>MgCl₂(s) + 6H₂O(g)</span><br>MgCl₂(l) <span style='font-size:0.85em;'>—(通电熔融电解)→</span> <span class='inline-ans'>Mg(l) + Cl₂(g)↑</span>",
+                desc: "<strong>关键防范</strong>：MgCl₂ 易水解，直接加热会生成碱式氯化镁或 MgO。<strong>必须在干燥 HCl 气体保护下脱水</strong>！最后电解熔融无水 MgCl₂ 制得金属镁，副产物 Cl₂ 可循环用于制取盐酸。"
+            }
+        ];
+
+        function showMgFlowStep(idx) {
+            document.querySelectorAll('[id^="mg-flow-"]').forEach((el, i) => {
+                el.className = i === idx ? 'process-step active' : 'process-step';
+            });
+            const d = mgFlowData[idx];
+            document.getElementById('flow-detail-card').innerHTML = `
+                <h4 style="color:var(--primary); font-size:1.05rem; margin-bottom:8px;">${d.title}</h4>
+                <div style="font-family:'Courier New', monospace; font-size:0.95rem; background:var(--bg-card); padding:10px 14px; border-radius:6px; margin:8px 0; border:1px solid var(--border-color); line-height: 2;">
+                    ${d.eq}
+                </div>
+                <div style="font-size:0.9rem; line-height:1.8; color:var(--text-main);">${d.desc}</div>
+            `;
+            bindAnswerClick();
+        }
+
+        /* 5. 化合物选项卡内容数据 */
+        const compData = [
+            {
+                title: "1. 氧化镁 (MgO) 与 氧化钙 (CaO) 对比",
+                content: `
+                    • <strong>氧化镁 (MgO)</strong>：俗称苦土。白色轻质粉末，<strong>熔点高达 2852°C</strong>，是优良的高温耐火材料（常用于制造耐火坩埚、耐火砖及炉衬）。属于碱性氧化物，与水反应极慢，能溶于强酸。<br>
+                    • <strong>氧化钙 (CaO)</strong>：俗称<strong>生石灰</strong>。白色固体，具有强烈吸水性，常用作食品或工业干燥剂。与水发生剧烈的化合反应并<strong>释放大量的热</strong>：<br>
+                    <div style="font-family:'Courier New', monospace; margin:6px 0; color:var(--primary); font-weight:bold;">
+                        CaO(s) + H₂O(l) → <span class="inline-ans">Ca(OH)₂(s) + 65.2 kJ</span>
+                    </div>
+                    • <strong>工业制备</strong>：工业上主要通过高温煅烧石灰石分解获得：<br>
+                    CaCO₃(s) <span style="font-size:0.85em;">—(高温)→</span> <span class="inline-ans">CaO(s) + CO₂(g)↑</span>。
+                `
+            },
+            {
+                title: "2. 氢氧化镁 (Mg(OH)₂) 与 氢氧化钙 (Ca(OH)₂)",
+                content: `
+                    • <strong>氢氧化镁 (Mg(OH)₂)</strong>：难溶于水的白色胶状固体，属于中强碱。常用作绿色环保型阻燃剂（加热分解吸热产生水蒸气并生成耐火 MgO）及胃酸中和剂。<br>
+                    • <strong>氢氧化钙 (Ca(OH)₂)</strong>：俗称<strong>熟石灰</strong>或<strong>消石灰</strong>。白色粉末，微溶于水，溶解度随温度升高而降低。其饱和水溶液称为<strong>澄清石灰水</strong>（用于检定 CO₂ 气体），悬浊液称为<strong>石灰乳</strong>（用于粉刷墙壁、配制波尔多液及建筑砂浆）。<br>
+                    <div style="font-family:'Courier New', monospace; margin:6px 0; color:var(--primary); font-weight:bold;">
+                        Ca(OH)₂(aq) + CO₂(g) → <span class="inline-ans">CaCO₃(s)↓ + H₂O(l)</span> (通入过量 CO₂ 则沉淀溶解变澄清)
+                    </div>
+                `
+            },
+            {
+                title: "3. 硫酸钙与石膏的互变转化 (CaSO₄·2H₂O ⇌ 2CaSO₄·H₂O)",
+                content: `
+                    • <strong>生石膏 (Gypsum)</strong>：化学式为 <strong>CaSO₄·2H₂O</strong>（二水合硫酸钙），难溶于水。<br>
+                    • <strong>熟石膏 (Plaster of Paris)</strong>：将生石膏在窑中加热至约 150°C 时，失去约 3/4 的结晶水转化为<strong>熟石膏（2CaSO₄·H₂O 或 CaSO₄·0.5H₂O）</strong>：<br>
+                    <div style="font-family:'Courier New', monospace; margin:6px 0; color:var(--primary); font-weight:bold;">
+                        2(CaSO₄·2H₂O)(s) <span style="font-size:0.85em;">—(150°C)→</span> <span class="inline-ans">(2CaSO₄·H₂O)(s) + 3H₂O(g)</span>
+                    </div>
+                    • <strong>熟石膏水化硬化</strong>：熟石膏与水调和成浆体后，会迅速重新水化结合为二水石膏晶体，在凝固过程中<strong>微膨胀并放热</strong>，因此能精密贴合模具，广泛用于制作<strong>石膏雕像、建筑石膏板、医疗骨折石膏绷带</strong>以及豆腐凝固剂。
+                `
+            },
+            {
+                title: "4. 氯化镁 (MgCl₂) 与 氯化钙 (CaCl₂)",
+                content: `
+                    • <strong>氯化镁 (MgCl₂)</strong>：易溶于水并强烈吸湿潮解。常以六水合物 MgCl₂·6H₂O 存在。是工业电解提取金属镁的核心原料，亦用于制造盐卤（点豆腐凝固剂）、除冰剂等。<br>
+                    • <strong>氯化钙 (CaCl₂)</strong>：无水 CaCl₂ 具有超强吸湿潮解性，是实验室常用的中性干燥剂（可干燥 H₂、O₂、Cl₂、HCl、CO₂ 等气体，但<strong>不能干燥氨气 NH₃</strong>，因二者会络合生成 <span class="inline-ans">CaCl₂·8NH₃</span>）。工业上用作冷冻盐水、融雪剂及食品添加剂。
+                `
+            }
+        ];
+
+        function switchCompTab(idx) {
+            document.querySelectorAll('[id^="tab-comp-"]').forEach((b, i) => {
+                b.className = i === idx ? 'tab-btn active' : 'tab-btn';
+            });
+            const d = compData[idx];
+            document.getElementById('comp-content-area').innerHTML = `
+                <h4 style="color:var(--primary); font-size:1.05rem; margin-bottom:8px;">${d.title}</h4>
+                <div style="font-size:0.92rem; color:var(--text-main); line-height:1.9;">${d.content}</div>
+            `;
+            bindAnswerClick();
+        }
+
+        /* 6. 试管定性实验模拟交互 */
+        function addReagentMg(reagent) {
+            const ppt = document.getElementById('ppt-mg');
+            const liq = document.getElementById('liquid-mg');
+            ppt.style.opacity = '0.9';
+            ppt.style.height = '35px';
+            liq.style.background = 'rgba(255, 255, 255, 0.4)';
+
+            if (reagent === 'NaOH') {
+                document.getElementById('lab-phenomenon-desc').innerHTML = `
+                    <strong>现象反馈 (滴加 NaOH 溶液)：</strong><br>
+                    试管 A 中滴加 NaOH 溶液，立即析出<strong>白色胶状沉淀</strong>（Mg(OH)₂↓）。<br>
+                    化学方程式：MgCl₂(aq) + 2NaOH(aq) → <span class="inline-ans">Mg(OH)₂(s)↓ + 2NaCl(aq)</span><br>
+                    离子方程式：Mg²⁺(aq) + 2OH⁻(aq) → <span class="inline-ans">Mg(OH)₂(s)↓</span>
+                `;
+            } else if (reagent === 'NH3') {
+                document.getElementById('lab-phenomenon-desc').innerHTML = `
+                    <strong>现象反馈 (滴加氨水 NH₃·H₂O)：</strong><br>
+                    试管 A 中滴加氨水，同样析出<strong>白色胶状沉淀</strong>（Mg(OH)₂↓）。<br>
+                    化学方程式：MgCl₂(aq) + 2NH₃·H₂O(aq) → <span class="inline-ans">Mg(OH)₂(s)↓ + 2NH₄Cl(aq)</span><br>
+                    离子方程式：Mg²⁺(aq) + 2NH₃·H₂O(aq) → <span class="inline-ans">Mg(OH)₂(s)↓ + 2NH₄⁺(aq)</span><br>
+                    <small style="color:var(--text-sub);">💡 补充要点：此沉淀可溶于足量 NH₄Cl 溶液（NH₄⁺ 结合 OH⁻ 使沉淀溶解平衡正向移动）。</small>
+                `;
+            }
+            bindAnswerClick();
+        }
+
+        function addReagentCa(action) {
+            const ppt = document.getElementById('ppt-ca');
+            const liq = document.getElementById('liquid-ca');
+            if (action === 'Oxalate') {
+                ppt.style.opacity = '0.95';
+                ppt.style.height = '40px';
+                liq.style.background = 'rgba(255, 255, 255, 0.35)';
+                document.getElementById('lab-phenomenon-desc').innerHTML = `
+                    <strong>现象反馈：</strong>试管 B 中加入草酸铵溶液 (NH₄)₂C₂O₄，产生<strong>白色晶体沉淀</strong>（CaC₂O₄↓ 草酸钙）。<br>
+                    离子方程式：Ca²⁺(aq) + C₂O₄²⁻(aq) → <span class="inline-ans">CaC₂O₄(s)↓</span>
+                `;
+            } else if (action === 'Acid') {
+                ppt.style.opacity = '0';
+                ppt.style.height = '0';
+                liq.style.background = 'rgba(56, 189, 248, 0.2)';
+                document.getElementById('lab-phenomenon-desc').innerHTML = `
+                    <strong>酸效应分析：</strong>加入稀盐酸后，草酸钙沉淀完全溶解生成可溶性草酸与氯化钙：<br>
+                    CaC₂O₄(s) + 2HCl(aq) → <span class="inline-ans">CaCl₂(aq) + H₂C₂O₄(aq)</span><br>
+                    （注：若加入稀乙酸 CH₃COOH，因乙酸酸性弱于草酸，沉淀<strong>不溶解</strong>，此为特征鉴别方法）。
+                `;
+            }
+            bindAnswerClick();
+        }
+
+        function resetTube(type) {
+            if (type === 'mg') {
+                document.getElementById('ppt-mg').style.opacity = '0';
+                document.getElementById('ppt-mg').style.height = '0';
+                document.getElementById('liquid-mg').style.background = 'rgba(56, 189, 248, 0.25)';
+            } else {
+                document.getElementById('ppt-ca').style.opacity = '0';
+                document.getElementById('ppt-ca').style.height = '0';
+                document.getElementById('liquid-ca').style.background = 'rgba(56, 189, 248, 0.25)';
+            }
+        }
+
+        /* 7. 思维导图折叠交互 */
+        function toggleMindNode(headerElement) {
+            const toggle = headerElement.querySelector('.mindmap-toggle');
+            const content = headerElement.nextElementSibling;
+            if (!content) return;
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                toggle.innerText = '[-]';
+            } else {
+                content.classList.add('collapsed');
+                toggle.innerText = '[+]';
+            }
+        }
+
+        /* 初始化执行 */
+        document.addEventListener('DOMContentLoaded', () => {
+            bindAnswerClick();
+            initAlkalineCanvas();
+            showMgFlowStep(0);
+            switchCompTab(0);
+        });
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+        });
+    </script>
+</body>
+</html>
