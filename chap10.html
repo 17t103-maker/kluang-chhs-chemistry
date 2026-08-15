@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>第10章 IIA 族元素：镁和钙 - 互动探究学习工作台</title>
     <!-- 网页浏览器图标（Favicon） -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -59,7 +59,7 @@
             padding-bottom: 90px;
         }
 
-        /* 全局统一顶部导航栏与手机端折叠适配 */
+        /* 统一全局快捷导航栏（支持手机端汉堡菜单折叠） */
         .global-nav {
             background: var(--bg-card);
             border-bottom: 3px solid var(--primary);
@@ -152,7 +152,7 @@
             }
         }
 
-        /* 顶部悬浮控制工具栏 */
+        /* 顶部悬浮控制工具栏 (支持手机端默认收起与展开切换) */
         .toolbar {
             position: sticky;
             top: 57px;
@@ -173,6 +173,36 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+        }
+
+        .toolbar-panel-toggle {
+            display: none;
+            background: var(--bg-card-sub);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .toolbar-panel-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .toolbar-collapsible {
+                display: none;
+                width: 100%;
+                padding-top: 8px;
+                border-top: 1px solid var(--border-color);
+                margin-top: 4px;
+            }
+            .toolbar-collapsible.active {
+                display: flex;
+            }
         }
 
         .btn {
@@ -505,7 +535,7 @@
         }
 
         @media print {
-            .global-nav, .toolbar, .canvas-toolbar, .btn, .canvas-box, .tab-box, .test-tube-rack {
+            .global-nav, .toolbar, .canvas-toolbar, .btn, .canvas-box, .tab-box, .test-tube-rack, .toolbar-panel-toggle {
                 display: none !important;
             }
             body {
@@ -542,8 +572,8 @@
         <button class="menu-toggle" onclick="toggleNavMenu()">☰ 导航菜单</button>
         <div class="nav-menu" id="globalNavMenu">
             <a href="index.html" class="nav-btn">🏠 平台首页</a>
-            <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
-            <a href="past_exams_select.html" class="nav-btn">📚 历届考题解析</a>
+            <a href="index.html" class="nav-btn">📖 章节教学内容</a>
+            <a href="2024.html" class="nav-btn">📚 历届考题解析</a>
             <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
         </div>
     </nav>
@@ -555,6 +585,9 @@
             <span style="color: var(--text-sub); font-size: 0.9rem;">| 第10章 IIA 族：镁和钙</span>
         </div>
         <div class="toolbar-group">
+            <button class="toolbar-panel-toggle" onclick="toggleToolbarPanel()">⚙️ 展开/收起面板</button>
+        </div>
+        <div class="toolbar-group toolbar-collapsible" id="toolbarCollapsiblePanel">
             <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开答案</button>
             <select class="btn" id="select-fontsize" onchange="changeFontSize(this.value)">
                 <option value="1">字号: 100%</option>
@@ -835,6 +868,11 @@
         /* 0. 手机端导航折叠控制 */
         function toggleNavMenu() {
             document.getElementById('globalNavMenu').classList.toggle('active');
+        }
+
+        /* 0.1 手机端工具栏面板折叠/展开切换 */
+        function toggleToolbarPanel() {
+            document.getElementById('toolbarCollapsiblePanel').classList.toggle('active');
         }
 
         /* 1. 答案显隐控制器 */
