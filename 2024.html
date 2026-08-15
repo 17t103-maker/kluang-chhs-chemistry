@@ -68,7 +68,7 @@
             margin: 0 auto;
         }
 
-        /* 顶部全功能快捷导航栏 */
+        /* 顶部全功能快捷导航栏 (已修正404路径，统一链接) */
         .global-top-nav {
             display: flex;
             flex-wrap: wrap;
@@ -95,6 +95,12 @@
             font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
+        }
+
+        body.dark-mode .nav-pill-btn {
+            background: #1e293b;
+            color: #f8fafc;
+            border-color: #334155;
         }
 
         .nav-pill-btn:hover {
@@ -148,7 +154,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* 导航控制卡片优化 */
+        /* 导航控制卡片 */
         .nav-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -281,6 +287,11 @@
         /* 手机端专属控制台收纳栏（默认在手机上折叠，避免占据太多空间） */
         .mobile-toggle-panel {
             display: none;
+            margin-bottom: 15px;
+        }
+
+        .collapse-content {
+            display: block;
         }
 
         /* 内容展示区卡片 */
@@ -455,7 +466,7 @@
             border: 1px solid var(--border-light);
         }
 
-        /* 手机端响应式特殊微调：取消手机端的强制sticky吸顶以防占空间遮挡，增加折叠切换 */
+        /* 手机端响应式特殊微调 */
         @media (max-width: 768px) {
             body {
                 padding: 12px 8px 60px 8px;
@@ -466,7 +477,6 @@
             .nav-card {
                 padding: 12px;
                 margin-bottom: 16px;
-                position: static !important; /* 取消手机端冻结/粘性布局，防止占满空间 */
             }
             .mobile-toggle-panel {
                 display: block;
@@ -521,11 +531,11 @@
 
     <div class="main-container">
         
-        <!-- 顶部全功能快捷导航栏：移除了2024/2025统测单列，章节内容直达章节选择画面，历届考题解析直达统测选择页 -->
+        <!-- 顶部全功能快捷导航栏 (已修正所有404死链) -->
         <nav class="global-top-nav">
             <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
-            <a href="chapters_select.html" class="nav-pill-btn">📖 章节教学内容</a>
-            <a href="past_exams_select.html" class="nav-pill-btn active">📝 历届考题解析</a>
+            <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
+            <a href="2024.html" class="nav-pill-btn active">📝 历届考题解析</a>
             <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
         </nav>
 
@@ -540,7 +550,7 @@
 
         <!-- 导航与控制面板 -->
         <section class="nav-card">
-            <!-- 手机端专属收纳/展开折叠按钮，防止在手机端占用空间影响阅读 -->
+            <!-- 手机端专属收纳/展开折叠按钮 -->
             <div class="mobile-toggle-panel">
                 <button class="btn-action" style="width:100%; padding:10px; font-size:0.95rem;" onclick="toggleControlPanel()">
                     📱 <span id="toggle-btn-text">展开题型与题号控制面板 (手机防遮挡阅读)</span>
@@ -548,7 +558,7 @@
             </div>
 
             <!-- 控制面板主体折叠容器 -->
-            <div class="collapse-content expanded" id="control-collapse-box">
+            <div class="collapse-content" id="control-collapse-box">
                 <div class="step-label">第一步：选择题型项目</div>
                 <div class="section-btn-group" id="section-tabs">
                     <button class="btn-section active" onclick="switchSection('A')">甲) 选择题 (20题)</button>
@@ -1028,13 +1038,13 @@
                         content: `
                             <p><strong>(a)</strong> 根据以下两个反应式，比较 2 个氧化剂的强弱并解释： (2%)<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;Fe(s) + S(s) → FeS(s)<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;2Fe(s) + 3Cl₂(g) → 2FeCl₃(s)</p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;2Fe(s) + 3Cl₂(g) → 2FeCℓ₃(s)</p>
                             <p><strong>(b)</strong> 实验室常用热的氢氧化钠溶液洗涤试管中残留的硫磺，反应后生成可溶于水的硫化钠和亚硫酸钠。写出配平反应式及氧化剂与还原剂的物质的量之比。 (4%)</p>
                             <p><strong>(c)</strong> 写出过氧化钠的化学式和电子式。 (2%)</p>
                         `,
                         sol: `<strong>【标准参考答案】</strong><br>
-                        • <strong>(a) 氧化性比较</strong>：<strong>Cl₂ &gt; S</strong><br>
-                        &nbsp;&nbsp;<strong>解释</strong>：Cl₂ 能将 Fe 氧化至高价态（+3 价），而 S 只能将 Fe 氧化至低价态（+2 价）。<br><br>
+                        • <strong>(a) 氧化性比较</strong>：<strong>Cℓ₂ &gt; S</strong><br>
+                        &nbsp;&nbsp;<strong>解释</strong>：Cℓ₂ 能将 Fe 氧化至高价态（+3 价），而 S 只能将 Fe 氧化至低价态（+2 价）。<br><br>
                         • <strong>(b) 反应方程式（含状态）</strong>：<br>
                         &nbsp;&nbsp;<strong>3S(s) + 6NaOH(aq) <span style="font-size:0.85em;">—(加热)→</span> 2Na₂S(aq) + Na₂SO₃(aq) + 3H₂O(l)</strong><br>
                         &nbsp;&nbsp;<strong>物质的量之比</strong>：<strong>n(氧化剂) : n(还原剂) = 2 : 1</strong><br><br>
@@ -1051,10 +1061,10 @@
                             <p><strong>(b)</strong> 写出 NH₃ 的电子式，并写出氨分子中各元素的氧化数。 (2%)</p>
                         `,
                         sol: `<strong>【标准参考答案】</strong><br>
-                        • <strong>(a)(i) 熔点顺序</strong>：<strong>Na₂O &gt; MgCl₂ &gt; AlCl₃</strong><br>
-                        &nbsp;&nbsp;<strong>原因</strong>：AlCl₃ 为分子晶体，微弱范德华力，熔点最低；Na₂O 与 MgCl₂ 为离子晶体，O²⁻ 半径小于 Cl⁻且带电多，晶格能更大，故 Na₂O 熔点最高。<br><br>
-                        • <strong>(a)(ii) 沸点顺序</strong>：<strong>HF &gt; HI &gt; HBr &gt; HCl</strong><br>
-                        &nbsp;&nbsp;<strong>原因</strong>：HF 存在分子间氢键，沸点最高；其余随相对分子质量增大范德华力增强，沸点 HI > HBr > HCl。<br><br>
+                        • <strong>(a)(i) 熔点顺序</strong>：<strong>Na₂O &gt; MgCℓ₂ &gt; AℓCℓ₃</strong><br>
+                        &nbsp;&nbsp;<strong>原因</strong>：AℓCℓ₃ 为分子晶体，微弱范德华力，熔点最低；Na₂O 与 MgCℓ₂ 为离子晶体，O²⁻ 半径小于 Cℓ⁻且带电多，晶格能更大，故 Na₂O 熔点最高。<br><br>
+                        • <strong>(a)(ii) 沸点顺序</strong>：<strong>HF &gt; HI &gt; HBr &gt; HCℓ</strong><br>
+                        &nbsp;&nbsp;<strong>原因</strong>：HF 存在分子间氢键，沸点最高；其余随相对分子质量增大范德华力增强，沸点 HI > HBr > HCℓ。<br><br>
                         • <strong>(b) 氨分子结构与氧化数</strong>：<br>
                         &nbsp;&nbsp;电子式：<strong>H:N̈:H (上方及下方连 H)</strong><br>
                         &nbsp;&nbsp;氧化数：<strong>N: -3 &nbsp;,&nbsp; H: +1</strong>`
@@ -1071,7 +1081,7 @@
                         • <strong>(a) 晶体类型差异</strong>：<br>
                         &nbsp;&nbsp;CO₂ 属于<strong>分子晶体</strong>，分子间范德华力弱；SiO₂ 属于<strong>原子晶体</strong>，原子间共价键极强，故熔沸点极高呈固体。<br><br>
                         • <strong>(b) 转化反应式（标注状态与条件）</strong>：<br>
-                        &nbsp;&nbsp;① <strong>2NaCl(l) <span style="font-size:0.85em;">—(通电熔融)→</span> 2Na(l) + Cl₂(g)↑</strong><br>
+                        &nbsp;&nbsp;① <strong>2NaCℓ(l) <span style="font-size:0.85em;">—(通电熔融)→</span> 2Na(l) + Cℓ₂(g)↑</strong><br>
                         &nbsp;&nbsp;② <strong>2Na(s) + H₂(g) <span style="font-size:0.85em;">—(高温)→</span> 2NaH(s)</strong><br>
                         &nbsp;&nbsp;③ <strong>NaH(s) + H₂O(l) → NaOH(aq) + H₂(g)↑</strong><br><br>
                         • <strong>(c) 氮气性质解析</strong>：<br>
@@ -1096,8 +1106,8 @@
                         &nbsp;&nbsp;还原性强至弱：<strong>A⁻ &gt; C⁻ &gt; B⁻</strong><br><br>
                         • <strong>(c) 鉴别步骤与方程式</strong>：<br>
                         &nbsp;&nbsp;1. <strong>焰色试验</strong>：透过蓝色钴玻璃观察，火焰呈<strong>紫色</strong>的是 <strong>K₂CO₃</strong>；呈<strong>黄色</strong>的是钠盐。<br>
-                        &nbsp;&nbsp;2. <strong>加稀盐酸</strong>：在钠盐中滴加稀盐酸，<strong>产生无色气泡</strong>的是 <strong>Na₂CO₃</strong>；<strong>无现象</strong>的是 <strong>NaCl</strong>。<br>
-                        &nbsp;&nbsp;• 反应式：<strong>Na₂CO₃(s) + 2HCl(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)↑</strong>`
+                        &nbsp;&nbsp;2. <strong>加稀盐酸</strong>：在钠盐中滴加稀盐酸，<strong>产生无色气泡</strong>的是 <strong>Na₂CO₃</strong>；<strong>无现象</strong>的是 <strong>NaCℓ</strong>。<br>
+                        &nbsp;&nbsp;• 反应式：<strong>Na₂CO₃(s) + 2HCℓ(aq) → 2NaCℓ(aq) + H₂O(l) + CO₂(g)↑</strong>`
                     }
                 ]
             },
@@ -1324,7 +1334,7 @@
             document.body.classList.toggle('dark-mode');
         }
 
-        // 手机端控制台折叠展开逻辑（防止在手机端freeze死锁并占满空间）
+        /* 手机端控制面板折叠展开逻辑 */
         function toggleControlPanel() {
             const box = document.getElementById('control-collapse-box');
             const btnText = document.getElementById('toggle-btn-text');
