@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>居銮中华中学 - 2025年下半年统一测验 高一理科化学</title>
     <!-- 网页浏览器标签图标 (Favicon) -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -175,6 +175,12 @@
             margin-bottom: 20px;
         }
 
+        .num-btn-group {
+            max-height: 130px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
         .btn-section {
             background: var(--btn-inactive-bg);
             color: var(--btn-inactive-text);
@@ -266,6 +272,11 @@
             background: var(--primary-light);
             color: var(--primary);
             border-color: var(--primary);
+        }
+
+        /* 手机端专属控制台收纳栏 */
+        .mobile-toggle-panel {
+            display: none;
         }
 
         /* 内容展示区卡片 */
@@ -440,8 +451,46 @@
             border: 1px solid var(--border-light);
         }
 
+        /* 手机端响应式特殊微调 */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 8px 60px 8px;
+            }
+            .main-title {
+                font-size: 1.35rem;
+            }
+            .nav-card {
+                padding: 12px;
+                margin-bottom: 16px;
+            }
+            .mobile-toggle-panel {
+                display: block;
+                margin-bottom: 12px;
+            }
+            .collapse-content {
+                display: none;
+            }
+            .collapse-content.expanded {
+                display: block;
+            }
+            .mode-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .mode-btn-group {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .btn-tool {
+                justify-content: center;
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+        }
+
         @media print {
-            .global-top-nav, .nav-card, .mode-toolbar, .action-bar, .btn-tool {
+            .global-top-nav, .nav-card, .mode-toolbar, .action-bar, .btn-tool, .mobile-toggle-panel {
                 display: none !important;
             }
             body {
@@ -470,10 +519,8 @@
         <!-- 顶部全功能快捷导航栏 -->
         <nav class="global-top-nav">
             <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
-            <a href="2024.html" class="nav-pill-btn">📅 2024统测</a>
-            <a href="2025.html" class="nav-pill-btn active">📅 2025统测</a>
-            <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
-            <a href="index.html" class="nav-pill-btn">📝 历届考题解析</a>
+            <a href="chapters_select.html" class="nav-pill-btn">📖 章节教学内容</a>
+            <a href="past_exams_select.html" class="nav-pill-btn">📝 历届考题解析</a>
             <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
         </nav>
 
@@ -488,21 +535,31 @@
 
         <!-- 导航与控制面板 -->
         <section class="nav-card">
-            <div class="step-label">第一步：选择题型项目</div>
-            <div class="section-btn-group" id="section-tabs">
-                <button class="btn-section active" onclick="switchSection('A')">甲) 选择题 (22题)</button>
-                <button class="btn-section" onclick="switchSection('B')">乙) 填充题 (11题)</button>
-                <button class="btn-section" onclick="switchSection('C')">丙) 完成表格 (4大题)</button>
-                <button class="btn-section" onclick="switchSection('D')">丁) 探究题 (1大题)</button>
-                <button class="btn-section" onclick="switchSection('E')">戊) 作答题 (3大题)</button>
+            <!-- 手机端折叠切换按钮 -->
+            <div class="mobile-toggle-panel">
+                <button class="btn-action" style="width:100%; padding:10px; font-size:0.95rem;" onclick="toggleControlPanel()">
+                    📱 <span id="toggle-btn-text">展开题型与题号控制面板 (手机防遮挡阅读)</span>
+                </button>
             </div>
 
-            <div class="step-label">第二步：点击题号直接查看</div>
-            <div class="num-btn-group" id="number-tabs">
-                <!-- 动态生成题号按钮 -->
-            </div>
+            <!-- 控制面板主体容器 -->
+            <div class="collapse-content expanded" id="control-collapse-box">
+                <div class="step-label">第一步：选择题型项目</div>
+                <div class="section-btn-group" id="section-tabs">
+                    <button class="btn-section active" onclick="switchSection('A')">甲) 选择题 (22题)</button>
+                    <button class="btn-section" onclick="switchSection('B')">乙) 填充题 (11题)</button>
+                    <button class="btn-section" onclick="switchSection('C')">丙) 完成表格 (4大题)</button>
+                    <button class="btn-section" onclick="switchSection('D')">丁) 探究题 (1大题)</button>
+                    <button class="btn-section" onclick="switchSection('E')">戊) 作答题 (3大题)</button>
+                </div>
 
-            <hr class="divider">
+                <div class="step-label">第二步：点击题号直接查看</div>
+                <div class="num-btn-group" id="number-tabs">
+                    <!-- 动态生成题号按钮 -->
+                </div>
+
+                <hr class="divider">
+            </div>
 
             <!-- 模式切换与工具条 -->
             <div class="mode-toolbar">
@@ -1026,7 +1083,7 @@
                         sol: `<strong>【参考解答与规范方程式】</strong><br>
                         • <strong>1a. i. VIA 族沸点比较与原因</strong>：<br>
                         &nbsp;&nbsp;沸点顺序为 <strong>H₂O &gt; H₂Te &gt; H₂Se &gt; H₂S</strong>。<br>
-                        &nbsp;&nbsp;<strong>原因</strong>：H₂O 分子间存在强烈的氢键，使其沸点异常升高；而 H₂S、H₂Se、H₂Te 分子间仅存在范德华力，随着相对分子质量增大，范德华力依次增强，沸点自 H₂S 到 H₂Te 依次升高。<br><br>
+                        &nbsp;&nbsp;<strong>原因</strong>：H₂O 分子间存在强烈的氢键，使其沸点异常升高；而 H₂S、H₂Se、H₂Te 分子间仅存在范德华力，随着相对分子质量增大，范德华力依次升高，沸点自 H₂S 到 H₂Te 依次升高。<br><br>
                         • <strong>1a. ii. IVA 族沸点比较</strong>：<br>
                         &nbsp;&nbsp;<strong>SnH₄ &gt; GeH₄ &gt; SiH₄ &gt; CH₄</strong>。<br><br>
                         • <strong>1a. iii. 原因</strong>：<br>
@@ -1271,6 +1328,18 @@
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
+        }
+
+        // 手机端控制台折叠展开逻辑
+        function toggleControlPanel() {
+            const box = document.getElementById('control-collapse-box');
+            const btnText = document.getElementById('toggle-btn-text');
+            box.classList.toggle('expanded');
+            if (box.classList.contains('expanded')) {
+                btnText.innerText = "点击收起控制面板";
+            } else {
+                btnText.innerText = "展开题型与题号控制面板 (手机防遮挡阅读)";
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
