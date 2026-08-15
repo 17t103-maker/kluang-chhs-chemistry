@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>第11章 IIIA族元素：铝 互动深度探究平台</title>
+    <!-- 网页浏览器图标 (Favicon) -->
+    <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
     <style>
         :root {
             --bg-color: #f4f7f6;
@@ -35,7 +37,7 @@
 
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -47,9 +49,46 @@
         body.font-medium { font-size: 18px; } /* 默认字号 18px */
         body.font-large { font-size: 21px; }
 
+        /* 顶部统一全局快捷导航栏样式 */
+        .global-nav {
+            background: var(--container-bg);
+            border-bottom: 3px solid var(--accent-color);
+            padding: 12px 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1001;
+        }
+
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-color);
+            color: #ffffff !important;
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
+        }
+
         .container {
             max-width: 1100px;
-            margin: 0 auto;
+            margin: 24px auto;
             background: var(--container-bg);
             padding: 40px;
             border-radius: 14px;
@@ -121,11 +160,28 @@
             letter-spacing: 2px;
             margin-bottom: 6px;
         }
+        
+        /* 标题包装器：实现校徽与大标题同行展示 */
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .school-logo {
+            width: 55px;
+            height: auto;
+            border-radius: 6px;
+            object-fit: contain;
+        }
         .title {
             font-size: 22px;
             font-weight: 600;
-            margin: 6px 0 12px 0;
+            margin: 0;
         }
+
         .info-bar {
             font-size: 15px;
             opacity: 0.85;
@@ -133,6 +189,7 @@
             justify-content: center;
             gap: 24px;
             flex-wrap: wrap;
+            margin-top: 10px;
         }
 
         .objectives-card {
@@ -414,7 +471,7 @@
         .h-node.leaf { background: #21252b; color: #98c379; font-size: 13.5px; }
 
         @media print {
-            .toolbar, .canvas-toolbar, .btn, .control-select, .video-box { display: none !important; }
+            .global-nav, .toolbar, .canvas-toolbar, .btn, .control-select, .video-box { display: none !important; }
             body { padding: 0; background: #fff !important; color: #000 !important; font-size: 14px !important; }
             .container { box-shadow: none; padding: 0; max-width: 100% !important; }
             .ans-trigger { display: none !important; }
@@ -427,6 +484,16 @@
     </style>
 </head>
 <body class="font-medium">
+
+    <!-- 统一全局快捷导航栏 -->
+    <nav class="global-nav">
+        <a href="index.html" class="nav-btn">🏠 平台首页</a>
+        <a href="2024.html" class="nav-btn">📝 2024统测</a>
+        <a href="2025.html" class="nav-btn">📝 2025统测</a>
+        <a href="index.html" class="nav-btn">📖 章节教学内容</a>
+        <a href="index.html" class="nav-btn">📚 历届考题解析</a>
+        <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+    </nav>
 
     <div class="container" id="mainContainer">
 
@@ -455,7 +522,11 @@
         <!-- 课程标头 -->
         <div class="header">
             <div class="school-name">居銮中华中学 高中化学课堂</div>
-            <div class="title">第11章 IIIA族元素：铝（全景知识与深度探究平台）</div>
+            <!-- 大标题左侧插入校徽 Logo -->
+            <div class="title-wrapper">
+                <img src="image/校徽.jpg" alt="校徽" class="school-logo">
+                <h1 class="title">第11章 IIIA族元素：铝（全景知识与深度探究平台）</h1>
+            </div>
             <div class="info-bar">
                 <span>适用年级：高一理科班</span>
                 <span>核心维度：结构 &rarr; 性质 &rarr; 两性反应 &rarr; 冶炼 &rarr; 用途</span>
