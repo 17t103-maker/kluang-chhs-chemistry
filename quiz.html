@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>化学随堂小测验解析系统</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-active: #0f172a;
+      --primary-light: #e0e7ff;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+      --success: #059669;
+      --accent: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 24px 16px;
+      line-height: 1.6;
+    }
+
+    .main-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* 顶部导航与标题 */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .back-home-btn:hover {
+      background: #f8fafc;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* 控制面板区域 */
+    .control-panel {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .step-section {
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* 药丸按钮样式（第一步） */
+    .pill-btn {
+      padding: 9px 18px;
+      border-radius: 9999px;
+      border: 1px solid transparent;
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .pill-btn:hover {
+      background: #cbd5e1;
+    }
+
+    .pill-btn.active {
+      background: #1e3a8a;
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(30, 58, 138, 0.25);
+    }
+
+    /* 题号按钮样式（第二步） */
+    .num-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #334155;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .num-btn:hover {
+      border-color: #94a3b8;
+      background: #f8fafc;
+    }
+
+    .num-btn.active {
+      background: #1e3a8a;
+      color: #ffffff;
+      border-color: #1e3a8a;
+    }
+
+    .divider {
+      border-top: 1px dashed var(--border);
+      margin: 18px 0;
+    }
+
+    /* 底部模式切换按钮 */
+    .mode-btn {
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .mode-btn.active {
+      background: #f8fafc;
+      border-color: #1e3a8a;
+      color: #1e3a8a;
+      font-weight: 700;
+    }
+
+    /* 题目卡片 */
+    .question-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .q-tag {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      background: #eff6ff;
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    .q-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 12px;
+    }
+
+    .q-prompt {
+      font-size: 1.05rem;
+      color: #334155;
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 10px;
+      border-left: 4px solid #3b82f6;
+      margin-bottom: 20px;
+    }
+
+    /* 点击展开答案按钮 */
+    .toggle-answer-btn {
+      width: 100%;
+      padding: 14px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      color: #475569;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .toggle-answer-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    .toggle-answer-btn.open {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+      border-style: solid;
+    }
+
+    /* 答案盒子 */
+    .answer-box {
+      margin-top: 16px;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ans-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #047857;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .formula-display {
+      font-family: "Courier New", Courier, monospace, "Times New Roman";
+      font-size: 1.12rem;
+      font-weight: 700;
+      background: #ffffff;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 12px;
+    }
+
+    .grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    .grid-table th, .grid-table td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .grid-table th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .all-list-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .control-panel {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <!-- 顶部栏 -->
+  <div class="header-bar">
+    <div class="header-title">
+      <span>✍️</span>
+      <span>随堂小测验解析系统</span>
+    </div>
+    <a href="index.html" class="back-home-btn">
+      <span>⬅️</span>
+      <span>返回目录</span>
+    </a>
+  </div>
+
+  <!-- 控制面板 -->
+  <div class="control-panel">
+    <!-- 第一步：选择小测验章节 -->
+    <div class="step-section">
+      <div class="step-title">第一步：选择小测验章节</div>
+      <div class="btn-group" id="chapter-btn-group">
+        <button class="pill-btn active" onclick="switchChapter('chap7', this)">第7章 化学键与分子间的作用力</button>
+        <button class="pill-btn" onclick="switchChapter('chap8', this)">第8章 氧化还原反应</button>
+        <button class="pill-btn" onclick="switchChapter('chap9_11', this)">第9～11章 元素与化学反应方程式</button>
+      </div>
+    </div>
+
+    <!-- 第二步：选择题目序号 -->
+    <div class="step-section" id="step2-container">
+      <div class="step-title">第二步：选择题目序号</div>
+      <div class="btn-group" id="question-btn-group">
+        <!-- JS 动态生成题目按钮 -->
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- 底部模式切换按钮 -->
+    <div class="btn-group">
+      <button class="mode-btn active" id="btn-mode-interactive" onclick="switchMode('interactive')">
+        🔍 交互模式 (单题点查)
+      </button>
+      <button class="mode-btn" id="btn-mode-questions-only" onclick="switchMode('questions-only')">
+        📄 列出全卷题目 (用于自测/打印)
+      </button>
+      <button class="mode-btn" id="btn-mode-full" onclick="switchMode('full')">
+        📝 列出全卷题目与答案
+      </button>
+    </div>
+  </div>
+
+  <!-- 内容展示区域 -->
+  <div id="content-container">
+    <!-- 动态渲染题目内容 -->
+  </div>
+
+</div>
+
+<script>
+const quizData = {
+  chap7: {
+    title: "第7章 化学键与分子间的作用力",
+    questions: [
+      {
+        id: 1,
+        title: "第 1 题：KOH",
+        prompt: "写出 KOH 的电子式与结构式（或说明）。",
+        answer: `
+          <div class="formula-display">【化学式】KOH\n【电子式】K⁺ [ :Ö: H ]⁻\n【结构式】K⁺ [ O — H ]⁻</div>
+          <div style="font-size: 0.9rem; color: #64748b;">* KOH 为离子化合物，钾离子与氢氧根离子之间为离子键，氢氧根内部为共价键。</div>
+        `
+      },
+      {
+        id: 2,
+        title: "第 2 题：NH₄⁺",
+        prompt: "写出 NH₄⁺ (铵根离子) 的电子式与结构式。",
+        answer: `
+          <div class="formula-display">【电子式】\n      H\n[ H : N : H ]⁺\n      H\n\n【结构式】\n      H\n[ H — N — H ]⁺\n      |\n      H</div>
+          <div style="font-size: 0.9rem; color: #64748b;">* 含有 1 个配位键与 3 个极性共价键。</div>
+        `
+      },
+      {
+        id: 3,
+        title: "第 3 题：CH₃Cl",
+        prompt: "写出 CH₃Cl (一氯甲烷) 的电子式与结构式。",
+        answer: `
+          <div class="formula-display">【电子式】\n      H\n  H : C : :Cl̈:\n      H\n\n【结构式】\n      H\n      |\n  H — C — Cl\n      |\n      H</div>
+        `
+      },
+      {
+        id: 4,
+        title: "第 4 题：MgO",
+        prompt: "写出 MgO (氧化镁) 的电子式与结构式。",
+        answer: `
+          <div class="formula-display">【电子式】Mg²⁺ [ :Ö: ]²⁻\n【结构式】无结构式（离子化合物通常不写共价结构式）</div>
+        `
+      },
+      {
+        id: 5,
+        title: "第 5 题：CS₂",
+        prompt: "写出 CS₂ (二硫化碳) 的电子式与结构式。",
+        answer: `
+          <div class="formula-display">【电子式】:S̈: : C : : S̈:  （即 :S̈::C::S̈:）\n【结构式】S = C = S</div>
+        `
+      },
+      {
+        id: 6,
+        title: "第 6 题：C₂H₂",
+        prompt: "写出 C₂H₂ (乙炔) 的电子式与结构式。",
+        answer: `
+          <div class="formula-display">【电子式】H : C ::: C : H\n【结构式】H — C ≡ C — H</div>
+        `
+      },
+      {
+        id: 7,
+        title: "第 7 题：晶体类型与微粒间作用力",
+        prompt: "写出以下物质的晶体类型及其晶体微粒间的作用力：<br>1. 铁 (Fe)<br>2. 干冰 (CO₂)<br>3. 氢氧化钠 (NaOH)<br>4. 碳化硅 (SiC)",
+        answer: `
+          <table class="grid-table">
+            <thead>
+              <tr>
+                <th>物质</th>
+                <th>晶体类型</th>
+                <th>晶体微粒间的作用力</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>铁 (Fe)</strong></td>
+                <td>金属晶体</td>
+                <td>金属键</td>
+              </tr>
+              <tr>
+                <td><strong>干冰 (CO₂)</strong></td>
+                <td>分子晶体</td>
+                <td>分子间作用力 / 范德华力</td>
+              </tr>
+              <tr>
+                <td><strong>氢氧化钠 (NaOH)</strong></td>
+                <td>离子晶体</td>
+                <td>离子键（Na⁺ 与 OH⁻ 之间）</td>
+              </tr>
+              <tr>
+                <td><strong>碳化硅 (SiC)</strong></td>
+                <td>共价晶体（原子晶体）</td>
+                <td>共价键</td>
+              </tr>
+            </tbody>
+          </table>
+        `
+      }
+    ]
+  },
+  chap8: {
+    title: "第8章 氧化还原反应",
+    questions: [
+      {
+        id: 1,
+        title: "第 1 题：Cu₂S 与 HNO₃ 反应",
+        prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Cu₂S(s) + HNO₃(aq) ⟶ Cu(NO₃)₂(aq) + H₂SO₄(aq) + NO₂(g) + H₂O(l)</strong>",
+        answer: `
+          <div class="formula-display">【配平方程】\n1 Cu₂S(s) + 14 HNO₃(aq) ⟶ 2 Cu(NO₃)₂(aq) + 1 H₂SO₄(aq) + 10 NO₂(g) + 6 H₂O(l)</div>
+          <div style="margin: 12px 0; background:#fff; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+            <strong>【双线桥法电子转移说明】</strong><br>
+            • <strong>失电子（氧化反应）：</strong> 1 mol Cu₂S 中 Cu (+1 ⟶ +2，失 2×1e⁻) 与 S (-2 ⟶ +6，失 8e⁻)，共失去 10 e⁻，指向产物 2Cu(NO₃)₂ 与 H₂SO₄。<br>
+            • <strong>得电子（还原反应）：</strong> 10 mol HNO₃ 中 N (+5 ⟶ +4，得 10×1e⁻ = 10 e⁻)，指向产物 10 NO₂。（另有 4 mol HNO₃ 表现酸性，形成硝酸盐）。
+          </div>
+          <table class="grid-table">
+            <tr>
+              <th>氧化剂</th><td>HNO₃</td>
+              <th>还原剂</th><td>Cu₂S</td>
+            </tr>
+            <tr>
+              <th>氧化产物</th><td>Cu(NO₃)₂ 与 H₂SO₄</td>
+              <th>还原产物</th><td>NO₂</td>
+            </tr>
+          </table>
+        `
+      },
+      {
+        id: 2,
+        title: "第 2 题：BiO₃⁻ 与 Mn²⁺ 反应",
+        prompt: "请配平下列离子方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>BiO₃⁻(aq) + Mn²⁺(aq) + H⁺(aq) ⟶ Bi³⁺(aq) + MnO₄⁻(aq) + H₂O(l)</strong>",
+        answer: `
+          <div class="formula-display">【配平方程】\n5 BiO₃⁻(aq) + 2 Mn²⁺(aq) + 14 H⁺(aq) ⟶ 5 Bi³⁺(aq) + 2 MnO₄⁻(aq) + 7 H₂O(l)</div>
+          <div style="margin: 12px 0; background:#fff; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+            <strong>【双线桥法电子转移说明】</strong><br>
+            • <strong>失电子（氧化反应）：</strong> 2 mol Mn²⁺ ⟶ 2 mol MnO₄⁻，Mn 元素化合价由 +2 升至 +7，共失去 10 e⁻ (2 × 5e⁻)。<br>
+            • <strong>得电子（还原反应）：</strong> 5 mol BiO₃⁻ ⟶ 5 mol Bi³⁺，Bi 元素化合价由 +5 降至 +3，共得到 10 e⁻ (5 × 2e⁻)。
+          </div>
+          <table class="grid-table">
+            <tr>
+              <th>氧化剂</th><td>BiO₃⁻</td>
+              <th>还原剂</th><td>Mn²⁺</td>
+            </tr>
+            <tr>
+              <th>氧化产物</th><td>MnO₄⁻</td>
+              <th>还原产物</th><td>Bi³⁺</td>
+            </tr>
+          </table>
+        `
+      },
+      {
+        id: 3,
+        title: "第 3 题：Fe(OH)₂ 与 O₂ 反应",
+        prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Fe(OH)₂(s) + O₂(g) + H₂O(l) ⟶ Fe(OH)₃(s)</strong>",
+        answer: `
+          <div class="formula-display">【配平方程】\n4 Fe(OH)₂(s) + 1 O₂(g) + 2 H₂O(l) ⟶ 4 Fe(OH)₃(s)</div>
+          <div style="margin: 12px 0; background:#fff; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+            <strong>【双线桥法电子转移说明】</strong><br>
+            • <strong>失电子（氧化反应）：</strong> 4 mol Fe(OH)₂ ⟶ 4 mol Fe(OH)₃，Fe 元素由 +2 升至 +3，共失去 4 e⁻ (4 × 1e⁻)。<br>
+            • <strong>得电子（还原反应）：</strong> 1 mol O₂ ⟶ Fe(OH)₃ 中的 O，O 元素由 0 降至 -2，共得到 4 e⁻ (1 × 4e⁻)。
+          </div>
+          <table class="grid-table">
+            <tr>
+              <th>氧化剂</th><td>O₂</td>
+              <th>还原剂</th><td>Fe(OH)₂</td>
+            </tr>
+            <tr>
+              <th>氧化产物</th><td>Fe(OH)₃</td>
+              <th>还原产物</th><td>Fe(OH)₃</td>
+            </tr>
+          </table>
+        `
+      },
+      {
+        id: 4,
+        title: "第 4 题：Al 与稀 HNO₃ 反应",
+        prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Al(s) + HNO₃(aq) ⟶ Al(NO₃)₃(aq) + NO(g) + H₂O(l)</strong>",
+        answer: `
+          <div class="formula-display">【配平方程】\n1 Al(s) + 4 HNO₃(aq) ⟶ 1 Al(NO₃)₃(aq) + 1 NO(g) + 2 H₂O(l)</div>
+          <div style="margin: 12px 0; background:#fff; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
+            <strong>【双线桥法电子转移说明】</strong><br>
+            • <strong>失电子（氧化反应）：</strong> 1 mol Al ⟶ 1 mol Al(NO₃)₃，Al 元素由 0 升至 +3，失去 3 e⁻。<br>
+            • <strong>得电子（还原反应）：</strong> 1 mol HNO₃ ⟶ 1 mol NO，N 元素由 +5 降至 +2，得到 3 e⁻。（另 3 mol HNO₃ 表现酸性生成硝酸铝）。
+          </div>
+          <table class="grid-table">
+            <tr>
+              <th>氧化剂</th><td>HNO₃</td>
+              <th>还原剂</th><td>Al</td>
+            </tr>
+            <tr>
+              <th>氧化产物</th><td>Al(NO₃)₃</td>
+              <th>还原产物</th><td>NO</td>
+            </tr>
+          </table>
+        `
+      }
+    ]
+  },
+  chap9_11: {
+    title: "第9～11章 化学反应方程式",
+    questions: [
+      { id: 1, title: "第 1 题：钠的燃烧", prompt: "请写出钠在空气/氧气中燃烧的化学反应方程式。", answer: `<div class="formula-display">2Na(s) + O₂(g) --(点燃)--> Na₂O₂(s)</div>` },
+      { id: 2, title: "第 2 题：钠与水反应", prompt: "请写出金属钠与水反应的化学方程式。", answer: `<div class="formula-display">2Na(s) + 2H₂O(l) ⟶ 2NaOH(aq) + H₂(g)↑</div>` },
+      { id: 3, title: "第 3 题：氯碱工业", prompt: "请写出工业上电解饱和食盐水（氯碱工业）的化学方程式。", answer: `<div class="formula-display">2NaCl(aq) + 2H₂O(l) --(通电)--> 2NaOH(aq) + H₂(g)↑ + Cl₂(g)↑</div>` },
+      { id: 4, title: "第 4 题：NaOH 吸收 CO₂ 变质", prompt: "请写出氢氧化钠吸收二氧化碳变质的化学方程式。", answer: `<div class="formula-display">2NaOH(aq) + CO₂(g) ⟶ Na₂CO₃(aq) + H₂O(l)\n(若 CO₂ 过量: NaOH(aq) + CO₂(g) ⟶ NaHCO₃(aq))</div>` },
+      { id: 5, title: "第 5 题：纯碱转小苏打", prompt: "请写出由碳酸钠转化为碳酸氢钠的化学方程式。", answer: `<div class="formula-display">Na₂CO₃(aq) + CO₂(g) + H₂O(l) ⟶ 2NaHCO₃(aq)</div>` },
+      { id: 6, title: "第 6 题：小苏打热分解", prompt: "请写出碳酸氢钠受热分解的化学方程式。", answer: `<div class="formula-display">2NaHCO₃(s) --(△)--> Na₂CO₃(s) + H₂O(g) + CO₂(g)↑</div>` },
+      { id: 7, title: "第 7 题：钾在氧气中燃烧", prompt: "请写出钾在氧气中燃烧的化学方程式。", answer: `<div class="formula-display">K(s) + O₂(g) --(点燃)--> KO₂(s)</div>` },
+      { id: 8, title: "第 8 题：镁在 CO₂ 中燃烧", prompt: "请写出金属镁在二氧化碳中燃烧的化学方程式。", answer: `<div class="formula-display">2Mg(s) + CO₂(g) --(点燃)--> 2MgO(s) + C(s)</div>` },
+      { id: 9, title: "第 9 题：镁与氮气反应", prompt: "请写出镁与氮气反应的化学方程式。", answer: `<div class="formula-display">3Mg(s) + N₂(g) --(点燃)--> Mg₃N₂(s)</div>` },
+      { id: 10, title: "第 10 题：加热石膏", prompt: "请写出生石膏加热制熟石膏的化学反应方程式。", answer: `<div class="formula-display">2[CaSO₄·2H₂O](s) --(△)--> (2CaSO₄)·H₂O(s) + 3H₂O(g)</div>` },
+      { id: 11, title: "第 11 题：CaO 与水反应", prompt: "请写出生石灰与水反应（熟化）的化学方程式。", answer: `<div class="formula-display">CaO(s) + H₂O(l) ⟶ Ca(OH)₂(s)</div>` },
+      { id: 12, title: "第 12 题：煅烧石灰石", prompt: "请写出工业上煅烧石灰石的化学反应方程式。", answer: `<div class="formula-display">CaCO₃(s) --(高温)--> CaO(s) + CO₂(g)↑</div>` },
+      { id: 13, title: "第 13 题：工业上制取镁", prompt: "请写出工业上电解熔融氯化镁制镁的化学方程式。", answer: `<div class="formula-display">MgCl₂(l) --(通电)--> Mg(l) + Cl₂(g)↑</div>` },
+      { id: 14, title: "第 14 题：工业上制取铝", prompt: "请写出工业上电解熔融氧化铝制铝的化学方程式。", answer: `<div class="formula-display">2Al₂O₃(l) --(冰晶石, 通电)--> 4Al(l) + 3O₂(g)↑</div>` },
+      { id: 15, title: "第 15 题：铝与强碱反应", prompt: "请写出铝与强碱溶液反应的化学方程式。", answer: `<div class="formula-display">2Al(s) + 2NaOH(aq) + 2H₂O(l) ⟶ 2NaAlO₂(aq) + 3H₂(g)↑\n(或 2Al(s) + 2NaOH(aq) + 6H₂O(l) ⟶ 2Na[Al(OH)₄](aq) + 3H₂(g)↑)</div>` },
+      { id: 16, title: "第 16 题：铝热反应", prompt: "请写出铝粉与氧化铁反应（铝热反应）的化学方程式。", answer: `<div class="formula-display">2Al(s) + Fe₂O₃(s) --(高温)--> Al₂O₃(s) + 2Fe(l)</div>` },
+      { id: 17, title: "第 17 题：Al₂O₃ 与强碱反应", prompt: "请写出氧化铝溶于强碱溶液的化学方程式。", answer: `<div class="formula-display">Al₂O₃(s) + 2NaOH(aq) ⟶ 2NaAlO₂(aq) + H₂O(l)\n(或 Al₂O₃(s) + 2NaOH(aq) + 3H₂O(l) ⟶ 2Na[Al(OH)₄](aq))</div>` },
+      { id: 18, title: "第 18 题：Al(OH)₃ 与强碱反应", prompt: "请写出氢氧化铝溶于强碱溶液的化学方程式。", answer: `<div class="formula-display">Al(OH)₃(s) + NaOH(aq) ⟶ NaAlO₂(aq) + 2H₂O(l)\n(或 Al(OH)₃(s) + NaOH(aq) ⟶ Na[Al(OH)₄](aq))</div>` },
+      { id: 19, title: "第 19 题：实验室制 Al(OH)₃", prompt: "请写出实验室用铝盐与氨水制备氢氧化铝的化学方程式。", answer: `<div class="formula-display">AlCl₃(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄Cl(aq)\n(离子方程式: Al³⁺(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄⁺(aq))</div>` },
+      { id: 20, title: "第 20 题：Al(OH)₃ 热分解", prompt: "请写出氢氧化铝受热分解的化学反应方程式。", answer: `<div class="formula-display">2Al(OH)₃(s) --(△)--> Al₂O₃(s) + 3H₂O(g)</div>` }
+    ]
+  }
+};
+
+let currentChap = 'chap7';
+let currentQIndex = 0;
+let currentMode = 'interactive';
+
+function renderQuestionButtons() {
+  const container = document.getElementById('question-btn-group');
+  container.innerHTML = '';
+  const list = quizData[currentChap].questions;
+  list.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.className = `num-btn ${idx === currentQIndex ? 'active' : ''}`;
+    btn.innerText = `第 ${q.id} 题`;
+    btn.onclick = () => {
+      currentQIndex = idx;
+      updateActiveQuestionBtn();
+      renderContent();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function updateActiveQuestionBtn() {
+  const buttons = document.querySelectorAll('#question-btn-group .num-btn');
+  buttons.forEach((btn, idx) => {
+    if (idx === currentQIndex) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
+function switchChapter(chapKey, btnElement) {
+  currentChap = chapKey;
+  currentQIndex = 0;
+  
+  document.querySelectorAll('#chapter-btn-group .pill-btn').forEach(b => b.classList.remove('active'));
+  btnElement.classList.add('active');
+
+  renderQuestionButtons();
+  renderContent();
+}
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  if (mode === 'interactive') {
+    document.getElementById('btn-mode-interactive').classList.add('active');
+    document.getElementById('step2-container').classList.remove('hidden');
+  } else if (mode === 'questions-only') {
+    document.getElementById('btn-mode-questions-only').classList.add('active');
+    document.getElementById('step2-container').classList.add('hidden');
+  } else if (mode === 'full') {
+    document.getElementById('btn-mode-full').classList.add('active');
+    document.getElementById('step2-container').classList.add('hidden');
+  }
+  renderContent();
+}
+
+function toggleSingleAnswer(btn) {
+  const ansBox = btn.nextElementSibling;
+  const isHidden = ansBox.classList.contains('hidden');
+  if (isHidden) {
+    ansBox.classList.remove('hidden');
+    btn.classList.add('open');
+    btn.innerHTML = '<span>👁️ 收起参考答案与解析</span>';
+  } else {
+    ansBox.classList.add('hidden');
+    btn.classList.remove('open');
+    btn.innerHTML = '<span>💡 点击查看参考答案与解析</span>';
+  }
+}
+
+function renderContent() {
+  const container = document.getElementById('content-container');
+  const data = quizData[currentChap];
+
+  if (currentMode === 'interactive') {
+    const q = data.questions[currentQIndex];
+    container.innerHTML = `
+      <div class="question-card">
+        <div class="q-header">
+          <span class="q-tag">${data.title}</span>
+          <span style="font-size:0.9rem; color:#64748b;">题号：${q.id} / ${data.questions.length}</span>
+        </div>
+        <div class="q-title">${q.title}</div>
+        <div class="q-prompt">${q.prompt}</div>
+        
+        <div class="answer-toggle-wrapper">
+          <button class="toggle-answer-btn" onclick="toggleSingleAnswer(this)">
+            <span>💡 点击查看参考答案与解析</span>
+          </button>
+          <div class="answer-box hidden">
+            <div class="ans-section-title"><span>✅</span><span>标准参考答案与解析</span></div>
+            ${q.answer}
+          </div>
+        </div>
+      </div>
+    `;
+  } else if (currentMode === 'questions-only') {
+    let html = `<div class="question-card"><h2 style="margin-bottom:16px;">${data.title} - 全卷自测题</h2>`;
+    data.questions.forEach(q => {
+      html += `
+        <div class="all-list-item">
+          <div class="q-title" style="font-size:1.1rem;">${q.title}</div>
+          <div class="q-prompt" style="margin-bottom:0;">${q.prompt}</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    container.innerHTML = html;
+  } else if (currentMode === 'full') {
+    let html = `<div class="question-card"><h2 style="margin-bottom:16px;">${data.title} - 全卷题目与详细解析</h2>`;
+    data.questions.forEach(q => {
+      html += `
+        <div class="all-list-item">
+          <div class="q-title" style="font-size:1.1rem;">${q.title}</div>
+          <div class="q-prompt">${q.prompt}</div>
+          <div class="ans-section-title"><span>✅</span><span>参考答案：</span></div>
+          ${q.answer}
+        </div>
+      `;
+    });
+    html += `</div>`;
+    container.innerHTML = html;
+  }
+}
+
+// 页面初始化
+renderQuestionButtons();
+renderContent();
+</script>
+</body>
+</html>
