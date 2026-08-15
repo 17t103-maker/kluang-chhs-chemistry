@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>第10章 IIA 族元素：镁和钙 - 互动探究学习工作台</title>
-    <!-- 增加：网页浏览器图标（Favicon） -->
+    <!-- 网页浏览器图标（Favicon） -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
     <style>
         :root {
@@ -59,7 +59,7 @@
             padding-bottom: 90px;
         }
 
-        /* 新增：全局统一顶部导航栏 */
+        /* 全局统一顶部导航栏与手机端折叠适配 */
         .global-nav {
             background: var(--bg-card);
             border-bottom: 3px solid var(--primary);
@@ -67,39 +67,95 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            position: relative;
-            z-index: 1001;
+            position: sticky;
+            top: 0;
+            z-index: 1002;
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .nav-btn {
             background: var(--bg-card-sub);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .nav-btn:hover {
             background: var(--primary);
             color: #ffffff !important;
             border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+            transform: translateY(-1px);
         }
 
-        /* 顶部悬浮工具栏 */
+        .menu-toggle {
+            display: none;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (max-width: 850px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-card);
+                padding: 14px 20px;
+                border-bottom: 3px solid var(--primary);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                align-items: stretch;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-btn {
+                justify-content: center;
+                padding: 10px;
+            }
+        }
+
+        /* 顶部悬浮控制工具栏 */
         .toolbar {
             position: sticky;
-            top: 0;
+            top: 57px;
             z-index: 1000;
             background: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
@@ -169,7 +225,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        /* 新增：大标题与校徽的排版容器 */
         .title-wrapper {
             display: flex;
             align-items: center;
@@ -250,7 +305,6 @@
             display: none;
         }
 
-        /* 高亮卡片与对比表格 */
         .highlight-banner {
             background: linear-gradient(135deg, rgba(2,132,199,0.08), rgba(16,185,129,0.08));
             border-left: 4px solid var(--primary);
@@ -280,7 +334,6 @@
             color: var(--text-main);
         }
 
-        /* 流程步骤网格 */
         .process-flow {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -317,7 +370,6 @@
             margin-bottom: 6px;
         }
 
-        /* 选项卡卡片组件 */
         .tab-box {
             display: flex;
             gap: 8px;
@@ -350,7 +402,6 @@
             margin-bottom: 16px;
         }
 
-        /* Canvas 动画容器 */
         .canvas-box {
             position: relative;
             background: var(--canvas-bg);
@@ -372,7 +423,6 @@
             gap: 8px;
         }
 
-        /* 试管虚拟实验台容器 */
         .test-tube-rack {
             display: flex;
             justify-content: space-around;
@@ -420,7 +470,6 @@
             box-shadow: 0 -2px 6px rgba(255,255,255,0.8);
         }
 
-        /* 思维导图 */
         .mindmap-node {
             margin-left: 20px;
             border-left: 2px solid var(--border-color);
@@ -485,35 +534,38 @@
 </head>
 <body>
 
-    <!-- 增加：统一全局快捷导航栏 -->
+    <!-- 统一全局快捷导航栏（支持手机端汉堡菜单折叠） -->
     <nav class="global-nav">
-        <a href="index.html" class="nav-btn">🏠 平台首页</a>
-        <a href="2024.html" class="nav-btn">📝 2024统测</a>
-        <a href="2025.html" class="nav-btn">📝 2025统测</a>
-        <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-        <a href="index.html" class="nav-btn">📚 历届考题解析</a>
-        <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+        <div class="nav-brand">
+            <span>⚗️ ChemInteract Studio</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleNavMenu()">☰ 导航菜单</button>
+        <div class="nav-menu" id="globalNavMenu">
+            <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
+            <a href="past_exams_select.html" class="nav-btn">📚 历届考题解析</a>
+            <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+        </div>
     </nav>
 
-    <!-- 顶部固定工具栏 -->
+    <!-- 顶部固定控制工具栏 -->
     <header class="toolbar">
         <div class="toolbar-group">
-            <span style="font-weight: 800; color: var(--primary);">⚗️ ChemInteract Studio</span>
-            <span style="color: var(--text-sub);">| 高一化学 第10章 IIA 族元素：镁和钙</span>
+            <span style="font-weight: 800; color: var(--primary);">⚗️ 教学工作台</span>
+            <span style="color: var(--text-sub); font-size: 0.9rem;">| 第10章 IIA 族：镁和钙</span>
         </div>
         <div class="toolbar-group">
-            <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开所有答案</button>
+            <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开答案</button>
             <select class="btn" id="select-fontsize" onchange="changeFontSize(this.value)">
                 <option value="1">字号: 100%</option>
                 <option value="1.15">字号: 115%</option>
                 <option value="1.3">字号: 130%</option>
             </select>
             <select class="btn" id="select-layout" onchange="changeLayout(this.value)">
-                <option value="1150px">版面: 居中标准</option>
-                <option value="1450px">版面: 宽屏全景</option>
+                <option value="1150px">版面: 标准</option>
+                <option value="1450px">版面: 宽屏</option>
             </select>
-            <button class="btn" onclick="toggleDarkMode()">🌓 护眼模式</button>
-            <button class="btn" onclick="window.print()">🖨️ 打印学案</button>
+            <button class="btn" onclick="toggleDarkMode()">🌓 模式</button>
+            <button class="btn" onclick="window.print()">🖨️ 打印</button>
         </div>
     </header>
 
@@ -521,7 +573,6 @@
         
         <!-- 章节概览与学习目标 -->
         <section class="section-card">
-            <!-- 增加：带校徽的大标题容器 -->
             <div class="title-wrapper">
                 <img src="image/校徽.jpg" alt="校徽" class="school-logo">
                 <h1 class="main-title">第 10 章 IIA 族元素：镁和钙 (Alkaline Earth Metals)</h1>
@@ -780,6 +831,11 @@
 
     <!-- 交互脚本引擎 -->
     <script>
+        /* 0. 手机端导航折叠控制 */
+        function toggleNavMenu() {
+            document.getElementById('globalNavMenu').classList.toggle('active');
+        }
+
         /* 1. 答案显隐控制器 */
         let allAnswersVisible = false;
 
@@ -793,7 +849,7 @@
                 }
             });
             const btn = document.getElementById('btn-toggle-all');
-            btn.innerHTML = allAnswersVisible ? '🔒 隐藏所有答案' : '🔓 展开所有答案';
+            btn.innerHTML = allAnswersVisible ? '🔒 隐藏答案' : '🔓 展开答案';
         }
 
         function bindAnswerClick() {
@@ -871,7 +927,7 @@
             const layers = currentAtom === 'Mg' ? [2, 8, 2] : [2, 8, 8, 2];
             const baseRadii = currentAtom === 'Mg' ? [25, 50, 75] : [25, 48, 70, 95];
 
-            // 绘制原子核
+            /* 绘制原子核 */
             alkCtx.fillStyle = '#ef4444';
             alkCtx.beginPath();
             alkCtx.arc(cx, cy, 14, 0, Math.PI * 2);
@@ -881,19 +937,19 @@
             alkCtx.textAlign = 'center';
             alkCtx.fillText(currentAtom === 'Mg' ? '+12' : '+20', cx, cy + 4);
 
-            // 绘制电子轨道及电子
+            /* 绘制电子轨道及电子 */
             for (let i = 0; i < layers.length; i++) {
                 const r = baseRadii[i];
                 const isOutermost = (i === layers.length - 1);
 
-                // 轨道
+                /* 轨道 */
                 alkCtx.strokeStyle = 'rgba(148, 163, 184, 0.4)';
                 alkCtx.lineWidth = 1.5;
                 alkCtx.beginPath();
                 alkCtx.arc(cx, cy, r, 0, Math.PI * 2);
                 alkCtx.stroke();
 
-                // 电子
+                /* 电子 */
                 const count = layers[i];
                 for (let j = 0; j < count; j++) {
                     let angle = (j / count) * Math.PI * 2 + (Date.now() * 0.001 * (i + 1));
@@ -914,7 +970,7 @@
                 }
             }
 
-            // 状态文字说明
+            /* 状态文字说明 */
             alkCtx.fillStyle = '#ffffff';
             alkCtx.font = 'bold 13px sans-serif';
             if (isIonized && ionProgress >= 0.95) {
@@ -931,7 +987,7 @@
             {
                 title: "步骤 1：贝壳煅烧制生石灰与石灰乳",
                 eq: "CaCO₃(s) <span style='font-size:0.85em;'>—(高温煅烧)→</span> <span class='inline-ans'>CaO(s) + CO₂(g)↑</span><br>CaO(s) + H₂O(l) → <span class='inline-ans'>Ca(OH)₂(s) (石灰乳)</span>",
-                desc: "<strong>工业智慧</strong>：利用沿海丰富的贝壳资源（主要成分为 CaCO₃）作为廉价易得的原料制取强碱性沉淀剂 Ca(OH)₂ 石灰乳，大幅降低生产成本。"
+                desc: "<strong>工业智慧</strong>：利用沿海丰富的贝壳资源（主要成分为 CaCO₃）作为廉价易得的沉淀剂 Ca(OH)₂ 石灰乳，大幅降低生产成本。"
             },
             {
                 title: "步骤 2：沉淀海水中的镁离子富集 Mg(OH)₂",
