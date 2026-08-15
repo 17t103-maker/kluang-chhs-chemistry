@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>第8章 氧化还原反应 - 互动探究学习工作台</title>
     <!-- 网页浏览器标签图标 (Favicon) -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -64,7 +64,7 @@
             transition: max-width 0.3s ease;
         }
 
-        /* 顶部全局导航栏与移动端折叠控制 */
+        /* 顶部全局导航栏 (已规范化路径，无 404) */
         .global-top-nav {
             display: flex;
             flex-wrap: wrap;
@@ -121,12 +121,6 @@
             background: #e2e8f0;
             color: var(--primary);
             border-color: #94a3b8;
-        }
-
-        .nav-pill-btn.active {
-            background: #1e3a5f;
-            color: #ffffff;
-            border-color: #1e3a5f;
         }
 
         .nav-menu-toggle {
@@ -689,15 +683,16 @@
 
     <div class="container">
         
-        <!-- 顶部全局导航栏 (已按需求规范化) -->
+        <!-- 顶部全局导航栏 (已规范化路径，点击不会404) -->
         <nav class="global-top-nav">
             <div class="nav-brand-area">
                 <span>⚗️ 教学中心平台</span>
             </div>
             <button class="nav-menu-toggle" onclick="toggleNavMenu()">☰ 导航菜单</button>
             <div class="nav-links-wrapper" id="globalNavLinks">
-                <a href="chapters_select.html" class="nav-pill-btn">📖 章节教学内容</a>
-                <a href="past_exams_select.html" class="nav-pill-btn">📚 历届考题解析</a>
+                <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
+                <a href="2024.html" class="nav-pill-btn">📚 历届考题 (2024)</a>
+                <a href="2025.html" class="nav-pill-btn">📚 历届考题 (2025)</a>
                 <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
             </div>
         </nav>
@@ -1480,7 +1475,7 @@
                                 <polygon points="415,88 410,98 420,98" fill="#2563eb"/>
                                 <text x="337" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2×1e⁻ = 2e⁻，化合价降低，被还原</text>
                               </svg>`,
-                        note: "<strong>第 3 步【注得失】</strong>：在线桥上必须准确写明“失/得”几电子（如 2×1e⁻）、“化合价升高/降低”及“被氧化/被还原”。"
+                        note: "<strong>第 3 步【注得失】</strong>：标明 Na 失去 2e⁻ 被氧化；Cl₂ 得到 2e⁻ 被还原。"
                     }
                 ]
             },
