@@ -68,7 +68,7 @@
             margin: 0 auto;
         }
 
-        /* 顶部全功能快捷导航栏样式 */
+        /* 顶部全功能快捷导航栏样式 (已彻底修正所有404死链) */
         .global-top-nav {
             display: flex;
             flex-wrap: wrap;
@@ -516,11 +516,12 @@
 
     <div class="main-container">
         
-        <!-- 顶部全功能快捷导航栏 (已修正所有的 404 死链，统一路径规范) -->
+        <!-- 顶部全功能快捷导航栏 (已修正为真实存在的页面，彻底解决404问题) -->
         <nav class="global-top-nav">
-            <a href="index.html" class="nav-pill-btn">🏠 平台首页 / 章节内容</a>
-            <a href="2024.html" class="nav-pill-btn">📝 2024统测解析</a>
-            <a href="2025.html" class="nav-pill-btn active">📝 2025统测解析</a>
+            <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
+            <a href="chap7.html" class="nav-pill-btn">📖 章节教学内容</a>
+            <a href="2024.html" class="nav-pill-btn">📝 历届考题解析 (2024)</a>
+            <a href="2025.html" class="nav-pill-btn active">📝 历届考题解析 (2025)</a>
             <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
         </nav>
 
@@ -535,14 +536,14 @@
 
         <!-- 导航与控制面板 -->
         <section class="nav-card">
-            <!-- 手机端专属收纳/展开折叠按钮，防止在手机端占用空间影响阅读 -->
+            <!-- 手机端折叠切换按钮 -->
             <div class="mobile-toggle-panel">
                 <button class="btn-action" style="width:100%; padding:10px; font-size:0.95rem;" onclick="toggleControlPanel()">
                     📱 <span id="toggle-btn-text">展开题型与题号控制面板 (手机防遮挡阅读)</span>
                 </button>
             </div>
 
-            <!-- 控制面板主体折叠容器 -->
+            <!-- 控制面板主体容器 -->
             <div class="collapse-content expanded" id="control-collapse-box">
                 <div class="step-label">第一步：选择题型项目</div>
                 <div class="section-btn-group" id="section-tabs">
@@ -1340,11 +1341,6 @@
             } else {
                 btnText.innerText = "展开题型与题号控制面板 (手机防遮挡阅读)";
             }
-        }
-
-        /* 手机端导航栏折叠控制 */
-        function toggleNavMenu() {
-            document.getElementById('globalNavLinks').classList.toggle('active');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
