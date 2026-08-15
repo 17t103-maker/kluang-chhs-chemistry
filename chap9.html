@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第9章 IA族元素：钠和钾 互动深度探究平台</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-color: #2d3748;
+            --primary-color: #1a365d;
+            --accent-color: #3182ce;
+            --ans-color: #c53030;
+            --ans-bg: #fff5f5;
+            --card-bg: #f8fafc;
+            --border-color: #cbd5e0;
+            --tree-bg: #1e2227;
+            --tree-text: #abb2bf;
+        }
+
+        body.eye-care-mode {
+            --bg-color: #1a1d20;
+            --container-bg: #24292e;
+            --text-color: #d1d5db;
+            --primary-color: #63b3ed;
+            --accent-color: #4299e1;
+            --ans-color: #f56565;
+            --ans-bg: #2d1f24;
+            --card-bg: #2d333b;
+            --border-color: #4b5563;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 整体字号放大两号设计 */
+        body.font-small { font-size: 16px; }
+        body.font-medium { font-size: 18px; } /* 默认字号 18px */
+        body.font-large { font-size: 21px; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            transition: max-width 0.3s ease;
+        }
+        .container.wide-mode { max-width: 96% !important; }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px 22px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover { background-color: var(--border-color); }
+        .btn-step { background-color: #4a5568; color: white; padding: 7px 14px; font-size: 14.5px; }
+        .btn-step.active { background-color: #3182ce; font-weight: bold; }
+        .btn-step.completed { background-color: #38a169; }
+
+        select.control-select {
+            padding: 7px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--container-bg);
+            color: var(--text-color);
+            font-size: 14.5px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 18px;
+            margin-bottom: 25px;
+        }
+        .school-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 6px 0 12px 0;
+        }
+        .info-bar {
+            font-size: 15px;
+            opacity: 0.85;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .objectives-card {
+            background-color: var(--card-bg);
+            border-left: 6px solid var(--accent-color);
+            border-radius: 0 10px 10px 0;
+            padding: 18px 24px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            border-left-width: 6px;
+        }
+        .objectives-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 12px;
+            font-size: 15.5px;
+            padding-left: 0;
+            list-style: none;
+            margin: 0;
+        }
+        .objectives-grid li {
+            position: relative;
+            padding-left: 22px;
+        }
+        .objectives-grid li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 35px 0 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sub-section-title {
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 20px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .content-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* 点读挖空样式 */
+        .ans-inline {
+            display: inline-block;
+            position: relative;
+            margin: 0 3px;
+        }
+        .ans-trigger {
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px dashed var(--accent-color);
+            padding: 2px 9px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .ans-trigger:hover {
+            background-color: #feebc8;
+            color: #c05621;
+            border-color: #f6ad55;
+        }
+        .ans-content {
+            display: none;
+            color: var(--ans-color);
+            font-weight: 700;
+            background-color: var(--ans-bg);
+            border-bottom: 2px solid var(--ans-color);
+            padding: 2px 10px;
+            border-radius: 5px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .ans-content.show { display: inline-block; }
+        .ans-trigger.hidden { display: none; }
+
+        .block-ans-box { margin: 15px 0; }
+        .block-ans-content {
+            display: none;
+            background-color: var(--ans-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--ans-color);
+            padding: 14px 18px;
+            border-radius: 6px;
+            color: var(--ans-color);
+            font-weight: 600;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .block-ans-content.show { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .canvas-card {
+            background: #1a202c;
+            color: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        .canvas-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            background: var(--container-bg);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 11px 15px;
+            font-size: 15.5px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* 知识图谱 (NotebookLM 风格) */
+        .mindmap-container {
+            margin-top: 35px;
+            background-color: var(--tree-bg);
+            color: #f8f9fa;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+        .mindmap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3e4451;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .mindmap-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #61afef;
+        }
+        .mindmap-content {
+            overflow-x: auto;
+            padding: 10px 5px;
+        }
+        .h-tree { display: flex; align-items: center; }
+        .h-tree ul {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 30px;
+            position: relative;
+            list-style: none;
+            margin: 0;
+        }
+        .h-tree ul.layer-open { display: flex; animation: fadeIn 0.3s ease-in-out; }
+        .h-tree li {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .h-tree li::before {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background-color: #4b5263;
+        }
+        .h-tree li::after {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: #4b5263;
+        }
+        .h-tree li:first-child::after { top: 50%; height: 50%; }
+        .h-tree li:last-child::after { height: 50%; }
+        .h-tree li:only-child::after { display: none; }
+
+        .h-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 15px;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: 500;
+            border: 1px solid #3e4451;
+            background: #2c313a;
+            color: var(--tree-text);
+            white-space: nowrap;
+            user-select: none;
+            transition: 0.2s;
+        }
+        .h-node.has-children { cursor: pointer; }
+        .h-node.has-children:hover { border-color: #61afef; color: #fff; box-shadow: 0 0 10px rgba(97, 175, 239, 0.4); }
+        .h-node .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: #3e4451;
+            color: #61afef;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .h-node.root { background: #2b3a4e; color: #61afef; font-weight: 700; border-color: #61afef; font-size: 15.5px; }
+        .h-node.branch { background: #282c34; color: #e5c07b; font-weight: 600; }
+        .h-node.leaf { background: #21252b; color: #98c379; font-size: 13.5px; }
+
+        @media print {
+            .toolbar, .canvas-toolbar, .btn, .control-select { display: none !important; }
+            body { padding: 0; background: #fff !important; color: #000 !important; font-size: 14px !important; }
+            .container { box-shadow: none; padding: 0; max-width: 100% !important; }
+            .ans-trigger { display: none !important; }
+            .ans-content { display: inline-block !important; background: transparent !important; color: #c53030 !important; }
+            .block-ans-content { display: block !important; }
+            .mindmap-container { background: #fff !important; color: #000 !important; border: 1px solid #ccc; }
+            .h-node { background: #f0f0f0 !important; color: #000 !important; border-color: #aaa !important; }
+            .h-tree li::before, .h-tree li::after { background-color: #999 !important; }
+        }
+    </style>
+</head>
+<body class="font-medium">
+
+    <div class="container" id="mainContainer">
+
+        <!-- 顶部交互控制栏 -->
+        <div class="toolbar">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-weight: 700; color: var(--primary-color);">🧭 课堂互动控制台</span>
+                <select class="control-select" onchange="setFontSize(this.value)">
+                    <option value="font-small">字号: 16px (标准)</option>
+                    <option value="font-medium" selected>字号: 18px (放大两号)</option>
+                    <option value="font-large">字号: 21px (超大)</option>
+                </select>
+                <select class="control-select" onchange="setLayoutWidth(this.value)">
+                    <option value="normal" selected>版面: 标准居中</option>
+                    <option value="wide">版面: 宽屏全景</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap:wrap;">
+                <button class="btn" onclick="toggleAllAnswers(true)">🔓 展开全部答案</button>
+                <button class="btn btn-outline" onclick="toggleAllAnswers(false)">🔒 隐藏全部答案</button>
+                <button class="btn btn-outline" onclick="toggleEyeCare()">👁️ 护眼模式</button>
+                <button class="btn btn-outline" onclick="window.print()">🖨️ 打印学案</button>
+            </div>
+        </div>
+
+        <!-- 课程标头 -->
+        <div class="header">
+            <div class="school-name">居銮中华中学 高中化学课堂</div>
+            <div class="title">第9章 IA族元素：钠和钾（全景知识与深度探究平台）</div>
+            <div class="info-bar">
+                <span>适用年级：高一理科班</span>
+                <span>核心维度：结构 &rarr; 性质 &rarr; 制备 &rarr; 检验 &rarr; 用途</span>
+                <span>教学模式：情境探究与实验动力学建模</span>
+            </div>
+        </div>
+
+        <!-- 🎯 章节学习目标卡片 -->
+        <div class="objectives-card">
+            <h3>🎯 本章核心素养与考试目标清单</h3>
+            <ul class="objectives-grid">
+                <li><strong>周期律与原子结构：</strong>掌握 IA 族最外层 1 个价电子的结构特征及原子半径递增规律[cite: 1]。</li>
+                <li><strong>金属性与强还原性：</strong>理解失电子倾向递变，建立“微观结构决定宏观性质”的学科模型[cite: 1]。</li>
+                <li><strong>物理与化学性质：</strong>掌握钠、钾的物理性质及与氧气、水、酸、卤素反应的本质特征与五字诀[cite: 1]。</li>
+                <li><strong>工业制备与热力学：</strong>掌握电解熔融 NaCl 制钠（Down 槽）与高温钠热还原 KCl 制钾（平衡移动原理）[cite: 1]。</li>
+                <li><strong>焰色试验标准规范：</strong>熟练掌握“洗-烧-蘸-烧-滤/洗”标准 5 步法与激发态光谱物理本质[cite: 1]。</li>
+                <li><strong>重要化合物性质对比：</strong>深入辨析 Na₂CO₃ 与 NaHCO₃ 的水溶性、热稳定性及产气动力学差异[cite: 1]。</li>
+            </ul>
+        </div>
+
+        <!-- ======================= 9.1 钠和钾的性质 ======================= -->
+        <div class="section-title">
+            <span>9.1 钠和钾的性质（周期律基础、物化特性与工业制备）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务一</span>
+        </div>
+
+        <!-- 元素周期律基础模型 -->
+        <div class="content-card">
+            <p><strong>1. 存在形态：</strong>由于碱金属的化学活性
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">极高/极低</button>
+                    <span class="ans-content">极高</span>
+                </span>，它们在自然界中
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">查看答案</button>
+                    <span class="ans-content">不能</span>
+                </span>（填“能”或“不能”）以单质形态独立存在[cite: 1]，必须以
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">查看答案</button>
+                    <span class="ans-content">化合物</span>
+                </span> 形态分布[cite: 1]。写出典型矿物的主要化学成分：<br>
+                • 食盐：
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
+                    <span class="ans-content">NaCl</span>
+                </span>[cite: 1]
+                &nbsp;&nbsp;&nbsp;&nbsp;• 硼砂：
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
+                    <span class="ans-content">Na₂B₄O₇·10H₂O</span>
+                </span>[cite: 1]
+                &nbsp;&nbsp;&nbsp;&nbsp;• 光卤石：
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
+                    <span class="ans-content">KCl·MgCl₂·6H₂O</span>
+                </span>[cite: 1]
+            </p>
+
+            <div class="sub-section-title">2. 元素周期律基础模型：点击下方表格各栏目，探索碱金属元素（Li 到 Fr）性质的递变规律：</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 45%;">探究核心维度（从 Li 到 Fr 依次向下）</th>
+                        <th style="width: 55%;">性质的递变趋势与具体规律</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. 最外层价电子数</td>
+                        <td>均为
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">1</span>
+                            </span> 个价电子（通式 ns¹）[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2. 核电荷数与电子层数</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">逐渐增多 / 依次增大</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3. 原子半径</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">逐渐增大（电子层数增多占主导）</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4. 原子核对价电子的吸引力</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">逐渐减弱</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5. 失去最外层电子的倾向（难易程度）</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">越来越容易（第一电离能递减）</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6. 元素的金属性与强还原性</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">逐渐增强（K > Na > Li）</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7. 与水/氧气反应的剧烈程度（活泼性）</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
+                                <span class="ans-content">越来越剧烈</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">9.1.1 钠和钾的物理性质</div>
+            <p>钠原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s¹</code>，钾原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹</code>[cite: 1]。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>元素名称</th>
+                        <th>颜色与光泽</th>
+                        <th>密度 / (g·cm⁻³) (20℃)</th>
+                        <th>熔点 / ℃</th>
+                        <th>沸点 / ℃</th>
+                        <th>硬度与机械性</th>
+                        <th>导电/导热性</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>金属钠 (Na)</strong></td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">颜色</button>
+                                <span class="ans-content">银白色，具金属光泽</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">密度大小</button>
+                                <span class="ans-content">0.97（比水小，比煤油大）</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">97.8</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">883</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">硬度</button>
+                                <span class="ans-content">质软（可用小刀切割）</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">导电性</button>
+                                <span class="ans-content">良好导体</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>金属钾 (K)</strong></td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">颜色</button>
+                                <span class="ans-content">银白色，具金属光泽</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">密度大小</button>
+                                <span class="ans-content">0.86（比水小，比煤油大）</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">63.4</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">759</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">硬度</button>
+                                <span class="ans-content">极软（比钠更软）</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">导电性</button>
+                                <span class="ans-content">良好导体</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>💡 <strong>储存方式：</strong>金属钠和钾必须保存在
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">查看试剂</button>
+                    <span class="ans-content">煤油或液体石蜡</span>
+                </span> 中[cite: 1]，严禁与水或空气直接接触[cite: 1]。</p>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">9.1.2 钠和钾的化学性质</div>
+            <p><strong>1. 与非金属单质（氧气、卤素）的反应：</strong></p>
+            <ul>
+                <li><strong>常温与氧气缓慢氧化：</strong>表面迅速变暗失去光泽[cite: 1]。<br>
+                    • 钠：<code>4Na(s) + O₂(g) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2Na₂O(s)（白色固体氧化钠）</span>
+                    </span>[cite: 1]<br>
+                    • 钾：<code>4K(s) + O₂(g) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2K₂O(s)（微黄白色固体氧化钾）</span>
+                    </span>[cite: 1]
+                </li>
+                <li><strong>在空气中加热燃烧：</strong>剧烈燃烧，生成过氧化物或超氧化物[cite: 1]。<br>
+                    • 钠：<code>2Na(s) + O₂(g) —Δ→</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">Na₂O₂(s)（淡黄色固体过氧化钠，黄色火焰）</span>
+                    </span>[cite: 1]<br>
+                    • 钾：<code>K(s) + O₂(g) —Δ→</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">KO₂(s)（橙黄色固体超氧化钾，淡紫色火焰）</span>
+                    </span>[cite: 1]
+                </li>
+                <li><strong>与卤素单质（Cl₂、Br₂、I₂）直接化合：</strong><br>
+                    • 钠在氯气中燃烧：<code>2Na(s) + Cl₂(g) —点燃→</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2NaCl(s)（大量白烟，耀眼黄色火焰）</span>
+                    </span>[cite: 1]<br>
+                    • 钾与卤素化合：<code>2K(s) + Cl₂(g) —点燃→</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2KCl(s)（化合极其剧烈，室温接触即可能引发爆炸）</span>
+                    </span>[cite: 1]
+                </li>
+            </ul>
+
+            <p><strong>2. 与水及酸反应：</strong></p>
+            <ul>
+                <li><strong>与水反应：</strong><br>
+                    • 钠与水：<code>2Na(s) + 2H₂O(l) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2NaOH(aq) + H₂(g)&uarr;</span>
+                    </span>[cite: 1]<br>
+                    • 钾与水：<code>2K(s) + 2H₂O(l) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2KOH(aq) + H₂(g)&uarr;</span>
+                    </span>[cite: 1]
+                </li>
+                <li><strong>与酸反应：</strong>比水更剧烈，极易发生爆炸式反应：<br>
+                    • 钠与盐酸：<code>2Na(s) + 2HCl(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2NaCl(aq) + H₂(g)&uarr;</span>
+                    </span>[cite: 1]<br>
+                    • 钾与盐酸：<code>2K(s) + 2HCl(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2KCl(aq) + H₂(g)&uarr;</span>
+                    </span>[cite: 1]
+                </li>
+            </ul>
+
+            <!-- 钠、钾与水反应“五字诀”拆解分析表 -->
+            <div class="sub-section-title">3. 钠与水（滴有酚酞）反应的“五字诀”拆解分析表：</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 12%;">字诀</th>
+                        <th style="width: 44%;">视频与模拟器展现的宏观细节</th>
+                        <th style="width: 44%;">对应的物理或化学科学本质</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>浮</strong></td>
+                        <td>金属小球浮在水面上</td>
+                        <td>金属的密度比水
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">大/小</button>
+                                <span class="ans-content">小（ρ_Na = 0.97 g/cm³）</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>熔</strong></td>
+                        <td>金属迅速熔化成闪亮的小球</td>
+                        <td>反应
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">吸/放</button>
+                                <span class="ans-content">放</span>
+                            </span> 热，且金属的熔点
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">高/低</button>
+                                <span class="ans-content">低</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>游</strong></td>
+                        <td>小球在水面上无序、急速游动</td>
+                        <td>反应剧烈产生的
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">物质</button>
+                                <span class="ans-content">氢气 (H₂)</span>
+                            </span> 推动小球四处移动[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>响</strong></td>
+                        <td>发出明显的“嘶嘶”响声（钾伴有爆鸣声）</td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">本质</button>
+                                <span class="ans-content">气体剧烈释放与水蒸气剧烈冲击</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>红</strong></td>
+                        <td>烧杯中无色的水溶液迅速变为鲜艳的粉红色</td>
+                        <td>反应生成了
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">酸/碱</button>
+                                <span class="ans-content">强碱</span>
+                            </span> 性物质（NaOH / KOH）[cite: 1]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 动态模拟器：钠与钾遇水反应大比拼 -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">🧪 碱金属与水反应（含酚酞）剧烈度对比动态模拟器</span>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <button class="btn btn-outline" style="color:white; border-color:#4a5568;" onclick="setWaterSimMetal('Na')">选择: 钠 (Na)</button>
+                        <button class="btn btn-outline" style="color:white; border-color:#4a5568;" onclick="setWaterSimMetal('K')">选择: 钾 (K)</button>
+                        <button class="btn" style="background:#48bb78;" onclick="startWaterReaction()">投入水中反应</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetWaterCanvas()">重置模拟器</button>
+                    </div>
+                </div>
+                <canvas id="waterCanvas" width="900" height="240" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:13.5px; color:#cbd5e0;">
+                    <span id="waterStatusText">当前待命：烧杯已注入滴有酚酞的水溶液</span>
+                    <span id="waterEqText" style="color:#f6e05e; font-weight:bold;">2Na(s) + 2H₂O(l) &rarr; 2NaOH(aq) + H₂(g)&uarr;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工业制备与微观/宏观双视角电解槽模拟器 -->
+        <div class="content-card">
+            <div class="sub-section-title">9.1.3 工业制取金属钠与金属钾的反应机理与原理</div>
+            <ul>
+                <li><strong>工业制钠（Down 槽电解熔融 NaCl）：</strong><br>
+                    • <strong>总反应：</strong><code>2NaCl(l) ——电解(580~600℃)——></code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
+                        <span class="ans-content">2Na(l) + Cl₂(g)↑</span>
+                    </span>[cite: 1]<br>
+                    • <strong>阳极 (石墨)：</strong><code>2Cl⁻ - 2e⁻ &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开电极式</button>
+                        <span class="ans-content">Cl₂(g)↑ (氧化反应)</span>
+                    </span><br>
+                    • <strong>阴极 (铁)：</strong><code>2Na⁺ + 2e⁻ &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开电极式</button>
+                        <span class="ans-content">2Na(l) (还原反应)</span>
+                    </span><br>
+                    • <strong>科学要点剖析：</strong>在 580~600℃ 电解温度下，生成的金属钠呈现<strong>液态（熔点 97.8℃）</strong>而非气体[cite: 1]！由于液态钠的密度（约 0.8 g/cm³）小于熔盐体系，钠会在阴极形成小液滴并<strong>上浮汇集</strong>流出；中间通过<strong>铁丝网隔膜</strong>机械阻隔，防止液态钠扩散到阳极与黄绿色氯气重新化合。
+                </li>
+                <li><strong>工业制钾（高温钠热还原法）：</strong><br>
+                    • <strong>反应原理：</strong><code>KCl(l) + Na(l) ⇌</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开平衡式</button>
+                        <span class="ans-content">NaCl(l) + K(g)↑ (850℃)</span>
+                    </span>[cite: 1]<br>
+                    • <strong>勒夏特列原理应用：</strong>在 850℃ 下，钾的沸点（759℃）低于钠的沸点（883℃）[cite: 1]，生成的金属钾呈蒸气状态不断脱离体系被冷凝抽离，促使平衡持续向右移动，产出高纯度钾（纯度 > 99.99%）[cite: 1]。
+                </li>
+            </ul>
+
+            <!-- Canvas 动态模拟：微观离子迁移与 Down 槽电解过程 -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">⚙️ 工业 Down 槽电解熔融 NaCl 动态微观/宏观模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#48bb78;" onclick="startDownsElectrolysis()">⚡ 接通直流电源电解</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetDownsElectrolysis()">重置反应器</button>
+                    </div>
+                </div>
+                <canvas id="downsCanvas" width="920" height="280" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="downsStatus">当前状态：待命已就绪，电解质为熔融 NaCl + CaCl₂ (580℃)</span>
+                    <span style="color:#f6e05e;">阳极(石墨): 2Cl⁻ - 2e⁻ &rarr; Cl₂&uarr; | 阴极(铁): 2Na⁺ + 2e⁻ &rarr; 2Na(l)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= 9.2 焰色试验 ======================= -->
+        <div class="section-title">
+            <span>9.2 焰色试验（物理本质与标准 5 步全流程模拟）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务二</span>
+        </div>
+
+        <div class="content-card">
+            <h4>1. 微观物理本质与光谱机理</h4>
+            <p>焰色试验是
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">物理/化学</button>
+                    <span class="ans-content">物理变化</span>
+                </span>[cite: 1]。当金属及其盐类在高温火焰中灼烧时，电子吸收能量从<strong>基态跃迁到激发态</strong>；处于不稳定激发态的电子在跃迁回基态时，以<strong>特定波长的光辐射</strong>形式释放能量，呈现出特征明线光谱[cite: 1]。</p>
+
+            <h4>2. 经典金属焰色标准 5 步交互式探究模拟器</h4>
+            <p style="font-size:14.5px; color:#718096;">💡 请先选择待测元素，再严格按照 <strong>①洗 &rarr; ②烧 &rarr; ③蘸 &rarr; ④烧 &rarr; ⑤滤/洗</strong> 标准流程点击操作：</p>
+
+            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                <button class="btn flame-elem-btn" style="background:#ecc94b; color:black;" onclick="selectFlameElem('Na')">待测试样: 钠盐 (Na⁺)</button>
+                <button class="btn flame-elem-btn" style="background:#9f7aea;" onclick="selectFlameElem('K')">待测试样: 钾盐 (K⁺)</button>
+                <button class="btn flame-elem-btn" style="background:#e53e3e;" onclick="selectFlameElem('Li')">待测试样: 锂盐 (Li⁺)</button>
+                <button class="btn flame-elem-btn" style="background:#dd6b20;" onclick="selectFlameElem('Ca')">待测试样: 钙盐 (Ca²⁺)</button>
+                <button class="btn flame-elem-btn" style="background:#38a169;" onclick="selectFlameElem('Cu')">待测试样: 铜盐 (Cu²⁺)</button>
+            </div>
+
+            <!-- 标准操作步骤按钮群 -->
+            <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; background:var(--card-bg); padding:12px; border-radius:8px;">
+                <button class="btn btn-step" id="stepBtn1" onclick="runFlameStep(1)">1. 洗 (稀盐酸)</button>
+                <button class="btn btn-step" id="stepBtn2" onclick="runFlameStep(2)">2. 烧 (至无色)</button>
+                <button class="btn btn-step" id="stepBtn3" onclick="runFlameStep(3)">3. 蘸 (待测试样)</button>
+                <button class="btn btn-step" id="stepBtn4" onclick="runFlameStep(4)">4. 烧 (显色观察)</button>
+                <button class="btn btn-step" id="stepBtn5" onclick="runFlameStep(5)">5. 滤/清洗 (蓝钴玻璃/洗净)</button>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:center; background:#1a202c; padding:18px; border-radius:10px; color:white;">
+                <div style="flex:1.2; min-width:320px; text-align:center;">
+                    <canvas id="flameCanvas" width="440" height="240" style="background:#0f172a; border-radius:8px; max-width:100%;"></canvas>
+                </div>
+                <div style="flex:1; min-width:280px; background:#2d3748; padding:18px; border-radius:8px; font-size:14.5px; line-height:1.7;">
+                    <div style="font-weight:bold; color:#63b3ed; font-size:16px; margin-bottom:8px;" id="flameStepTitle">步骤 1：准备洗涤铂丝</div>
+                    <div id="flameStepDesc" style="color:#e2e8f0;">用稀盐酸洗净铂丝，将表面残留杂质转化为易挥发的氯化物[cite: 1]。</div>
+                    <div style="margin-top:12px; border-top:1px solid #4a5568; padding-top:10px;">
+                        • 当前试样：<strong id="currentFlameElemText" style="color:#f6e05e;">钠盐 (Na⁺)</strong><br>
+                        • 特征颜色：<span id="currentFlameColorText">黄色 (589.0 nm)</span>[cite: 1]<br>
+                        • 蓝钴玻璃状态：<span id="cobaltStatusText" style="color:#a0aec0;">未放置 (观察钾时必需)</span>[cite: 1]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= 9.3 钠和钾的重要化合物 ======================= -->
+        <div class="section-title">
+            <span>9.3 钠和钾的重要化合物（表格对比、化学反应与实验探究）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务三</span>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">1. 氯化钠 (NaCl) 与 氯化钾 (KCl) 系统对比表</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:20%;">化合物名称</th>
+                        <th style="width:30%;">物理与化学性质</th>
+                        <th style="width:50%;">核心化学反应方程式与用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>氯化钠 (NaCl)</strong><br>（食盐）</td>
+                        <td>无色透明立方晶体，易溶于水，熔点 
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">熔点</button>
+                                <span class="ans-content">801℃</span>
+                            </span>[cite: 1]，沸点 1413℃[cite: 1]。
+                        </td>
+                        <td>
+                            • <strong>氯碱工业电解饱和食盐水：</strong><br>
+                            <code>2NaCl(aq) + 2H₂O(l) ——通电——></code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                                <span class="ans-content">2NaOH(aq) + Cl₂(g)↑ + H₂(g)↑</span>
+                            </span>[cite: 1]<br>
+                            • <strong>主要用途：</strong>食用调味、配制 0.9% 生理盐水、生产纯碱、烧碱及金属钠等基本化工原料[cite: 1]。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>氯化钾 (KCl)</strong></td>
+                        <td>白色晶体，易溶于水，熔点 
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">熔点</button>
+                                <span class="ans-content">770℃</span>
+                            </span>[cite: 1]。
+                        </td>
+                        <td>
+                            • <strong>高温还原制取金属钾：</strong><br>
+                            <code>KCl(l) + Na(l) ⇌</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开平衡产物</button>
+                                <span class="ans-content">NaCl(l) + K(g)↑ (850℃)</span>
+                            </span>[cite: 1]<br>
+                            • <strong>主要用途：</strong>临床电解质平衡调节剂、农业高浓度优质钾肥[cite: 1]。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="sub-section-title">2. 氢氧化钠 (NaOH) 与 硝酸钾 (KNO₃) 系统对比表</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:20%;">化合物名称</th>
+                        <th style="width:30%;">物理与化学性质</th>
+                        <th style="width:50%;">核心化学反应方程式与用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>氢氧化钠 (NaOH)</strong><br>（烧碱/火碱/苛性钠）</td>
+                        <td>白色固体，极易吸收水分
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
+                                <span class="ans-content">潮解</span>
+                            </span>[cite: 1]，溶于水强烈
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">吸/放热</button>
+                                <span class="ans-content">放热</span>
+                            </span>[cite: 1]，具强腐蚀性[cite: 1]。
+                        </td>
+                        <td>
+                            • <strong>吸收 CO₂ 变质：</strong><code>2NaOH(aq) + CO₂(g) &rarr;</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
+                                <span class="ans-content">Na₂CO₃(aq) + H₂O(l)</span>
+                            </span>[cite: 1]<br>
+                            • <strong>腐蚀玻璃（必须用橡胶塞）：</strong><code>SiO₂(s) + 2NaOH(aq) &rarr;</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
+                                <span class="ans-content">Na₂SiO₃(aq) + H₂O(l)</span>
+                            </span>[cite: 1]<br>
+                            • <strong>溶解两性金属铝：</strong><code>2Al(s) + 2NaOH(aq) + 2H₂O(l) &rarr;</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
+                                <span class="ans-content">2NaAlO₂(aq) + 3H₂(g)↑</span>
+                            </span>[cite: 1]<br>
+                            • <strong>主要用途：</strong>造纸、制皂、精炼石油、人造纤维及印染工业[cite: 1]。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>硝酸钾 (KNO₃)</strong></td>
+                        <td>白色晶体粉末，在水中溶解时强烈
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">吸/放热</button>
+                                <span class="ans-content">吸热</span>
+                            </span>[cite: 1]，受热分解表现强氧化性[cite: 1]。
+                        </td>
+                        <td>
+                            • <strong>受热分解反应：</strong><br>
+                            <code>2KNO₃(s) —Δ→</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                                <span class="ans-content">2KNO₂(s) + O₂(g)↑</span>
+                            </span>[cite: 1]<br>
+                            • <strong>制造传统黑火药：</strong><code>S(s) + 2KNO₃(s) + 3C(s) —点燃—></code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                                <span class="ans-content">K₂S(s) + N₂(g)↑ + 3CO₂(g)↑</span>
+                            </span><br>
+                            • <strong>主要用途：</strong>焰火火药、农业高效氮钾复合肥[cite: 1]。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 动力学对比模拟器 1：Na2CO3 vs NaHCO3 与盐酸反应（双锥形瓶套气球） -->
+        <div class="content-card">
+            <div class="sub-section-title">3. 实验对比一：Na₂CO₃ / NaHCO₃ 与盐酸反应动力学模拟（双锥形瓶套气球）</div>
+            <p style="font-size:15px; color:#718096;">
+                💡 <strong>实验设计：</strong>两个等容积锥形瓶中分别盛有 <strong>等质量（如各 2.0 g）</strong> 的 Na₂CO₃ 与 NaHCO₃ 粉末，同时倒入 <strong>同浓度、同体积的过量稀盐酸</strong>，观察气球膨胀的速率与最终体积大小：
+            </p>
+
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">🎈 气球膨胀与产气动力学对比实时演示</span>
+                    <div>
+                        <button class="btn" style="background:#48bb78;" onclick="startAcidBalloonReaction()">🧪 同时倾倒入等量过量盐酸</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetAcidBalloonSim()">重置实验</button>
+                    </div>
+                </div>
+                <canvas id="balloonCanvas" width="920" height="280" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="balloonStatusText">状态待命：锥形瓶 A (2.0 g Na₂CO₃) | 锥形瓶 B (2.0 g NaHCO₃)</span>
+                    <span style="color:#f6e05e;">动力学结论：NaHCO₃ 一步瞬间爆发生气且气球更大；Na₂CO₃ 分步延缓产气</span>
+                </div>
+            </div>
+
+            <div class="block-ans-box">
+                <span>❓ <strong>反应本质方程式与动力学差异剖析：</strong></span>
+                <button class="ans-trigger" onclick="toggleBlockAns(this)">展开机理对比</button>
+                <div class="block-ans-content">
+                    • <strong>碳酸氢钠体系（B瓶）：</strong><code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code>[cite: 1]<br>
+                    &nbsp;&nbsp;反应一步到位，无中间过渡阶段，倒入盐酸瞬间产生剧烈翻滚气泡，气球以极快速度膨胀胀大！因相同质量下 NaHCO₃ 摩尔质量较小（84 g/mol），产出的 CO₂ 气体总体积更大！<br>
+                    • <strong>碳酸钠体系（A瓶）：</strong>分步反应：<br>
+                    &nbsp;&nbsp;第一阶段（盐酸不足）：<code>Na₂CO₃(aq) + HCl(aq) &rarr; NaHCO₃(aq) + NaCl(aq)</code>（吸收 H⁺，暂无气泡产生）<br>
+                    &nbsp;&nbsp;第二阶段（盐酸过量）：<code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code>[cite: 1]（开始平缓产气，气球膨胀较慢且体积相对较小）。
+                </div>
+            </div>
+        </div>
+
+        <!-- 热稳定性实验模拟器 2：Na2CO3 vs NaHCO3 经典套管加热实验（严谨双路导管设计） -->
+        <div class="content-card">
+            <div class="sub-section-title">4. 实验对比二：Na₂CO₃ 与 NaHCO₃ 热稳定性对比（经典套管实验装置）</div>
+            <p style="font-size:15px; color:#718096;">
+                💡 <strong>经典严谨设计：</strong>内小试管装 NaHCO₃（经穿透大胶塞的长导管直插右侧试管 A）；外大试管装 Na₂CO₃（经侧支管向下引出直插试管 B）：
+            </p>
+
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">🔥 严谨双路套管受热分解与澄清石灰水检验模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#e53e3e;" onclick="startThermalDecompSim()">🔥 点燃酒精灯加热</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetThermalSim()">熄灭并重置</button>
+                    </div>
+                </div>
+                <canvas id="thermalCanvas" width="940" height="320" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="thermalStatusText">状态待命：内管装 NaHCO₃ (红色气路导向试管 A)，外管装 Na₂CO₃ (蓝色气路导向试管 B)</span>
+                    <span style="color:#f6e05e;">结论：NaHCO₃ 受微热易分解；Na₂CO₃ 强热不分解</span>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:20%;">探究对比维度</th>
+                        <th style="width:40%;">碳酸钠 (Na₂CO₃ / 苏打 / 纯碱)</th>
+                        <th style="width:40%;">碳酸氢钠 (NaHCO₃ / 小苏打)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>受热分解反应</strong></td>
+                        <td>稳定，受热
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">点击查看</button>
+                                <span class="ans-content">不分解</span>
+                            </span>
+                        </td>
+                        <td>不稳定，受热易分解：<br>
+                            <code>2NaHCO₃(s) —Δ→</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
+                                <span class="ans-content">Na₂CO₃(s) + H₂O(l) + CO₂(g)↑</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>澄清石灰水检验</strong></td>
+                        <td>试管 B 无气泡冒出，石灰水保持
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
+                                <span class="ans-content">澄清</span>
+                            </span>
+                        </td>
+                        <td>试管 A 产生大量气泡，石灰水迅速变
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
+                                <span class="ans-content">乳白色浑浊</span>
+                            </span>[cite: 1]
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>与 CaCl₂/BaCl₂ 溶液反应</strong></td>
+                        <td><code>Na₂CO₃(aq) + CaCl₂(aq) &rarr;</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
+                                <span class="ans-content">CaCO₃(s)↓ + 2NaCl(aq)（白色沉淀）</span>
+                            </span>[cite: 1]
+                        </td>
+                        <td>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
+                                <span class="ans-content">不产生沉淀（不反应）</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>固体相互转化</strong></td>
+                        <td colspan="2">
+                            • <code>Na₂CO₃(aq) + CO₂(g) + H₂O(l) &rarr;</code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
+                                <span class="ans-content">2NaHCO₃(s)↓</span>
+                            </span> (通入过量二氧化碳)[cite: 1]<br>
+                            • <code>2NaHCO₃(s) —加热灼烧—></code>
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
+                                <span class="ans-content">Na₂CO₃(s) + H₂O(l) + CO₂(g)↑</span>
+                            </span> 或向溶液加入适量 NaOH[cite: 1]。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ======================= NotebookLM 风格全景知识图谱 ======================= -->
+        <div class="mindmap-container">
+            <div class="mindmap-header">
+                <div class="mindmap-title">🧠 第9章 IA族元素：钠和钾 全景知识图谱 (Foldable Hierarchy)</div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-outline" style="color:#61afef; border-color:#3e4451; padding:3px 10px; font-size:13px;" onclick="expandAllMindmap(true)">全部展开</button>
+                    <button class="btn btn-outline" style="color:#61afef; border-color:#3e4451; padding:3px 10px; font-size:13px;" onclick="expandAllMindmap(false)">全部折叠</button>
+                </div>
+            </div>
+
+            <div class="mindmap-content">
+                <div class="h-tree">
+                    <div class="h-node root has-children" onclick="toggleHNode(this)">
+                        第9章 IA族元素：钠和钾 <span class="toggle-btn">+</span>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                9.1 钠和钾的性质与制备 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">周期律基础：1个价电子、电子层递增、半径增大、引力减弱、金属性及还原性增强 (K > Na)</div></li>
+                                <li><div class="h-node leaf">9.1.1 物理性质：银白金属、质软、比水轻比煤油重、熔沸点低、导电导热优良</div></li>
+                                <li><div class="h-node leaf">9.1.2 化学性质：常温氧化生Na₂O/K₂O；燃烧生Na₂O₂/KO₂；与水/酸剧烈反应(浮熔游响红)；卤素中剧烈燃烧</div></li>
+                                <li><div class="h-node leaf">9.1.3 工业制备：Down槽电解熔融NaCl(加CaCl₂助熔,铁丝网防化合)；高温钠热还原KCl(抽气促平衡移动)</div></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                9.2 焰色试验 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">物理本质：基态 &rarr; 激发态 &rarr; 跃迁回基态发射特定波长光子（明线发射光谱）</div></li>
+                                <li><div class="h-node leaf">标准操作：洗(稀盐酸) &rarr; 烧(至无色) &rarr; 蘸(试样) &rarr; 烧(观察显色) &rarr; 滤/洗(蓝钴玻璃滤黄光)</div></li>
+                                <li><div class="h-node leaf">特征颜色：Na 黄色 (589nm 双黄线)；K 淡紫色 (透过蓝钴玻璃)；Li 紫红；Ca 砖红；Cu 绿</div></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                9.3 重要化合物 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">NaCl / KCl：调味生理必需、氯碱工业电解饱和食盐水(2NaCl+2H₂O&rarr;2NaOH+Cl₂↑+H₂↑)、钾肥</div></li>
+                                <li><div class="h-node leaf">NaOH：极易潮解吸CO₂变质、腐蚀玻璃(SiO₂+2NaOH&rarr;Na₂SiO₃+H₂O用橡皮塞)、溶解剧烈放热</div></li>
+                                <li><div class="h-node leaf">Na₂CO₃ (苏打)：易溶、水溶液强碱性、热稳定受热不分解、加CaCl₂产CaCO₃沉淀、加酸分步延缓生气</div></li>
+                                <li><div class="h-node leaf">NaHCO₃ (小苏打)：微溶、弱碱性、受热易分解(2NaHCO₃&rarr;Na₂CO₃+H₂O+CO₂↑)、加酸瞬间剧烈爆发生气</div></li>
+                                <li><div class="h-node leaf">KNO₃：溶解强烈吸热、受热分解产生O₂表现强氧化性、制造黑火药(S+2KNO₃+3C)、复合肥料</div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript 逻辑交互控制引擎 -->
+    <script>
+        // --- 1. 全局字号与版面 ---
+        function setFontSize(sizeClass) {
+            document.body.classList.remove('font-small', 'font-medium', 'font-large');
+            document.body.classList.add(sizeClass);
+        }
+
+        function setLayoutWidth(layoutType) {
+            const container = document.getElementById('mainContainer');
+            if (layoutType === 'wide') {
+                container.classList.add('wide-mode');
+            } else {
+                container.classList.remove('wide-mode');
+            }
+        }
+
+        function toggleEyeCare() {
+            document.body.classList.toggle('eye-care-mode');
+        }
+
+        // 点读挖空控制
+        function toggleAns(btnElement) {
+            const content = btnElement.nextElementSibling;
+            content.classList.toggle('show');
+            btnElement.classList.toggle('hidden');
+        }
+
+        function toggleBlockAns(btnElement) {
+            const content = btnElement.nextElementSibling;
+            const isShow = content.classList.toggle('show');
+            btnElement.textContent = isShow ? "收起机理" : "展开机理对比";
+        }
+
+        function toggleAllAnswers(showAll) {
+            document.querySelectorAll('.ans-content').forEach(c => c.classList.toggle('show', showAll));
+            document.querySelectorAll('.ans-inline .ans-trigger').forEach(t => t.classList.toggle('hidden', showAll));
+            document.querySelectorAll('.block-ans-content').forEach(c => c.classList.toggle('show', showAll));
+            document.querySelectorAll('.block-ans-box .ans-trigger').forEach(t => {
+                t.textContent = showAll ? "收起解析" : "展开解析";
+            });
+        }
+
+        // --- 2. 钠与钾遇水反应动态模拟器 ---
+        const wCanvas = document.getElementById('waterCanvas');
+        const wCtx = wCanvas.getContext('2d');
+        let waterAnimId = null;
+        let activeWaterMetal = 'Na';
+        let isWaterReacting = false;
+
+        function setWaterSimMetal(metal) {
+            activeWaterMetal = metal;
+            document.getElementById('waterEqText').innerText = metal === 'Na' ?
+                "2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)↑" : "2K(s) + 2H₂O(l) → 2KOH(aq) + H₂(g)↑ (反应伴随淡紫色火焰与微爆)";
+            resetWaterCanvas();
+        }
+
+        function resetWaterCanvas() {
+            if (waterAnimId) cancelAnimationFrame(waterAnimId);
+            isWaterReacting = false;
+            wCtx.clearRect(0, 0, wCanvas.width, wCanvas.height);
+
+            wCtx.strokeStyle = '#64748b';
+            wCtx.lineWidth = 4;
+            wCtx.strokeRect(120, 30, 660, 180);
+
+            wCtx.fillStyle = 'rgba(56, 189, 248, 0.2)';
+            wCtx.fillRect(122, 90, 656, 118);
+
+            wCtx.fillStyle = '#94a3b8';
+            wCtx.font = '14px sans-serif';
+            wCtx.fillText("液面 (滴有无色酚酞)", 135, 85);
+
+            document.getElementById('waterStatusText').innerText = `已就绪：等待投入金属 ${activeWaterMetal}`;
+        }
+
+        function startWaterReaction() {
+            if (isWaterReacting) return;
+            isWaterReacting = true;
+
+            let frame = 0;
+            let metalX = 450;
+            let metalY = 88;
+            const isK = activeWaterMetal === 'K';
+
+            function animate() {
+                wCtx.clearRect(0, 0, wCanvas.width, wCanvas.height);
+
+                wCtx.strokeStyle = '#64748b';
+                wCtx.lineWidth = 4;
+                wCtx.strokeRect(120, 30, 660, 180);
+
+                let pinkAlpha = Math.min(0.75, frame / 90);
+                wCtx.fillStyle = `rgba(244, 114, 182, ${pinkAlpha})`;
+                wCtx.fillRect(122, 90, 656, 118);
+
+                let speed = isK ? 10 : 6;
+                metalX += (Math.random() - 0.5) * speed * 2;
+                metalX = Math.max(140, Math.min(740, metalX));
+
+                for (let i = 0; i < (isK ? 8 : 5); i++) {
+                    wCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    wCtx.beginPath();
+                    wCtx.arc(metalX + (Math.random() - 0.5) * 15, metalY + 5 + Math.random() * 20, 2 + Math.random() * 2, 0, Math.PI * 2);
+                    wCtx.fill();
+                }
+
+                wCtx.fillStyle = '#f8fafc';
+                wCtx.beginPath();
+                wCtx.arc(metalX, metalY, isK ? 6 : 7, 0, Math.PI * 2);
+                wCtx.fill();
+
+                if (isK || frame % 3 === 0) {
+                    wCtx.fillStyle = isK ? 'rgba(192, 132, 252, 0.95)' : 'rgba(250, 204, 21, 0.9)';
+                    wCtx.beginPath();
+                    wCtx.arc(metalX, metalY - 8, 8 + Math.random() * 7, 0, Math.PI * 2);
+                    wCtx.fill();
+                }
+
+                frame++;
+                if (frame < 140) {
+                    waterAnimId = requestAnimationFrame(animate);
+                    document.getElementById('waterStatusText').innerText = 
+                        `反应进行中: [浮]水面漂浮 &rarr; [熔]放热缩成光亮小球 &rarr; [游]氢气推动急速乱窜 &rarr; [响]发出嘶嘶声 &rarr; [红]生成强碱溶液变红`;
+                } else {
+                    isWaterReacting = false;
+                    document.getElementById('waterStatusText').innerText = `反应结束：金属 ${activeWaterMetal} 已完全反应，溶液均匀显鲜艳粉红色。`;
+                }
+            }
+            animate();
+        }
+
+        // --- 3. Down 槽电解熔融 NaCl 模拟器 ---
+        const dCanvas = document.getElementById('downsCanvas');
+        const dCtx = dCanvas.getContext('2d');
+        let downsAnimId = null;
+        let isDownsRunning = false;
+
+        function resetDownsElectrolysis() {
+            if (downsAnimId) cancelAnimationFrame(downsAnimId);
+            isDownsRunning = false;
+            dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height);
+
+            dCtx.fillStyle = '#b91c1c';
+            dCtx.fillRect(140, 30, 640, 220);
+            dCtx.fillStyle = '#1e293b';
+            dCtx.fillRect(155, 45, 610, 195);
+
+            dCtx.fillStyle = 'rgba(234, 88, 12, 0.45)';
+            dCtx.fillRect(160, 50, 600, 185);
+
+            dCtx.fillStyle = '#334155';
+            dCtx.fillRect(420, 110, 80, 125);
+            dCtx.fillStyle = '#475569';
+            dCtx.beginPath();
+            dCtx.moveTo(380, 50); dCtx.lineTo(540, 50); dCtx.lineTo(475, 110); dCtx.lineTo(445, 110);
+            dCtx.closePath();
+            dCtx.fill();
+
+            dCtx.fillStyle = '#64748b';
+            dCtx.fillRect(445, 10, 30, 40);
+
+            dCtx.fillStyle = '#94a3b8';
+            dCtx.fillRect(230, 100, 40, 135);
+            dCtx.fillRect(650, 100, 40, 135);
+
+            dCtx.fillStyle = '#cbd5e0';
+            dCtx.fillRect(200, 40, 80, 30);
+            dCtx.fillRect(100, 45, 100, 15);
+
+            dCtx.strokeStyle = '#f8fafc';
+            dCtx.lineWidth = 2;
+            dCtx.setLineDash([4, 4]);
+            dCtx.beginPath();
+            dCtx.moveTo(340, 60); dCtx.lineTo(340, 230);
+            dCtx.moveTo(580, 60); dCtx.lineTo(580, 230);
+            dCtx.stroke();
+            dCtx.setLineDash([]);
+
+            dCtx.fillStyle = '#f8fafc';
+            dCtx.font = '13px sans-serif';
+            dCtx.fillText("Cl₂ 导出管", 430, 25);
+            dCtx.fillText("液态 Na 导出槽", 95, 38);
+            dCtx.fillText("石墨阳极(+)", 425, 170);
+            dCtx.fillText("铁阴极(-)", 225, 90);
+            dCtx.fillText("铁阴极(-)", 645, 90);
+            dCtx.fillText("铁丝网隔膜", 315, 55);
+            dCtx.fillText("铁丝网隔膜", 555, 55);
+
+            document.getElementById('downsStatus').innerText = "当前状态：待命已就绪，电解质已熔融 (580~600℃)";
+        }
+
+        function startDownsElectrolysis() {
+            if (isDownsRunning) return;
+            isDownsRunning = true;
+            let frame = 0;
+            const clIons = [];
+            const naIons = [];
+            const cl2Bubbles = [];
+            const naLiquidDrops = [];
+
+            for (let i = 0; i < 15; i++) {
+                clIons.push({ x: 280 + Math.random() * 360, y: 70 + Math.random() * 140 });
+                naIons.push({ x: 280 + Math.random() * 360, y: 70 + Math.random() * 140 });
+            }
+
+            function animate() {
+                resetDownsElectrolysis();
+
+                for (let i = clIons.length - 1; i >= 0; i--) {
+                    let ion = clIons[i];
+                    dCtx.fillStyle = '#a3e635';
+                    dCtx.beginPath();
+                    dCtx.arc(ion.x, ion.y, 4, 0, Math.PI * 2);
+                    dCtx.fill();
+                    dCtx.fillStyle = '#000';
+                    dCtx.font = '9px sans-serif';
+                    dCtx.fillText("Cl⁻", ion.x - 4, ion.y + 3);
+
+                    if (ion.x < 460) ion.x += 1.2;
+                    else ion.x -= 1.2;
+
+                    if (Math.abs(ion.x - 460) < 15) {
+                        cl2Bubbles.push({ x: 440 + Math.random() * 40, y: ion.y, r: 3 + Math.random() * 3, vy: 2 });
+                        ion.x = 280 + Math.random() * 360;
+                        ion.y = 80 + Math.random() * 130;
+                    }
+                }
+
+                for (let i = naIons.length - 1; i >= 0; i--) {
+                    let ion = naIons[i];
+                    dCtx.fillStyle = '#60a5fa';
+                    dCtx.beginPath();
+                    dCtx.arc(ion.x, ion.y, 4, 0, Math.PI * 2);
+                    dCtx.fill();
+                    dCtx.fillStyle = '#000';
+                    dCtx.font = '9px sans-serif';
+                    dCtx.fillText("Na⁺", ion.x - 5, ion.y + 3);
+
+                    if (ion.x < 460) ion.x += 1.2;
+                    else ion.x += 1.2;
+
+                    if (ion.x < 260 || ion.x > 660) {
+                        naLiquidDrops.push({ x: ion.x < 460 ? 245 : 665, y: ion.y, r: 4 + Math.random() * 2, vy: 1.5 });
+                        ion.x = 360 + Math.random() * 200;
+                        ion.y = 80 + Math.random() * 130;
+                    }
+                }
+
+                for (let i = cl2Bubbles.length - 1; i >= 0; i--) {
+                    let b = cl2Bubbles[i];
+                    dCtx.fillStyle = 'rgba(163, 230, 53, 0.85)';
+                    dCtx.beginPath();
+                    dCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                    dCtx.fill();
+                    b.y -= b.vy;
+                    if (b.y < 20) cl2Bubbles.splice(i, 1);
+                }
+
+                for (let i = naLiquidDrops.length - 1; i >= 0; i--) {
+                    let n = naLiquidDrops[i];
+                    dCtx.fillStyle = '#f8fafc';
+                    dCtx.beginPath();
+                    dCtx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                    dCtx.fill();
+                    n.y -= n.vy;
+                    if (n.y < 55) {
+                        dCtx.fillStyle = '#e2e8f0';
+                        dCtx.fillRect(110, 48, 120, 10);
+                        naLiquidDrops.splice(i, 1);
+                    }
+                }
+
+                frame++;
+                if (frame < 220) {
+                    downsAnimId = requestAnimationFrame(animate);
+                    document.getElementById('downsStatus').innerText = "微观反应中：Cl⁻ 向阳极失电子生成 Cl₂ 气泡；Na⁺ 向阴极得电子生成低密度液态钠并上浮流出！";
+                } else {
+                    isDownsRunning = false;
+                    document.getElementById('downsStatus').innerText = "电解完成：铁丝网隔膜成功阻止 Na 与 Cl₂ 化合，高纯度液态金属钠进入收集系统。";
+                }
+            }
+            animate();
+        }
+
+        // --- 4. 焰色试验 5 步模拟 ---
+        const flameCanvas = document.getElementById('flameCanvas');
+        const fCtx = flameCanvas.getContext('2d');
+        let currentFlameElem = 'Na';
+        let currentStep = 1;
+        let flameAnimId = null;
+
+        const flameElemData = {
+            'Na': { name: '钠盐 (Na⁺)', colorHex: '#f6e05e', text: '黄色', wave: '589.0 nm & 589.6 nm', needCobalt: false },
+            'K': { name: '钾盐 (K⁺)', colorHex: '#b794f4', text: '淡紫色 (透过蓝色钴玻璃)', wave: '766.5 nm & 404.4 nm', needCobalt: true },
+            'Li': { name: '锂盐 (Li⁺)', colorHex: '#ff4d4d', text: '紫红色', wave: '670.8 nm', needCobalt: false },
+            'Ca': { name: '钙盐 (Ca²⁺)', colorHex: '#ed8936', text: '砖红色', wave: '622 nm', needCobalt: false },
+            'Cu': { name: '铜盐 (Cu²⁺)', colorHex: '#48bb78', text: '绿色', wave: '510~550 nm', needCobalt: false }
+        };
+
+        function selectFlameElem(elem) {
+            currentFlameElem = elem;
+            const data = flameElemData[elem];
+            document.getElementById('currentFlameElemText').innerText = data.name;
+            document.getElementById('currentFlameColorText').innerText = `${data.text} (${data.wave})`;
+            runFlameStep(1);
+        }
+
+        function runFlameStep(step) {
+            currentStep = step;
+            if (flameAnimId) cancelAnimationFrame(flameAnimId);
+
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`stepBtn${i}`);
+                btn.classList.remove('active', 'completed');
+                if (i < step) btn.classList.add('completed');
+                if (i === step) btn.classList.add('active');
+            }
+
+            const data = flameElemData[currentFlameElem];
+            const titleEl = document.getElementById('flameStepTitle');
+            const descEl = document.getElementById('flameStepDesc');
+            const cobaltEl = document.getElementById('cobaltStatusText');
+
+            let frame = 0;
+
+            function drawScene(flameColor, hasSample, showCobalt) {
+                fCtx.clearRect(0, 0, flameCanvas.width, flameCanvas.height);
+
+                fCtx.fillStyle = '#64748b'; fCtx.fillRect(200, 180, 40, 40);
+                fCtx.fillStyle = '#94a3b8'; fCtx.fillRect(212, 130, 16, 50);
+
+                let flicker = Math.sin(frame * 0.3) * 4;
+                fCtx.fillStyle = flameColor;
+                fCtx.beginPath();
+                fCtx.moveTo(220, 45 + flicker);
+                fCtx.quadraticCurveTo(170, 105, 208, 130);
+                fCtx.lineTo(232, 130);
+                fCtx.quadraticCurveTo(270, 105, 220, 45 + flicker);
+                fCtx.fill();
+
+                fCtx.fillStyle = 'rgba(56, 189, 248, 0.85)';
+                fCtx.beginPath();
+                fCtx.moveTo(220, 95);
+                fCtx.quadraticCurveTo(205, 112, 214, 130);
+                fCtx.lineTo(226, 130);
+                fCtx.quadraticCurveTo(235, 112, 220, 95);
+                fCtx.fill();
+
+                fCtx.strokeStyle = '#e2e8f0'; fCtx.lineWidth = 2;
+                fCtx.beginPath(); fCtx.moveTo(60, 115); fCtx.lineTo(218, 115); fCtx.stroke();
+
+                if (hasSample) {
+                    fCtx.fillStyle = '#f6ad55';
+                    fCtx.beginPath(); fCtx.arc(218, 115, 4, 0, Math.PI * 2); fCtx.fill();
+                }
+
+                if (showCobalt) {
+                    fCtx.fillStyle = 'rgba(30, 64, 175, 0.5)';
+                    fCtx.fillRect(130, 25, 180, 195);
+                    fCtx.strokeStyle = '#3b82f6';
+                    fCtx.lineWidth = 3;
+                    fCtx.strokeRect(130, 25, 180, 195);
+                    fCtx.fillStyle = '#93c5fd';
+                    fCtx.font = '13px sans-serif';
+                    fCtx.fillText("透过蓝色钴玻璃 (滤去 Na 黄光)", 140, 48);
+                }
+
+                frame++;
+                flameAnimId = requestAnimationFrame(() => drawScene(flameColor, hasSample, showCobalt));
+            }
+
+            if (step === 1) {
+                titleEl.innerText = "步骤 1：洗 (稀盐酸洗涤)";
+                descEl.innerText = "用稀盐酸洗净铂丝，将表面残留金属转化为高温易挥发的氯化物。";
+                cobaltEl.innerText = "未放置";
+                drawScene('rgba(56, 189, 248, 0.5)', false, false);
+            } else if (step === 2) {
+                titleEl.innerText = "步骤 2：烧 (外焰灼烧至无色)";
+                descEl.innerText = "置于外焰灼烧，直至火焰颜色恢复至原本火焰颜色，确认铂丝已完全纯净。";
+                cobaltEl.innerText = "未放置";
+                drawScene('rgba(56, 189, 248, 0.8)', false, false);
+            } else if (step === 3) {
+                titleEl.innerText = "步骤 3：蘸 (蘸取待测试样)";
+                descEl.innerText = `用纯净的铂丝蘸取待测 ${data.name} 试样。`;
+                cobaltEl.innerText = "未放置";
+                drawScene('rgba(56, 189, 248, 0.5)', true, false);
+            } else if (step === 4) {
+                titleEl.innerText = "步骤 4：烧 (显色观察)";
+                descEl.innerText = `置于外焰灼烧，电子跃迁释放光子，观察到特征火焰颜色：【${data.text}】！`;
+                cobaltEl.innerText = data.needCobalt ? "提示：观察钾必须透过蓝色钴玻璃！" : "无需使用";
+                drawScene(data.colorHex, false, false);
+            } else if (step === 5) {
+                titleEl.innerText = "步骤 5：滤 / 再次洗净";
+                if (data.needCobalt) {
+                    descEl.innerText = "透过蓝色钴玻璃成功滤去黄光干扰，清晰观察到钾特征淡紫色火焰！随后用盐酸洗净铂丝。";
+                    cobaltEl.innerText = "已放置蓝色钴玻璃";
+                    drawScene(data.colorHex, false, true);
+                } else {
+                    descEl.innerText = "实验完毕，再次用稀盐酸洗净铂丝备用。";
+                    cobaltEl.innerText = "未放置";
+                    drawScene('rgba(56, 189, 248, 0.5)', false, false);
+                }
+            }
+        }
+
+        // --- 5. 动力学对比：Na2CO3 vs NaHCO3 双气球膨胀实验 ---
+        const bCanvas = document.getElementById('balloonCanvas');
+        const bCtx = bCanvas.getContext('2d');
+        let balloonAnimId = null;
+        let isBalloonRunning = false;
+
+        function resetAcidBalloonSim() {
+            if (balloonAnimId) cancelAnimationFrame(balloonAnimId);
+            isBalloonRunning = false;
+            bCtx.clearRect(0, 0, bCanvas.width, bCanvas.height);
+
+            function drawFlask(x, label, formula) {
+                bCtx.fillStyle = '#2d3748';
+                bCtx.strokeStyle = '#a0aec0';
+                bCtx.lineWidth = 3;
+                bCtx.beginPath();
+                bCtx.moveTo(x + 50, 150);
+                bCtx.lineTo(x + 70, 150);
+                bCtx.lineTo(x + 110, 240);
+                bCtx.lineTo(x + 10, 240);
+                bCtx.closePath();
+                bCtx.fill();
+                bCtx.stroke();
+
+                bCtx.fillStyle = 'rgba(66, 153, 225, 0.3)';
+                bCtx.fillRect(x + 20, 200, 80, 40);
+
+                bCtx.fillStyle = '#e53e3e';
+                bCtx.beginPath();
+                bCtx.ellipse(x + 60, 135, 12, 15, 0, 0, Math.PI * 2);
+                bCtx.fill();
+
+                bCtx.fillStyle = '#cbd5e0';
+                bCtx.font = '14px sans-serif';
+                bCtx.fillText(label, x + 25, 260);
+                bCtx.fillStyle = '#f6e05e';
+                bCtx.fillText(formula, x + 20, 190);
+            }
+
+            drawFlask(200, "锥形瓶 A", "2.0 g Na₂CO₃");
+            drawFlask(560, "锥形瓶 B", "2.0 g NaHCO₃");
+            document.getElementById('balloonStatusText').innerText = "状态待命：锥形瓶 A (2.0 g Na₂CO₃) | 锥形瓶 B (2.0 g NaHCO₃)";
+        }
+
+        function startAcidBalloonReaction() {
+            if (isBalloonRunning) return;
+            isBalloonRunning = true;
+            let frame = 0;
+
+            function animate() {
+                bCtx.clearRect(0, 0, bCanvas.width, bCanvas.height);
+
+                let rB = Math.min(54, 15 + frame * 0.55);
+                let rA = 15;
+                if (frame > 45) {
+                    rA = Math.min(42, 15 + (frame - 45) * 0.28);
+                }
+
+                function drawAnimatedFlask(x, label, formula, rBalloon, isFast) {
+                    bCtx.fillStyle = '#2d3748';
+                    bCtx.strokeStyle = '#a0aec0';
+                    bCtx.lineWidth = 3;
+                    bCtx.beginPath();
+                    bCtx.moveTo(x + 50, 150);
+                    bCtx.lineTo(x + 70, 150);
+                    bCtx.lineTo(x + 110, 240);
+                    bCtx.lineTo(x + 10, 240);
+                    bCtx.closePath();
+                    bCtx.fill();
+                    bCtx.stroke();
+
+                    bCtx.fillStyle = 'rgba(66, 153, 225, 0.4)';
+                    bCtx.fillRect(x + 20, 195, 80, 45);
+
+                    if ((isFast && frame < 130) || (!isFast && frame > 45 && frame < 160)) {
+                        for (let i = 0; i < (isFast ? 8 : 4); i++) {
+                            bCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                            bCtx.beginPath();
+                            bCtx.arc(x + 30 + Math.random() * 60, 205 + Math.random() * 30, 2 + Math.random() * 3, 0, Math.PI * 2);
+                            bCtx.fill();
+                        }
+                    }
+
+                    bCtx.fillStyle = isFast ? '#48bb78' : '#e53e3e';
+                    bCtx.beginPath();
+                    bCtx.ellipse(x + 60, 150 - rBalloon, rBalloon * 0.85, rBalloon, 0, 0, Math.PI * 2);
+                    bCtx.fill();
+
+                    bCtx.fillStyle = '#cbd5e0';
+                    bCtx.font = '14px sans-serif';
+                    bCtx.fillText(label, x + 25, 260);
+                    bCtx.fillStyle = '#f6e05e';
+                    bCtx.fillText(formula, x + 15, 185);
+                }
+
+                drawAnimatedFlask(200, "锥形瓶 A (Na₂CO₃)", "分步产气 (气球稍小)", rA, false);
+                drawAnimatedFlask(560, "锥形瓶 B (NaHCO₃)", "瞬间产气 (气球更大)", rB, true);
+
+                frame++;
+                if (frame < 170) {
+                    balloonAnimId = requestAnimationFrame(animate);
+                    document.getElementById('balloonStatusText').innerText = "反应中：右侧 NaHCO₃ 瞬间剧烈产气，气球膨胀极快且体积更大；左侧 Na₂CO₃ 经历分步过渡后缓缓充气。";
+                } else {
+                    isBalloonRunning = false;
+                    document.getElementById('balloonStatusText').innerText = "反应结束：等质量下 NaHCO₃ 产气量显著更多且反应速率极快！";
+                }
+            }
+            animate();
+        }
+
+        // --- 6. 严谨套管加热对比模拟器（严格对照手绘图纸修正导管走向与结构） ---
+        const tCanvas = document.getElementById('thermalCanvas');
+        const tCtx = tCanvas.getContext('2d');
+        let thermalAnimId = null;
+        let isThermalRunning = false;
+
+        function resetThermalSim() {
+            if (thermalAnimId) cancelAnimationFrame(thermalAnimId);
+            isThermalRunning = false;
+            tCtx.clearRect(0, 0, tCanvas.width, tCanvas.height);
+
+            // 1. 铁架台
+            tCtx.fillStyle = '#475569';
+            tCtx.fillRect(60, 255, 150, 15);
+            tCtx.fillRect(90, 35, 12, 235);
+            tCtx.fillStyle = '#64748b';
+            tCtx.fillRect(90, 120, 60, 10);
+
+            // 2. 倾斜外大试管 (管身透明玻璃)
+            tCtx.save();
+            tCtx.translate(140, 95);
+            tCtx.rotate(0.08);
+
+            tCtx.strokeStyle = '#e2e8f0';
+            tCtx.lineWidth = 3.5;
+            tCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            tCtx.beginPath();
+            tCtx.moveTo(0, 0);
+            tCtx.lineTo(340, 0);
+            tCtx.arc(340, 26, 26, -Math.PI/2, Math.PI/2);
+            tCtx.lineTo(0, 52);
+            tCtx.closePath();
+            tCtx.stroke();
+            tCtx.fill();
+
+            // 外大试管底部的 Na₂CO₃ 白色固体 (直接受热区)
+            tCtx.fillStyle = '#cbd5e0';
+            tCtx.fillRect(285, 25, 55, 22);
+
+            // 3. 内部小试管 (置于外管内中后部，受微热)
+            tCtx.strokeStyle = '#94a3b8';
+            tCtx.lineWidth = 2.5;
+            tCtx.beginPath();
+            tCtx.moveTo(60, 12);
+            tCtx.lineTo(240, 12);
+            tCtx.arc(240, 26, 14, -Math.PI/2, Math.PI/2);
+            tCtx.lineTo(60, 40);
+            tCtx.closePath();
+            tCtx.stroke();
+
+            // 内管中的 NaHCO₃ 白色固体 (粉末)
+            tCtx.fillStyle = '#f8fafc';
+            tCtx.fillRect(170, 22, 55, 14);
+
+            // 内管小橡胶塞
+            tCtx.fillStyle = '#78350f';
+            tCtx.fillRect(52, 11, 14, 30);
+
+            // 外大试管的大橡胶塞
+            tCtx.fillStyle = '#92400e';
+            tCtx.fillRect(-8, -4, 22, 60);
+
+            tCtx.restore();
+
+            // 4. 绘制独立的两路导气管 (严格对照手绘图纸)
+
+            // 【红色气路】：内管 NaHCO₃ 导气细管向左穿透大塞 -> 向上折弯 -> 沿上方一直向右延伸 -> 插入试管 A
+            tCtx.strokeStyle = '#f87171'; // 红色导管
+            tCtx.lineWidth = 3.5;
+            tCtx.beginPath();
+            tCtx.moveTo(195, 123); // 内管塞子处
+            tCtx.lineTo(125, 117); // 穿过大橡胶塞向左引出
+            tCtx.lineTo(125, 55);  // 向上折弯
+            tCtx.lineTo(840, 55);  // 水平向右延伸至最右侧试管 A 上方
+            tCtx.lineTo(840, 260); // 折弯向下插入试管 A
+            tCtx.stroke();
+
+            // 【蓝色气路】：外管 Na₂CO₃ 侧支导管从中前部向上引出 -> 向右延伸 -> 插入试管 B
+            tCtx.strokeStyle = '#60a5fa'; // 蓝色导管
+            tCtx.lineWidth = 3.5;
+            tCtx.beginPath();
+            tCtx.moveTo(270, 105); // 从外大试管中前部引出
+            tCtx.lineTo(285, 75);  // 向上折弯
+            tCtx.lineTo(685, 75);  // 向右水平延伸至试管 B 上方
+            tCtx.lineTo(685, 260); // 折弯向下插入试管 B
+            tCtx.stroke();
+
+            // 5. 试管 B (接蓝色气路外管 -> 澄清石灰水)
+            tCtx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+            tCtx.fillRect(668, 195, 34, 75);
+            tCtx.strokeStyle = '#e2e8f0';
+            tCtx.lineWidth = 2.5;
+            tCtx.beginPath();
+            tCtx.moveTo(668, 175);
+            tCtx.lineTo(668, 265);
+            tCtx.arc(685, 265, 17, Math.PI, 0, true);
+            tCtx.lineTo(702, 175);
+            tCtx.stroke();
+
+            // 6. 试管 A (接红色气路内管 -> 澄清石灰水)
+            tCtx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+            tCtx.fillRect(823, 195, 34, 75);
+            tCtx.strokeStyle = '#e2e8f0';
+            tCtx.lineWidth = 2.5;
+            tCtx.beginPath();
+            tCtx.moveTo(823, 175);
+            tCtx.lineTo(823, 265);
+            tCtx.arc(840, 265, 17, Math.PI, 0, true);
+            tCtx.lineTo(857, 175);
+            tCtx.stroke();
+
+            // 7. 酒精灯 (位于外管底部与内管重叠区下方)
+            tCtx.fillStyle = '#64748b';
+            tCtx.fillRect(390, 250, 75, 45); // 灯身
+            tCtx.fillStyle = '#94a3b8';
+            tCtx.fillRect(417, 230, 20, 20); // 灯头
+            tCtx.fillStyle = '#f8fafc';
+            tCtx.fillRect(424, 218, 6, 12);  // 灯芯
+
+            // 标注文字
+            tCtx.fillStyle = '#f8fafc';
+            tCtx.font = '14.5px sans-serif';
+            tCtx.fillText("外管: Na₂CO₃", 410, 100);
+            tCtx.fillText("内管: NaHCO₃", 280, 138);
+            tCtx.fillText("试管 B (接外管)", 640, 305);
+            tCtx.fillText("试管 A (接内管)", 795, 305);
+
+            document.getElementById('thermalStatusText').innerText = "状态待命：内管装 NaHCO₃ (红色气路导向试管 A)，外管装 Na₂CO₃ (蓝色气路导向试管 B)";
+        }
+
+        function startThermalDecompSim() {
+            if (isThermalRunning) return;
+            isThermalRunning = true;
+            let frame = 0;
+            const bubblesA = [];
+
+            function animate() {
+                resetThermalSim();
+
+                // 动态酒精灯火焰 (直接加热两药品受热区)
+                let flicker = Math.sin(frame * 0.4) * 5;
+                tCtx.fillStyle = '#f59e0b';
+                tCtx.beginPath();
+                tCtx.moveTo(427, 150);
+                tCtx.lineTo(410, 218 + flicker);
+                tCtx.lineTo(444, 218 + flicker);
+                tCtx.closePath();
+                tCtx.fill();
+
+                // 内焰
+                tCtx.fillStyle = 'rgba(56, 189, 248, 0.8)';
+                tCtx.beginPath();
+                tCtx.moveTo(427, 185);
+                tCtx.lineTo(418, 218);
+                tCtx.lineTo(436, 218);
+                tCtx.closePath();
+                tCtx.fill();
+
+                // 内管管口凝结透明小水珠
+                if (frame > 25) {
+                    tCtx.fillStyle = '#38bdf8';
+                    tCtx.beginPath();
+                    tCtx.arc(225, 115, 2.5, 0, Math.PI * 2);
+                    tCtx.arc(235, 120, 3, 0, Math.PI * 2);
+                    tCtx.fill();
+                }
+
+                // 试管 A (内管 NaHCO₃ 分解生成 CO₂ 冒气泡)
+                if (frame % 3 === 0) {
+                    bubblesA.push({ x: 840 + (Math.random() - 0.5) * 10, y: 255, r: 2.5, vy: 1.6 });
+                }
+                for (let i = bubblesA.length - 1; i >= 0; i--) {
+                    let b = bubblesA[i];
+                    tCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    tCtx.beginPath();
+                    tCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                    tCtx.fill();
+                    b.y -= b.vy;
+                    if (b.y < 195) bubblesA.splice(i, 1);
+                }
+
+                // 试管 A 变乳白色浑浊渐变
+                let milkyAlpha = Math.min(0.85, frame / 80);
+                tCtx.fillStyle = `rgba(241, 245, 249, ${milkyAlpha})`;
+                tCtx.fillRect(824, 196, 32, 70);
+
+                frame++;
+                if (frame < 160) {
+                    thermalAnimId = requestAnimationFrame(animate);
+                    document.getElementById('thermalStatusText').innerText = "加热中：内管 NaHCO₃ 仅受间接微热即迅速分解出 CO₂ 沿红色长管注入试管 A 变浑浊，管口凝结水珠；外管 Na₂CO₃ 受直接强热试管 B 仍无任何气泡！";
+                } else {
+                    isThermalRunning = false;
+                    document.getElementById('thermalStatusText').innerText = "实验结论：Na₂CO₃ 热稳定性极强；NaHCO₃ 极易受热分解为 Na₂CO₃、H₂O 与 CO₂。";
+                }
+            }
+            animate();
+        }
+
+        // --- 7. NotebookLM 全景树状折叠控制 ---
+        function toggleHNode(nodeElement) {
+            const nextUl = nodeElement.nextElementSibling;
+            const toggleBtn = nodeElement.querySelector('.toggle-btn');
+            if (nextUl && nextUl.tagName === 'UL') {
+                const isOpen = nextUl.classList.toggle('layer-open');
+                if (toggleBtn) toggleBtn.textContent = isOpen ? '-' : '+';
+            }
+        }
+
+        function expandAllMindmap(expand) {
+            document.querySelectorAll('.h-tree ul').forEach(ul => {
+                ul.classList.toggle('layer-open', expand);
+            });
+            document.querySelectorAll('.h-tree .toggle-btn').forEach(btn => {
+                btn.textContent = expand ? '-' : '+';
+            });
+        }
+
+        // --- 页面初始化 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            resetWaterCanvas();
+            resetDownsElectrolysis();
+            runFlameStep(1);
+            resetAcidBalloonSim();
+            resetThermalSim();
+        });
+    </script>
+</body>
+</html>
