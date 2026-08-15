@@ -370,6 +370,16 @@
             font-weight: 700;
         }
 
+        .bridge-box {
+            background: var(--bg-card-sub);
+            border-left: 4px solid var(--primary);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: Consolas, monospace, sans-serif;
+            font-size: 0.92rem;
+        }
+
         /* 全卷清览模式 */
         .full-exam-section {
             margin-bottom: 30px;
@@ -461,7 +471,6 @@
 
     <!-- 试卷完整题库数据与渲染脚本 -->
     <script>
-        /* 完整试卷题库数据源 */
         const examDatabase = {
             A: {
                 title: "甲) 选择题 (33%，每题 1.5%)",
@@ -499,8 +508,17 @@
                             "C. m = 4, R³⁺ 是还原产物",
                             "D. n = 2y, H₂O 是还原产物"
                         ],
-                        correct: "A",
-                        sol: "<strong>【答案解析 A】</strong><br>依据电荷与得失电子守恒配平：4R²⁺ + 4H⁺ + O₂ → 4R³⁺ + 2H₂O。<br>• 系数比例为 x:y:1:m:n = 4:4:1:4:2。<br>• 化简最简整数比可对应 m=2，此时 R²⁺（+2→+3）失去电子被氧化，生成的 R³⁺ 为<strong>氧化产物</strong>，故 A 正确。"
+                        correct: "B",
+                        sol: `<strong>【答案解析 B】</strong><br>
+                        <strong>1. 离子方程式守恒配平：</strong><br>
+                        • 电子转移：R²⁺ ➔ R³⁺（失 1e⁻，发生氧化反应，R³⁺ 为氧化产物）；O₂ ➔ 2O²⁻（得 4e⁻，发生还原反应，H₂O 为还原产物）。<br>
+                        • 得失电子与电荷/质量守恒配平：<strong>4R²⁺ + 4H⁺ + O₂ = 4R³⁺ + 2H₂O</strong><br>
+                        • 对应系数为：x = 4, y = 4, m = 4, n = 2。<br>
+                        <strong>2. 选项逐项剖析：</strong><br>
+                        • <strong>A 错误</strong>：m = 4 而非 2。<br>
+                        • <strong>B 正确</strong>：m = 4, y = 4，故 <strong>m = y 成立</strong>；H⁺ 中氢元素反应前后化合价均为 +1，未发生氧化还原反应。<br>
+                        • <strong>C 错误</strong>：R³⁺ 是失电子氧化后的<strong>氧化产物</strong>。<br>
+                        • <strong>D 错误</strong>：y = 4, n = 2，比例关系为 y = 2n（即 n = ½y），选项中 n = 2y 颠倒了比例。`
                     },
                     {
                         id: 4,
@@ -583,8 +601,14 @@
                             "C. 1, 3, 4",
                             "D. 其他组合"
                         ],
-                        correct: "A",
-                        sol: "<strong>【答案解析 A】</strong><br>• 1. 熔点：MgO > NaCl（正确）；<br>• 2. 熔点：BeCl₂ < MgCl₂（原项错误）；<br>• 3. 沸点：HCl < HBr（原项错误）；<br>• 4. 熔点：晶体硅 < 碳化硅（原项错误）。<br>题目要求找出错误项组合。"
+                        correct: "B",
+                        sol: `<strong>【答案解析 B】</strong><br>
+                        <strong>逐项微观机理分析：</strong><br>
+                        • <strong>1. 熔点 MgO &gt; NaCl (比较正确)</strong>：两者均为离子晶体，晶格能主要取决于离子电荷与离子半径。Mg²⁺ 与 O²⁻ 均带 2 个电荷且半径小，晶格能远大于带 1 个电荷的 Na⁺ 和 Cl⁻（MgO 熔点约 2852°C，NaCl 约 801°C）。<br>
+                        • <strong>2. 熔点 BeCl₂ &gt; MgCl₂ (比较错误)</strong>：Be 电负性大，BeCl₂ 表现出较强的共价性，属分子晶体特征（熔点仅 415°C）；MgCl₂ 为典型离子晶体（熔点 714°C）。实际应为 BeCl₂ &lt; MgCl₂。<br>
+                        • <strong>3. 沸点 HCl &gt; HBr (比较错误)</strong>：组成结构相似的分子晶体（不含氢键），相对分子质量越大，范德华力越强，沸点越高。相对分子质量 HBr &gt; HCl，实际沸点应为 HBr &gt; HCl。<br>
+                        • <strong>4. 熔点 晶体硅 &gt; 碳化硅 (比较错误)</strong>：两者均为原子晶体（共价晶体），熔点取决于共价键键能。碳原子半径明显小于硅原子，故 C-Si 键长短于 Si-Si 键长，键能更大，熔点更高（SiC 约 2730°C，晶体硅约 1414°C）。实际应为碳化硅 &gt; 晶体硅。<br>
+                        <strong>结论：</strong>错误项组合为 <strong>2, 3, 4</strong>，故选 <strong>B</strong>。`
                     },
                     {
                         id: 11,
@@ -758,7 +782,12 @@
                     {
                         id: 5,
                         text: "5. 四种基本反应类型属于氧化还原反应的有（写一种）：____________________ <strong>(1%)</strong>",
-                        sol: "<strong>【答案】</strong>置换反应（或写化合反应 / 分解反应）<br><strong>【解析】</strong>置换反应一定有单质参加和生成，必然属于氧化还原反应。"
+                        sol: `<strong>【答案】</strong>置换反应<br>
+                        <strong>💡 知识点拓展（四种基本反应类型与氧化还原反应的关系）：</strong><br>
+                        • <strong>置换反应</strong>：<strong>一定属于氧化还原反应</strong>（有单质参与且生成新单质，必然存在化合价升降与电子转移）。<br>
+                        • <strong>化合反应</strong>：部分属于氧化还原反应（有单质参加的化合反应属于氧化还原反应，如 2H₂ + O₂ → 2H₂O）。<br>
+                        • <strong>分解反应</strong>：部分属于氧化还原反应（有单质生成的分解反应属于氧化还原反应，如 2H₂O → 2H₂↑ + O₂↑）。<br>
+                        • <strong>复分解反应</strong>：一定不属于氧化还原反应（反应前后所有元素化合价均保持不变）。`
                     },
                     {
                         id: 6,
@@ -824,13 +853,40 @@
                     },
                     {
                         id: 2,
-                        text: "2. 氧化还原反应分析与表格填写 <strong>(10%)</strong>",
+                        text: "2. 氧化还原反应分析（含双线桥法电子转移说明） <strong>(10%)</strong>",
                         content: `
+                            <p style="color:var(--text-sub); margin-bottom:8px;"><strong>题目要求：</strong> i. 写出氧化数变化并用双线桥表示电子得失与反应类别； ii. 判定氧化剂/还原剂； iii. 比较氧化性或还原性强弱； iv. 判定氧化或还原产物。</p>
                             <p><strong>第 1 题：</strong> MnO₂(s) + 2NaCl(aq) + 2H₂SO₄(aq) → Na₂SO₄(aq) + MnSO₄(aq) + Cl₂(g) + 2H₂O(l)</p>
                             <p><strong>第 2 题：</strong> 5Na₂S₂O₅(aq) + 4KIO₃(aq) → 5Na₂SO₄(aq) + 2K₂SO₄(aq) + 2I₂(s) + 3SO₃(g)</p>
                             <p><strong>第 3 题：</strong> 2MnO₂(s) + Zn(s) —(OH⁻)→ ZnO(s) + Mn₂O₃(s)</p>
                         `,
-                        sol: "<strong>【详细答案与分析】</strong><br><table class='exam-table'><tr><th>题号</th><th>氧化剂</th><th>还原剂</th><th>强弱比较</th><th>氧化/还原产物</th></tr><tr><td>1</td><td>MnO₂</td><td>NaCl</td><td>氧化性：MnO₂ &gt; Cl₂</td><td>还原产物：MnSO₄</td></tr><tr><td>2</td><td>KIO₃</td><td>Na₂S₂O₅</td><td>还原性：Na₂S₂O₅ &gt; I₂</td><td>氧化产物：Na₂SO₄ / SO₃</td></tr><tr><td>3</td><td>MnO₂</td><td>Zn</td><td>氧化性：MnO₂ &gt; ZnO</td><td>还原产物：Mn₂O₃</td></tr></table>"
+                        sol: `<strong>【完整标准解答与双线桥法说明】</strong><br><br>
+                        <strong>第 1 题：</strong><br>
+                        <div class="bridge-box">
+                            • <strong>化合价升降与双线桥：</strong><br>
+                            &nbsp;&nbsp;MnO₂ (+4 价 Mn) ──[ 得 2e⁻，化合价降低，被还原 (还原反应) ]──➔ MnSO₄ (+2 价 Mn)<br>
+                            &nbsp;&nbsp;2NaCl (-1 价 Cl) ──[ 失 2×e⁻ = 2e⁻，化合价升高，被氧化 (氧化反应) ]──➔ Cl₂ (0 价 Cl)<br>
+                            • <strong>氧化剂</strong>：MnO₂ &nbsp;|&nbsp; <strong>还原剂</strong>：NaCl<br>
+                            • <strong>氧化性比较</strong>：<strong>MnO₂ &gt; Cl₂</strong> &nbsp;|&nbsp; <strong>还原产物</strong>：MnSO₄
+                        </div><br>
+
+                        <strong>第 2 题：</strong><br>
+                        <div class="bridge-box">
+                            • <strong>化合价升降与双线桥：</strong><br>
+                            &nbsp;&nbsp;4KIO₃ (4 个 +5 价 I) ──[ 得 4×5e⁻ = 20e⁻，化合价降低，被还原 (还原反应) ]──➔ 2I₂ (4 个 0 价 I)<br>
+                            &nbsp;&nbsp;5Na₂S₂O₅ (10 个 +4 价 S) ──[ 失 10×2e⁻ = 20e⁻，化合价升高，被氧化 (氧化反应) ]──➔ Na₂SO₄ / K₂SO₄ / SO₃ (10 个 +6 价 S)<br>
+                            • <strong>氧化剂</strong>：KIO₃ &nbsp;|&nbsp; <strong>还原剂</strong>：Na₂S₂O₅<br>
+                            • <strong>还原性比较</strong>：<strong>Na₂S₂O₅ &gt; I₂</strong> &nbsp;|&nbsp; <strong>氧化产物</strong>：Na₂SO₄、K₂SO₄、SO₃（写任一或全写均可）
+                        </div><br>
+
+                        <strong>第 3 题：</strong><br>
+                        <div class="bridge-box">
+                            • <strong>化合价升降与双线桥：</strong><br>
+                            &nbsp;&nbsp;2MnO₂ (2 个 +4 价 Mn) ──[ 得 2×1e⁻ = 2e⁻，化合价降低，被还原 (还原反应) ]──➔ Mn₂O₃ (2 个 +3 价 Mn)<br>
+                            &nbsp;&nbsp;Zn (0 价 Zn) ──[ 失 2e⁻，化合价升高，被氧化 (氧化反应) ]──➔ ZnO (+2 价 Zn)<br>
+                            • <strong>氧化剂</strong>：MnO₂ &nbsp;|&nbsp; <strong>还原剂</strong>：Zn<br>
+                            • <strong>氧化性比较</strong>：<strong>MnO₂ &gt; ZnO</strong>（或 MnO₂ &gt; Zn²⁺） &nbsp;|&nbsp; <strong>还原产物</strong>：Mn₂O₃
+                        </div>`
                     },
                     {
                         id: 3,
@@ -839,7 +895,7 @@
                             <p>1. K₂MnO₄ + H₂O + CO₂ → KMnO₄ + MnO₂ + KHCO₃</p>
                             <p>2. I⁻ + IO₃⁻ + H⁺ → I₂ + H₂O</p>
                         `,
-                        sol: "<strong>【配平结果与解析】</strong><br>• <strong>第 1 题</strong>：<strong>3 K₂MnO₄ + 2 H₂O + 4 CO₂ → 2 KMnO₄ + MnO₂ + 4 KHCO₃</strong><br><small style='color:var(--text-sub);'>解析：Mn(+6) 歧化为 Mn(+7) 和 Mn(+4)，2 个升高 1 价，1 个降低 2 价，配平系数为 3:2:1。</small><br><br>• <strong>第 2 题</strong>：<strong>5 I⁻ + IO₃⁻ + 6 H⁺ → 3 I₂ + 3 H₂O</strong><br><small style='color:var(--text-sub);'>解析：I(-1) 失 5×1e⁻，I(+5) 得 5e⁻，归中生成 3 I₂。</small>"
+                        sol: "<strong>【配平结果与解析】</strong><br>• <strong>第 1 题</strong>：<strong>3 K₂MnO₄(aq) + 2 H₂O(l) + 4 CO₂(g) → 2 KMnO₄(aq) + MnO₂(s)↓ + 4 KHCO₃(aq)</strong><br><small style='color:var(--text-sub);'>解析：Mn(+6) 歧化为 Mn(+7) 和 Mn(+4)，2 个升高 1 价，1 个降低 2 价，配平系数为 3:2:1。</small><br><br>• <strong>第 2 题</strong>：<strong>5 I⁻(aq) + IO₃⁻(aq) + 6 H⁺(aq) → 3 I₂(s) + 3 H₂O(l)</strong><br><small style='color:var(--text-sub);'>解析：I(-1) 失 5×1e⁻，I(+5) 得 5e⁻，归中生成 3 I₂。</small>"
                     },
                     {
                         id: 4,
@@ -882,7 +938,18 @@
                             <p><strong>ii.</strong> 写出过氧化钠与二氧化碳反应的化学方程式：____________________</p>
                             <p><strong>iii.</strong> 试管 F 中收集满气体后，下一步实验操作是：____________________</p>
                         `,
-                        sol: "<strong>【参考答案与评分标准】</strong><br>• <strong>i. A装置反应式</strong>：CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑<br>• <strong>表格填写</strong>：<br>&nbsp;&nbsp;1. 过氧化钠（Na₂O₂）固体<br>&nbsp;&nbsp;2. 除去 CO₂ 气体中混有的 HCl 挥发气体<br>&nbsp;&nbsp;3. 与 CO₂ 反应产生供氧气体 O₂<br>&nbsp;&nbsp;4. 吸收未反应完全的 CO₂ 气体，净化 O₂<br>• <strong>ii. 化学方程式</strong>：2Na₂O₂ + 2CO₂ → 2Na₂CO₃ + O₂<br>• <strong>iii. 下一步操作</strong>：在水槽中用拇指堵住试管口，取出试管并正立，将带火星的木条伸入试管口内。若木条复燃，则证明收集到的气体是氧气（O₂），从而证明 Na₂O₂ 可作为供氧剂。"
+                        sol: `<strong>【参考答案与规范方程式】</strong><br>
+                        • <strong>i. A 装置反应式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;<strong>CaCO₃(s) + 2HCl(aq) → CaCl₂(aq) + H₂O(l) + CO₂(g)↑</strong><br><br>
+                        • <strong>表格填写</strong>：<br>
+                        &nbsp;&nbsp;<strong>1.</strong> 过氧化钠固体 [Na₂O₂(s)]<br>
+                        &nbsp;&nbsp;<strong>2.</strong> 除去 CO₂ 气体中混有的 HCl 挥发气体<br>
+                        &nbsp;&nbsp;<strong>3.</strong> 与 CO₂ 反应产生供氧气体 O₂(g)<br>
+                        &nbsp;&nbsp;<strong>4.</strong> 吸收未反应完全的 CO₂ 气体，净化 O₂ 气流<br><br>
+                        • <strong>ii. 过氧化钠与二氧化碳反应方程式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;<strong>2Na₂O₂(s) + 2CO₂(g) → 2Na₂CO₃(s) + O₂(g)</strong><br><br>
+                        • <strong>iii. 下一步操作</strong>：<br>
+                        &nbsp;&nbsp;在水槽中用拇指堵住试管口，取出试管并正立，将带火星的木条伸入试管口内。若木条复燃，则证明收集到的气体是氧气（O₂），从而证明 Na₂O₂ 可作为供氧剂。`
                     }
                 ]
             },
@@ -901,17 +968,43 @@
                             <p><strong>iii.</strong> 试详细解释 IV 族氢化物为何没有像其他 3 族氢化物有个特别高的沸点。 <strong>(2%)</strong></p>
                             <p><strong>1b.</strong> 写出氢氧化钠溶液与二氧化硅的配平反应式。 <strong>(2%)</strong></p>
                         `,
-                        sol: "<strong>【参考解答】</strong><br>• <strong>1a. i. VIA 族沸点比较与原因</strong>：沸点顺序为 <strong>H₂O &gt; H₂Te &gt; H₂Se &gt; H₂S</strong>。原因：H₂O 分子间存在强烈的氢键，使其沸点异常升高；而 H₂S、H₂Se、H₂Te 分子间仅存在范德华力，随着相对分子质量增大，范德华力依次增强，沸点自 H₂S 到 H₂Te 依次升高。<br>• <strong>1a. ii. IVA 族沸点比较</strong>：<strong>SnH₄ &gt; GeH₄ &gt; SiH₄ &gt; CH₄</strong>。<br>• <strong>1a. iii. 原因</strong>：IVA 族的中心原子没有孤对电子，且 C-H 键极性较小，分子间不能形成氢键，沸点完全取决于范德华力大小，故 CH₄ 沸点最低，无异常高沸点。<br>• <strong>1b. 反应式</strong>：2NaOH + SiO₂ → Na₂SiO₃ + H₂O"
+                        sol: `<strong>【参考解答与规范方程式】</strong><br>
+                        • <strong>1a. i. VIA 族沸点比较与原因</strong>：<br>
+                        &nbsp;&nbsp;沸点顺序为 <strong>H₂O &gt; H₂Te &gt; H₂Se &gt; H₂S</strong>。<br>
+                        &nbsp;&nbsp;<strong>原因</strong>：H₂O 分子间存在强烈的氢键，使其沸点异常升高；而 H₂S、H₂Se、H₂Te 分子间仅存在范德华力，随着相对分子质量增大，范德华力依次增强，沸点自 H₂S 到 H₂Te 依次升高。<br><br>
+                        • <strong>1a. ii. IVA 族沸点比较</strong>：<br>
+                        &nbsp;&nbsp;<strong>SnH₄ &gt; GeH₄ &gt; SiH₄ &gt; CH₄</strong>。<br><br>
+                        • <strong>1a. iii. 原因</strong>：<br>
+                        &nbsp;&nbsp;IVA 族的中心原子最外层电子全部成键，没有孤对电子，且 C-H 键极性小，分子间不能形成氢键。其沸点完全取决于范德华力大小，故 CH₄ 沸点最低，无异常高沸点。<br><br>
+                        • <strong>1b. 规范反应式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;<strong>2NaOH(aq) + SiO₂(s) → Na₂SiO₃(aq) + H₂O(l)</strong>`
                     },
                     {
                         id: 2,
                         text: "2a. 一未知物 P 做焰色试验时呈紫色火焰，将 P 加入盐酸后产生的气体能使石灰水变浑浊。写出推论及反应式说明 P 是什么物质？ <strong>(5%)</strong><br>2b. 写出 P 溶液与石灰水的配平反应式。 <strong>(2%)</strong>",
-                        sol: "<strong>【参考解答】</strong><br>• <strong>2a. 推论与反应式</strong>：<br>1. 焰色反应呈紫色（透过蓝色钴玻璃），说明 P 中含有钾离子（K⁺）；<br>2. 加入盐酸产生的气体能使澄清石灰水变浑浊，说明释放的气体为 CO₂，P 中含有碳酸根（CO₃²⁻）或碳酸氢根（HCO₃⁻）；<br>3. 推论 P 为 <strong>碳酸钾 K₂CO₃</strong>（或 KHCO₃）。<br>相关反应方程式：<br>K₂CO₃ + 2HCl → 2KCl + H₂O + CO₂↑<br>CO₂ + Ca(OH)₂ → CaCO₃↓ + H₂O<br><br>• <strong>2b. P 与石灰水反应式</strong>：K₂CO₃ + Ca(OH)₂ → CaCO₃↓ + 2KOH"
+                        sol: `<strong>【参考解答与规范方程式】</strong><br>
+                        • <strong>2a. 推论与反应式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;1. 焰色反应呈紫色（透过蓝色钴玻璃），说明 P 中含有钾离子（K⁺）；<br>
+                        &nbsp;&nbsp;2. 加入盐酸产生的气体能使澄清石灰水变浑浊，说明释放的气体为 CO₂，P 中含有碳酸根（CO₃²⁻）或碳酸氢根（HCO₃⁻）；<br>
+                        &nbsp;&nbsp;3. 推论 P 为 <strong>碳酸钾 K₂CO₃</strong>（或 KHCO₃）。<br>
+                        &nbsp;&nbsp;<strong>相关反应方程式</strong>：<br>
+                        &nbsp;&nbsp;<strong>K₂CO₃(s) + 2HCl(aq) → 2KCl(aq) + H₂O(l) + CO₂(g)↑</strong><br>
+                        &nbsp;&nbsp;<strong>CO₂(g) + Ca(OH)₂(aq) → CaCO₃(s)↓ + H₂O(l)</strong><br><br>
+                        • <strong>2b. P 与石灰水反应式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;<strong>K₂CO₃(aq) + Ca(OH)₂(aq) → CaCO₃(s)↓ + 2KOH(aq)</strong>`
                     },
                     {
                         id: 3,
                         text: "3a. 写出如下反应的反应式（可加入适合试剂及条件）： <strong>(5%)</strong><br><div style='padding:10px 14px; background:var(--bg-card-sub); border-radius:6px; font-weight:bold; margin:8px 0;'>NaCl ➔ Na ➔ NaOH ➔ Mg(OH)₂ / NaAlO₂</div>3b. 写出硝酸钾受热时的配平反应式。 <strong>(2%)</strong>",
-                        sol: "<strong>【参考解答】</strong><br>• <strong>3a. 各步转化方程式</strong>：<br>① 2NaCl(l) —(通电熔融)→ 2Na + Cl₂↑<br>② 2Na + 2H₂O → 2NaOH + H₂↑<br>③ 2NaOH + MgCl₂ → Mg(OH)₂(s)↓ + 2NaCl<br>④ NaOH + Al(OH)₃ → NaAlO₂ + 2H₂O（或 2Al + 2NaOH + 2H₂O → 2NaAlO₂ + 3H₂↑）<br><br>• <strong>3b. 硝酸钾受热分解</strong>：2KNO₃ —(加热)→ 2KNO₂ + O₂↑"
+                        sol: `<strong>【参考解答与规范方程式】</strong><br>
+                        • <strong>3a. 各步转化反应方程式（全部标注物质状态）</strong>：<br>
+                        &nbsp;&nbsp;① <strong>2NaCl(l) <span style="font-size:0.85em;">—(通电熔融)→</span> 2Na(l) + Cl₂(g)↑</strong><br>
+                        &nbsp;&nbsp;② <strong>2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)↑</strong><br>
+                        &nbsp;&nbsp;③ <strong>2NaOH(aq) + MgCl₂(aq) → Mg(OH)₂(s)↓ + 2NaCl(aq)</strong><br>
+                        &nbsp;&nbsp;④ <strong>NaOH(aq) + Al(OH)₃(s) → NaAlO₂(aq) + 2H₂O(l)</strong><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>(或: 2Al(s) + 2NaOH(aq) + 2H₂O(l) → 2NaAlO₂(aq) + 3H₂(g)↑)</i><br><br>
+                        • <strong>3b. 硝酸钾受热分解方程式（含状态）</strong>：<br>
+                        &nbsp;&nbsp;<strong>2KNO₃(s) <span style="font-size:0.85em;">—(加热)→</span> 2KNO₂(s) + O₂(g)↑</strong>`
                     }
                 ]
             }
@@ -921,7 +1014,6 @@
         let currentQuestionIdx = 0;
         let isAnswerShown = false;
 
-        /* 切换题型部分 */
         function switchSection(secKey) {
             currentSectionKey = secKey;
             currentQuestionIdx = 0;
@@ -937,7 +1029,6 @@
             renderSingleQuestion();
         }
 
-        /* 渲染题号按钮 */
         function renderNumberTabs() {
             const secData = examDatabase[currentSectionKey];
             const numContainer = document.getElementById('number-tabs');
@@ -949,7 +1040,6 @@
             numContainer.innerHTML = html;
         }
 
-        /* 选定特定题号 */
         function selectQuestion(idx) {
             currentQuestionIdx = idx;
             isAnswerShown = false;
@@ -957,7 +1047,6 @@
             renderSingleQuestion();
         }
 
-        /* 渲染单题页面 */
         function renderSingleQuestion() {
             const secData = examDatabase[currentSectionKey];
             const q = secData.questions[currentQuestionIdx];
@@ -1014,7 +1103,6 @@
             `;
         }
 
-        /* 切换答案显示/隐藏 */
         function toggleAnswer() {
             isAnswerShown = !isAnswerShown;
             const panel = document.getElementById('ans-panel');
@@ -1050,7 +1138,6 @@
             }
         }
 
-        /* 全卷清览模式渲染 */
         function renderFullExam(showAnswers) {
             document.getElementById('btn-mode-single').classList.remove('active');
             document.getElementById('btn-mode-print').classList.toggle('active', !showAnswers);
@@ -1120,7 +1207,6 @@
             container.innerHTML = fullHtml;
         }
 
-        /* 返回单题模式 */
         function returnSingleMode() {
             document.getElementById('btn-mode-single').classList.add('active');
             document.getElementById('btn-mode-print').classList.remove('active');
@@ -1128,12 +1214,10 @@
             renderSingleQuestion();
         }
 
-        /* 护眼暗色模式切换 */
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
         }
 
-        /* 页面初始化 */
         document.addEventListener('DOMContentLoaded', () => {
             switchSection('A');
         });
