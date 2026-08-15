@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>第9章 IA族元素：钠和钾 互动深度探究平台</title>
     <!-- 网页浏览器图标 (Favicon) -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -115,6 +115,35 @@
             gap: 12px;
         }
 
+        /* 手机端折叠控制台按钮样式 */
+        .mobile-toggle-btn {
+            display: none;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 12px; }
+            .mobile-toggle-btn { display: block; }
+            .toolbar {
+                display: none; /* 手机端默认收起，防止占满屏幕空间 */
+                position: static;
+                margin-bottom: 15px;
+            }
+            .toolbar.expanded {
+                display: flex;
+            }
+        }
+
         .btn {
             background-color: var(--accent-color);
             color: white;
@@ -136,9 +165,6 @@
             border: 1px solid var(--border-color);
         }
         .btn-outline:hover { background-color: var(--border-color); }
-        .btn-step { background-color: #4a5568; color: white; padding: 7px 14px; font-size: 14.5px; }
-        .btn-step.active { background-color: #3182ce; font-weight: bold; }
-        .btn-step.completed { background-color: #38a169; }
 
         select.control-select {
             padding: 7px 12px;
@@ -447,7 +473,7 @@
         .h-node.leaf { background: #21252b; color: #98c379; font-size: 13.5px; }
 
         @media print {
-            .global-nav, .toolbar, .canvas-toolbar, .btn, .control-select { display: none !important; }
+            .global-nav, .toolbar, .mobile-toggle-btn, .canvas-toolbar, .btn, .control-select { display: none !important; }
             body { padding: 0; background: #fff !important; color: #000 !important; font-size: 14px !important; }
             .container { box-shadow: none; padding: 0; max-width: 100% !important; }
             .ans-trigger { display: none !important; }
@@ -461,17 +487,20 @@
 </head>
 <body class="font-medium">
 
-    <!-- 统一全局快捷导航栏 -->
+    <!-- 统一全局快捷导航栏（已按需求调整链接） -->
     <nav class="global-nav">
         <a href="index.html" class="nav-btn">🏠 平台首页</a>
-        <a href="2024.html" class="nav-btn">📝 2024统测</a>
-        <a href="2025.html" class="nav-btn">📝 2025统测</a>
-        <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-        <a href="index.html" class="nav-btn">📚 历届考题解析</a>
+        <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
+        <a href="past_exams_select.html" class="nav-btn">📝 历届考题解析</a>
         <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
     </nav>
 
     <div class="container" id="mainContainer">
+
+        <!-- 手机端折叠控制台切换按钮 -->
+        <button class="mobile-toggle-btn" onclick="document.querySelector('.toolbar').classList.toggle('expanded')">
+            ⚙️ 展开/收起 课堂互动控制台
+        </button>
 
         <!-- 顶部交互控制栏 -->
         <div class="toolbar">
@@ -514,12 +543,12 @@
         <div class="objectives-card">
             <h3>🎯 本章核心素养与考试目标清单</h3>
             <ul class="objectives-grid">
-                <li><strong>周期律与原子结构：</strong>掌握 IA 族最外层 1 个价电子的结构特征及原子半径递增规律[cite: 1]。</li>
-                <li><strong>金属性与强还原性：</strong>理解失电子倾向递变，建立“微观结构决定宏观性质”的学科模型[cite: 1]。</li>
-                <li><strong>物理与化学性质：</strong>掌握钠、钾的物理性质及与氧气、水、酸、卤素反应的本质特征与五字诀[cite: 1]。</li>
-                <li><strong>工业制备与热力学：</strong>掌握电解熔融 NaCl 制钠（Down 槽）与高温钠热还原 KCl 制钾（平衡移动原理）[cite: 1]。</li>
-                <li><strong>焰色试验标准规范：</strong>熟练掌握“洗-烧-蘸-烧-滤/洗”标准 5 步法与激发态光谱物理本质[cite: 1]。</li>
-                <li><strong>重要化合物性质对比：</strong>深入辨析 Na₂CO₃ 与 NaHCO₃ 的水溶性、热稳定性及产气动力学差异[cite: 1]。</li>
+                <li><strong>周期律与原子结构：</strong>掌握 IA 族最外层 1 个价电子的结构特征及原子半径递增规律。</li>
+                <li><strong>金属性与强还原性：</strong>理解失电子倾向递变，建立“微观结构决定宏观性质”的学科模型。</li>
+                <li><strong>物理与化学性质：</strong>掌握钠、钾的物理性质及与氧气、水、酸、卤素反应的本质特征与五字诀。</li>
+                <li><strong>工业制备与热力学：</strong>掌握电解熔融 NaCl 制钠（Down 槽）与高温钠热还原 KCl 制钾（平衡移动原理）。</li>
+                <li><strong>焰色试验标准规范：</strong>熟练掌握“洗-烧-蘸-烧-滤/洗”标准 5 步法与激发态光谱物理本质。</li>
+                <li><strong>重要化合物性质对比：</strong>深入辨析 Na₂CO₃ 与 NaHCO₃ 的水溶性、热稳定性及产气动力学差异。</li>
             </ul>
         </div>
 
@@ -539,26 +568,26 @@
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">查看答案</button>
                     <span class="ans-content">不能</span>
-                </span>（填“能”或“不能”）以单质形态独立存在[cite: 1]，必须以
+                </span>（填“能”或“不能”）以单质形态独立存在，必须以
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">查看答案</button>
                     <span class="ans-content">化合物</span>
-                </span> 形态分布[cite: 1]。写出典型矿物的主要化学成分：<br>
+                </span> 形态分布。写出典型矿物的主要化学成分：<br>
                 • 食盐：
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
                     <span class="ans-content">NaCl</span>
-                </span>[cite: 1]
+                </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;• 硼砂：
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
                     <span class="ans-content">Na₂B₄O₇·10H₂O</span>
-                </span>[cite: 1]
+                </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;• 光卤石：
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
                     <span class="ans-content">KCl·MgCl₂·6H₂O</span>
-                </span>[cite: 1]
+                </span>
             </p>
 
             <div class="sub-section-title">2. 元素周期律基础模型：点击下方表格各栏目，探索碱金属元素（Li 到 Fr）性质的递变规律：</div>
@@ -576,7 +605,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
                                 <span class="ans-content">1</span>
-                            </span> 个价电子（通式 ns¹）[cite: 1]
+                            </span> 个价电子（通式 ns¹）
                         </td>
                     </tr>
                     <tr>
@@ -585,7 +614,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
                                 <span class="ans-content">逐渐增多 / 依次增大</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -612,7 +641,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
                                 <span class="ans-content">越来越容易（第一电离能递减）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -621,7 +650,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
                                 <span class="ans-content">逐渐增强（K > Na > Li）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -630,7 +659,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">点击揭晓</button>
                                 <span class="ans-content">越来越剧烈</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                 </tbody>
@@ -639,7 +668,7 @@
 
         <div class="content-card">
             <div class="sub-section-title">9.1.1 钠和钾的物理性质</div>
-            <p>钠原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s¹</code>，钾原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹</code>[cite: 1]。</p>
+            <p>钠原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s¹</code>，钾原子的电子排布式为 <code>1s² 2s² 2p⁶ 3s² 3p⁶ 4s¹</code>。</p>
 
             <table>
                 <thead>
@@ -660,37 +689,37 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">颜色</button>
                                 <span class="ans-content">银白色，具金属光泽</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">密度大小</button>
                                 <span class="ans-content">0.97（比水小，比煤油大）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
                                 <span class="ans-content">97.8</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
                                 <span class="ans-content">883</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">硬度</button>
                                 <span class="ans-content">质软（可用小刀切割）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">导电性</button>
                                 <span class="ans-content">良好导体</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -699,37 +728,37 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">颜色</button>
                                 <span class="ans-content">银白色，具金属光泽</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">密度大小</button>
                                 <span class="ans-content">0.86（比水小，比煤油大）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
                                 <span class="ans-content">63.4</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
                                 <span class="ans-content">759</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">硬度</button>
                                 <span class="ans-content">极软（比钠更软）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">导电性</button>
                                 <span class="ans-content">良好导体</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                 </tbody>
@@ -738,48 +767,48 @@
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">查看试剂</button>
                     <span class="ans-content">煤油或液体石蜡</span>
-                </span> 中[cite: 1]，严禁与水或空气直接接触[cite: 1]。</p>
+                </span> 中，严禁与水或空气直接接触。</p>
         </div>
 
         <div class="content-card">
             <div class="sub-section-title">9.1.2 钠和钾的化学性质</div>
             <p><strong>1. 与非金属单质（氧气、卤素）的反应：</strong></p>
             <ul>
-                <li><strong>常温与氧气缓慢氧化：</strong>表面迅速变暗失去光泽[cite: 1]。<br>
+                <li><strong>常温与氧气缓慢氧化：</strong>表面迅速变暗失去光泽。<br>
                     • 钠：<code>4Na(s) + O₂(g) &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2Na₂O(s)（白色固体氧化钠）</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • 钾：<code>4K(s) + O₂(g) &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2K₂O(s)（微黄白色固体氧化钾）</span>
-                    </span>[cite: 1]
+                    </span>
                 </li>
-                <li><strong>在空气中加热燃烧：</strong>剧烈燃烧，生成过氧化物或超氧化物[cite: 1]。<br>
+                <li><strong>在空气中加热燃烧：</strong>剧烈燃烧，生成过氧化物或超氧化物。<br>
                     • 钠：<code>2Na(s) + O₂(g) —Δ→</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">Na₂O₂(s)（淡黄色固体过氧化钠，黄色火焰）</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • 钾：<code>K(s) + O₂(g) —Δ→</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">KO₂(s)（橙黄色固体超氧化钾，淡紫色火焰）</span>
-                    </span>[cite: 1]
+                    </span>
                 </li>
                 <li><strong>与卤素单质（Cl₂、Br₂、I₂）直接化合：</strong><br>
                     • 钠在氯气中燃烧：<code>2Na(s) + Cl₂(g) —点燃→</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2NaCl(s)（大量白烟，耀眼黄色火焰）</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • 钾与卤素化合：<code>2K(s) + Cl₂(g) —点燃→</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2KCl(s)（化合极其剧烈，室温接触即可能引发爆炸）</span>
-                    </span>[cite: 1]
+                    </span>
                 </li>
             </ul>
 
@@ -790,24 +819,24 @@
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2NaOH(aq) + H₂(g)&uarr;</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • 钾与水：<code>2K(s) + 2H₂O(l) &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2KOH(aq) + H₂(g)&uarr;</span>
-                    </span>[cite: 1]
+                    </span>
                 </li>
                 <li><strong>与酸反应：</strong>比水更剧烈，极易发生爆炸式反应：<br>
                     • 钠与盐酸：<code>2Na(s) + 2HCl(aq) &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2NaCl(aq) + H₂(g)&uarr;</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • 钾与盐酸：<code>2K(s) + 2HCl(aq) &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                         <span class="ans-content">2KCl(aq) + H₂(g)&uarr;</span>
-                    </span>[cite: 1]
+                    </span>
                 </li>
             </ul>
 
@@ -829,7 +858,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">大/小</button>
                                 <span class="ans-content">小（ρ_Na = 0.97 g/cm³）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -843,7 +872,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">高/低</button>
                                 <span class="ans-content">低</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -853,7 +882,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">物质</button>
                                 <span class="ans-content">氢气 (H₂)</span>
-                            </span> 推动小球四处移动[cite: 1]
+                            </span> 推动小球四处移动
                         </td>
                     </tr>
                     <tr>
@@ -873,7 +902,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">酸/碱</button>
                                 <span class="ans-content">强碱</span>
-                            </span> 性物质（NaOH / KOH）[cite: 1]
+                            </span> 性物质（NaOH / KOH）
                         </td>
                     </tr>
                 </tbody>
@@ -883,7 +912,7 @@
             <div class="canvas-card">
                 <div class="canvas-toolbar">
                     <span style="font-weight:bold; color:#63b3ed;">🧪 碱金属与水反应（含酚酞）剧烈度对比动态模拟器</span>
-                    <div style="display:flex; gap:8px; align-items:center;">
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
                         <button class="btn btn-outline" style="color:white; border-color:#4a5568;" onclick="setWaterSimMetal('Na')">选择: 钠 (Na)</button>
                         <button class="btn btn-outline" style="color:white; border-color:#4a5568;" onclick="setWaterSimMetal('K')">选择: 钾 (K)</button>
                         <button class="btn" style="background:#48bb78;" onclick="startWaterReaction()">投入水中反应</button>
@@ -891,7 +920,7 @@
                     </div>
                 </div>
                 <canvas id="waterCanvas" width="900" height="240" style="width:100%; background:#171923; border-radius:8px;"></canvas>
-                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:13.5px; color:#cbd5e0;">
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:13.5px; color:#cbd5e0; flex-wrap:wrap; gap:6px;">
                     <span id="waterStatusText">当前待命：烧杯已注入滴有酚酞的水溶液</span>
                     <span id="waterEqText" style="color:#f6e05e; font-weight:bold;">2Na(s) + 2H₂O(l) &rarr; 2NaOH(aq) + H₂(g)&uarr;</span>
                 </div>
@@ -907,7 +936,7 @@
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
                         <span class="ans-content">2Na(l) + Cl₂(g)↑</span>
-                    </span>[cite: 1]<br>
+                    </span><br>
                     • <strong>阳极 (石墨)：</strong><code>2Cl⁻ - 2e⁻ &rarr;</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开电极式</button>
@@ -918,15 +947,15 @@
                         <button class="ans-trigger" onclick="toggleAns(this)">展开电极式</button>
                         <span class="ans-content">2Na(l) (还原反应)</span>
                     </span><br>
-                    • <strong>科学要点剖析：</strong>在 580~600℃ 电解温度下，生成的金属钠呈现<strong>液态（熔点 97.8℃）</strong>而非气体[cite: 1]！由于液态钠的密度（约 0.8 g/cm³）小于熔盐体系，钠会在阴极形成小液滴并<strong>上浮汇集</strong>流出；中间通过<strong>铁丝网隔膜</strong>机械阻隔，防止液态钠扩散到阳极与黄绿色氯气重新化合。
+                    • <strong>科学要点剖析：</strong>在 580~600℃ 电解温度下，生成的金属钠呈现<strong>液态（熔点 97.8℃）</strong>而非气体！由于液态钠的密度（约 0.8 g/cm³）小于熔盐体系，钠会在阴极形成小液滴并<strong>上浮汇集</strong>流出；中间通过<strong>铁丝网隔膜</strong>机械阻隔，防止液态钠扩散到阳极与黄绿色氯气重新化合。
                 </li>
                 <li><strong>工业制钾（高温钠热还原法）：</strong><br>
                     • <strong>反应原理：</strong><code>KCl(l) + Na(l) ⇌</code>
                     <span class="ans-inline">
                         <button class="ans-trigger" onclick="toggleAns(this)">展开平衡式</button>
                         <span class="ans-content">NaCl(l) + K(g)↑ (850℃)</span>
-                    </span>[cite: 1]<br>
-                    • <strong>勒夏特列原理应用：</strong>在 850℃ 下，钾的沸点（759℃）低于钠的沸点（883℃）[cite: 1]，生成的金属钾呈蒸气状态不断脱离体系被冷凝抽离，促使平衡持续向右移动，产出高纯度钾（纯度 > 99.99%）[cite: 1]。
+                    </span><br>
+                    • <strong>勒夏特列原理应用：</strong>在 850℃ 下，钾的沸点（759℃）低于钠的沸点（883℃），生成的金属钾呈蒸气状态不断脱离体系被冷凝抽离，促使平衡持续向右移动，产出高纯度钾（纯度 > 99.99%）。
                 </li>
             </ul>
 
@@ -959,7 +988,7 @@
                 <span class="ans-inline">
                     <button class="ans-trigger" onclick="toggleAns(this)">物理/化学</button>
                     <span class="ans-content">物理变化</span>
-                </span>[cite: 1]。当金属及其盐类在高温火焰中灼烧时，电子吸收能量从<strong>基态跃迁到激发态</strong>；处于不稳定激发态的电子在跃迁回基态时，以<strong>特定波长的光辐射</strong>形式释放能量，呈现出特征明线光谱[cite: 1]。</p>
+                </span>。当金属及其盐类在高温火焰中灼烧时，电子吸收能量从<strong>基态跃迁到激发态</strong>；处于不稳定激发态的电子在跃迁回基态时，以<strong>特定波长的光辐射</strong>形式释放能量，呈现出特征明线光谱。</p>
 
             <h4>2. 经典金属焰色标准 5 步交互式探究模拟器</h4>
             <p style="font-size:14.5px; color:#718096;">💡 请先选择待测元素，再严格按照 <strong>①洗 &rarr; ②烧 &rarr; ③蘸 &rarr; ④烧 &rarr; ⑤滤/洗</strong> 标准流程点击操作：</p>
@@ -987,11 +1016,11 @@
                 </div>
                 <div style="flex:1; min-width:280px; background:#2d3748; padding:18px; border-radius:8px; font-size:14.5px; line-height:1.7;">
                     <div style="font-weight:bold; color:#63b3ed; font-size:16px; margin-bottom:8px;" id="flameStepTitle">步骤 1：准备洗涤铂丝</div>
-                    <div id="flameStepDesc" style="color:#e2e8f0;">用稀盐酸洗净铂丝，将表面残留杂质转化为易挥发的氯化物[cite: 1]。</div>
+                    <div id="flameStepDesc" style="color:#e2e8f0;">用稀盐酸洗净铂丝，将表面残留杂质转化为易挥发的氯化物。</div>
                     <div style="margin-top:12px; border-top:1px solid #4a5568; padding-top:10px;">
                         • 当前试样：<strong id="currentFlameElemText" style="color:#f6e05e;">钠盐 (Na⁺)</strong><br>
-                        • 特征颜色：<span id="currentFlameColorText">黄色 (589.0 nm)</span>[cite: 1]<br>
-                        • 蓝钴玻璃状态：<span id="cobaltStatusText" style="color:#a0aec0;">未放置 (观察钾时必需)</span>[cite: 1]
+                        • 特征颜色：<span id="currentFlameColorText">黄色 (589.0 nm)</span><br>
+                        • 蓝钴玻璃状态：<span id="cobaltStatusText" style="color:#a0aec0;">未放置 (观察钾时必需)</span>
                     </div>
                 </div>
             </div>
@@ -1020,7 +1049,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">熔点</button>
                                 <span class="ans-content">801℃</span>
-                            </span>[cite: 1]，沸点 1413℃[cite: 1]。
+                            </span>，沸点 1413℃。
                         </td>
                         <td>
                             • <strong>氯碱工业电解饱和食盐水：</strong><br>
@@ -1028,8 +1057,8 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                                 <span class="ans-content">2NaOH(aq) + Cl₂(g)↑ + H₂(g)↑</span>
-                            </span>[cite: 1]<br>
-                            • <strong>主要用途：</strong>食用调味、配制 0.9% 生理盐水、生产纯碱、烧碱及金属钠等基本化工原料[cite: 1]。
+                            </span><br>
+                            • <strong>主要用途：</strong>食用调味、配制 0.9% 生理盐水、生产纯碱、烧碱及金属钠等基本化工原料。
                         </td>
                     </tr>
                     <tr>
@@ -1038,7 +1067,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">熔点</button>
                                 <span class="ans-content">770℃</span>
-                            </span>[cite: 1]。
+                            </span>。
                         </td>
                         <td>
                             • <strong>高温还原制取金属钾：</strong><br>
@@ -1046,8 +1075,8 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开平衡产物</button>
                                 <span class="ans-content">NaCl(l) + K(g)↑ (850℃)</span>
-                            </span>[cite: 1]<br>
-                            • <strong>主要用途：</strong>临床电解质平衡调节剂、农业高浓度优质钾肥[cite: 1]。
+                            </span><br>
+                            • <strong>主要用途：</strong>临床电解质平衡调节剂、农业高浓度优质钾肥。
                         </td>
                     </tr>
                 </tbody>
@@ -1065,42 +1094,42 @@
                 <tbody>
                     <tr>
                         <td><strong>氢氧化钠 (NaOH)</strong><br>（烧碱/火碱/苛性钠）</td>
-                        <td>白色固体，极易吸收水分
+                        <td>白色固体，极易吸收水分 
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
                                 <span class="ans-content">潮解</span>
-                            </span>[cite: 1]，溶于水强烈
+                            </span>，溶于水强烈 
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">吸/放热</button>
                                 <span class="ans-content">放热</span>
-                            </span>[cite: 1]，具强腐蚀性[cite: 1]。
+                            </span>，具强腐蚀性。
                         </td>
                         <td>
                             • <strong>吸收 CO₂ 变质：</strong><code>2NaOH(aq) + CO₂(g) &rarr;</code>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
                                 <span class="ans-content">Na₂CO₃(aq) + H₂O(l)</span>
-                            </span>[cite: 1]<br>
+                            </span><br>
                             • <strong>腐蚀玻璃（必须用橡胶塞）：</strong><code>SiO₂(s) + 2NaOH(aq) &rarr;</code>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
                                 <span class="ans-content">Na₂SiO₃(aq) + H₂O(l)</span>
-                            </span>[cite: 1]<br>
+                            </span><br>
                             • <strong>溶解两性金属铝：</strong><code>2Al(s) + 2NaOH(aq) + 2H₂O(l) &rarr;</code>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
                                 <span class="ans-content">2NaAlO₂(aq) + 3H₂(g)↑</span>
-                            </span>[cite: 1]<br>
-                            • <strong>主要用途：</strong>造纸、制皂、精炼石油、人造纤维及印染工业[cite: 1]。
+                            </span><br>
+                            • <strong>主要用途：</strong>造纸、制皂、精炼石油、人造纤维及印染工业。
                         </td>
                     </tr>
                     <tr>
                         <td><strong>硝酸钾 (KNO₃)</strong></td>
-                        <td>白色晶体粉末，在水中溶解时强烈
+                        <td>白色晶体粉末，在水中溶解时强烈 
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">吸/放热</button>
                                 <span class="ans-content">吸热</span>
-                            </span>[cite: 1]，受热分解表现强氧化性[cite: 1]。
+                            </span>，受热分解表现强氧化性。
                         </td>
                         <td>
                             • <strong>受热分解反应：</strong><br>
@@ -1108,13 +1137,13 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                                 <span class="ans-content">2KNO₂(s) + O₂(g)↑</span>
-                            </span>[cite: 1]<br>
+                            </span><br>
                             • <strong>制造传统黑火药：</strong><code>S(s) + 2KNO₃(s) + 3C(s) —点燃—></code>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
                                 <span class="ans-content">K₂S(s) + N₂(g)↑ + 3CO₂(g)↑</span>
                             </span><br>
-                            • <strong>主要用途：</strong>焰火火药、农业高效氮钾复合肥[cite: 1]。
+                            • <strong>主要用途：</strong>焰火火药、农业高效氮钾复合肥。
                         </td>
                     </tr>
                 </tbody>
@@ -1147,11 +1176,11 @@
                 <span>❓ <strong>反应本质方程式与动力学差异剖析：</strong></span>
                 <button class="ans-trigger" onclick="toggleBlockAns(this)">展开机理对比</button>
                 <div class="block-ans-content">
-                    • <strong>碳酸氢钠体系（B瓶）：</strong><code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code>[cite: 1]<br>
+                    • <strong>碳酸氢钠体系（B瓶）：</strong><code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code><br>
                     &nbsp;&nbsp;反应一步到位，无中间过渡阶段，倒入盐酸瞬间产生剧烈翻滚气泡，气球以极快速度膨胀胀大！因相同质量下 NaHCO₃ 摩尔质量较小（84 g/mol），产出的 CO₂ 气体总体积更大！<br>
                     • <strong>碳酸钠体系（A瓶）：</strong>分步反应：<br>
                     &nbsp;&nbsp;第一阶段（盐酸不足）：<code>Na₂CO₃(aq) + HCl(aq) &rarr; NaHCO₃(aq) + NaCl(aq)</code>（吸收 H⁺，暂无气泡产生）<br>
-                    &nbsp;&nbsp;第二阶段（盐酸过量）：<code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code>[cite: 1]（开始平缓产气，气球膨胀较慢且体积相对较小）。
+                    &nbsp;&nbsp;第二阶段（盐酸过量）：<code>NaHCO₃(aq) + HCl(aq) &rarr; NaCl(aq) + H₂O(l) + CO₂(g)&uarr;</code>（开始平缓产气，气球膨胀较慢且体积相对较小）。
                 </div>
             </div>
         </div>
@@ -1200,7 +1229,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开方程式</button>
                                 <span class="ans-content">Na₂CO₃(s) + H₂O(l) + CO₂(g)↑</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -1215,7 +1244,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">现象</button>
                                 <span class="ans-content">乳白色浑浊</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -1224,7 +1253,7 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
                                 <span class="ans-content">CaCO₃(s)↓ + 2NaCl(aq)（白色沉淀）</span>
-                            </span>[cite: 1]
+                            </span>
                         </td>
                         <td>
                             <span class="ans-inline">
@@ -1240,12 +1269,12 @@
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
                                 <span class="ans-content">2NaHCO₃(s)↓</span>
-                            </span> (通入过量二氧化碳)[cite: 1]<br>
+                            </span> (通入过量二氧化碳)<br>
                             • <code>2NaHCO₃(s) —加热灼烧—></code>
                             <span class="ans-inline">
                                 <button class="ans-trigger" onclick="toggleAns(this)">展开产物</button>
                                 <span class="ans-content">Na₂CO₃(s) + H₂O(l) + CO₂(g)↑</span>
-                            </span> 或向溶液加入适量 NaOH[cite: 1]。
+                            </span> 或向溶液加入适量 NaOH。
                         </td>
                     </tr>
                 </tbody>
@@ -1685,7 +1714,7 @@
 
             if (step === 1) {
                 titleEl.innerText = "步骤 1：洗 (稀盐酸洗涤)";
-                descEl.innerText = "用稀盐酸洗净铂丝，将表面残留金属转化为高温易挥发的氯化物[cite: 1]。";
+                descEl.innerText = "用稀盐酸洗净铂丝，将表面残留金属转化为高温易挥发的氯化物。";
                 cobaltEl.innerText = "未放置";
                 drawScene('rgba(56, 189, 248, 0.5)', false, false);
             } else if (step === 2) {
