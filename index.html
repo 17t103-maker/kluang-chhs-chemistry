@@ -14,6 +14,9 @@
       --text-muted: #64748b;
       --border: #e2e8f0;
       --disabled: #94a3b8;
+      --notice-bg: #fffbeb;
+      --notice-border: #fef3c7;
+      --notice-text: #b45309;
     }
 
     * {
@@ -55,7 +58,30 @@
     header p {
       font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* 温馨提示框 */
+    .notice-box {
+      background-color: var(--notice-bg);
+      border: 1px solid var(--notice-border);
+      color: var(--notice-text);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .notice-box a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .notice-box a:hover {
+      text-decoration: underline;
     }
 
     .view {
@@ -95,40 +121,23 @@
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
     }
 
-    /* 章节按钮特别样式 */
-    .btn-chapter {
+    /* 子菜单按钮特殊样式 */
+    .btn-sub {
       background: #f8fafc;
       justify-content: center;
       gap: 8px;
       font-size: 1rem;
     }
 
-    .btn-chapter:hover {
+    .btn-sub:hover {
       background: var(--primary);
       color: #ffffff !important;
       border-color: var(--primary);
     }
 
-    /* 待公布/禁用状态 */
-    .btn.disabled {
-      background-color: #f1f5f9;
-      color: var(--disabled);
-      cursor: not-allowed;
-      border-color: #e2e8f0;
-    }
-
-    .badge {
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: #e2e8f0;
-      color: #64748b;
-    }
-
     /* 返回按钮 */
     .btn-back {
-      margin-top: 10px;
+      margin-top: 6px;
       background: transparent;
       border: none;
       color: var(--text-muted);
@@ -160,33 +169,48 @@
       <p>Kluang Chong Hwa High School</p>
     </header>
 
+    <!-- 温馨提示与纠错说明 -->
+    <div class="notice-box">
+      ⚠️ <strong>温馨提示：</strong>网站各解析的参考答案目前正在持续修正中，内容仅供参考。如有发现任何错误或疑问，欢迎随时发送邮件至 <a href="mailto:17t103@chonghwa.edu.my">17t103@chonghwa.edu.my</a> 或通过其他方式联系老师指正！
+    </div>
+
     <!-- 视图 1：主目录 -->
     <div id="main-view" class="view">
-      <button class="btn" onclick="showChapters()">
+      <button class="btn" onclick="switchView('chapter-view')">
         <span>📖 章节教学内容</span>
         <span>👉</span>
       </button>
 
-      <button class="btn disabled" title="正在整理中，敬请期待">
+      <button class="btn" onclick="switchView('exam-view')">
         <span>📝 历届考题解析</span>
-        <span class="badge">待公布</span>
+        <span>👉</span>
       </button>
 
-      <button class="btn disabled" title="正在整理中，敬请期待">
+      <a href="quiz.html" class="btn">
         <span>✍️ 随堂小测验解析</span>
-        <span class="badge">待公布</span>
+        <span>👉</span>
+      </a>
+    </div>
+
+    <!-- 视图 2：章节选择视图 -->
+    <div id="chapter-view" class="view hidden">
+      <a href="chap7.html" class="btn btn-sub">第 7 章 教学内容与讲义</a>
+      <a href="chap8.html" class="btn btn-sub">第 8 章 教学内容与讲义</a>
+      <a href="chap9.html" class="btn btn-sub">第 9 章 教学内容与讲义</a>
+      <a href="chap10.html" class="btn btn-sub">第 10 章 教学内容与讲义</a>
+      <a href="chap11.html" class="btn btn-sub">第 11 章 教学内容与讲义</a>
+
+      <button class="btn-back" onclick="switchView('main-view')">
+        ⬅️ 返回主菜单
       </button>
     </div>
 
-    <!-- 视图 2：章节选择（点击章节内容后切换展示） -->
-    <div id="chapter-view" class="view hidden">
-      <a href="chap7.html" class="btn btn-chapter">第 7 章 教学内容与讲义</a>
-      <a href="chap8.html" class="btn btn-chapter">第 8 章 教学内容与讲义</a>
-      <a href="chap9.html" class="btn btn-chapter">第 9 章 教学内容与讲义</a>
-      <a href="chap10.html" class="btn btn-chapter">第 10 章 教学内容与讲义</a>
-      <a href="chap11.html" class="btn btn-chapter">第 11 章 教学内容与讲义</a>
+    <!-- 视图 3：历届考题解析年份选择视图 -->
+    <div id="exam-view" class="view hidden">
+      <a href="2024.html" class="btn btn-sub">📜 2024 年下半年统测化学解析</a>
+      <a href="2025.html" class="btn btn-sub">📜 2025 年下半年统测化学解析</a>
 
-      <button class="btn-back" onclick="showMain()">
+      <button class="btn-back" onclick="switchView('main-view')">
         ⬅️ 返回主菜单
       </button>
     </div>
@@ -197,14 +221,13 @@
   </div>
 
   <script>
-    function showChapters() {
-      document.getElementById('main-view').classList.add('hidden');
-      document.getElementById('chapter-view').classList.remove('hidden');
-    }
-
-    function showMain() {
-      document.getElementById('chapter-view').classList.add('hidden');
-      document.getElementById('main-view').classList.remove('hidden');
+    function switchView(targetViewId) {
+      // 隐藏所有视图
+      document.querySelectorAll('.view').forEach(view => {
+        view.classList.add('hidden');
+      });
+      // 显示目标视图
+      document.getElementById(targetViewId).classList.remove('hidden');
     }
   </script>
 </body>
