@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>第7章 化学键与分子间作用力 - 互动研学平台</title>
   <!-- 网页浏览器图标 (Favicon) -->
@@ -73,7 +73,7 @@
       padding: 0 20px;
     }
 
-    /* 顶部统一全局快捷导航栏 */
+    /* 顶部统一全局快捷导航栏（修复404问题） */
     .global-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -511,11 +511,11 @@
 </head>
 <body>
 
-  <!-- 顶部统一全局快捷导航栏（已修正对应跳转链接，解决404问题） -->
+  <!-- 顶部统一全局快捷导航栏 -->
   <nav class="global-nav">
     <a href="index.html" class="nav-btn">🏠 平台首页</a>
     <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-    <a href="index.html" class="nav-btn">📝 历届考题解析</a>
+    <a href="2024.html" class="nav-btn">📝 历届考题解析</a>
     <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
   </nav>
 
@@ -1086,7 +1086,7 @@
                   </span>
                   <div class="node-children">
                     <ul>
-                      <li><span style="color:#94a3b8;"><strong>范德华力</strong>：受式量、极性、原子数、电子数, 支链接触面积 5 大因素影响</span></li>
+                      <li><span style="color:#94a3b8;"><strong>范德华力</strong>：受式量、极性、原子数、电子数、支链接触面积 5 大因素影响</span></li>
                       <li><span style="color:#94a3b8;"><strong>氢键 (X-H···Y)</strong>：存在于 N, O, F 氢化物中，引起沸点反常跳跃与冰密度反常</span></li>
                     </ul>
                   </div>
@@ -1169,28 +1169,28 @@
     const cloudData = {
       H2: {
         title: "氢气分子 (H-H) · 非极性共价键",
-        desc: "• <strong>电负性差值</strong>：Δχ = 2.1 - 2.1 = 0<br>• <strong>电子云分布</strong>：两核引力相同，电子云在核间对称均匀分布，两端不显电性。<br>• <strong>键型结论</strong>：<span class='inline-ans'>非极性共价键</span>",
+        desc: "• <strong>电负性差值</strong>：Δχ = 2.1 - 2.1 = 0<br>• <strong>电子云分布</strong>：两核引力相同，电子云在核间对称均匀分布，两端不显电性。<br>• <strong>键型归类</strong>：<span class='inline-ans'>非极性共价键</span>",
         shift: 0,
         atomA: "H (2.1)", atomB: "H (2.1)",
         colorA: "#38bdf8", colorB: "#38bdf8"
       },
       HCl: {
         title: "氯化氢分子 (H-Cl) · 极性共价键",
-        desc: "• <strong>电负性差值</strong>：Δχ = 3.0 - 2.1 = 0.9<br>• <strong>电子云分布</strong>：共用电子对明显向电负性较大的 Cl 原子偏移，Cl 端显负电性 (δ⁻)，H 端显正电性 (δ⁺)。<br>• <strong>键型结论</strong>：<span class='inline-ans'>极性共价键</span>",
+        desc: "• <strong>电负性差值</strong>：Δχ = 3.0 - 2.1 = 0.9<br>• <strong>电子云分布</strong>：共用电子对明显向电负性较大的 Cl 原子偏移，Cl 端显负电性 (δ⁻)，H 端显正电性 (δ⁺)。<br>• <strong>键型归类</strong>：<span class='inline-ans'>极性共价键</span>",
         shift: 35,
         atomA: "H (δ⁺)", atomB: "Cl (δ⁻)",
         colorA: "#38bdf8", colorB: "#10b981"
       },
       HF: {
         title: "氟化氢分子 (H-F) · 强极性共价键",
-        desc: "• <strong>电负性差值</strong>：Δχ = 4.0 - 2.1 = 1.9 (共价分子)<br>• <strong>电子云分布</strong>：氟电负性极大，电子云极度偏向 F 端，H 核几乎呈裸露质子态。<br>• <strong>键型结论</strong>：<span class='inline-ans'>强极性共价键 (分子间易成氢键)</span>",
+        desc: "• <strong>电负性差值</strong>：Δχ = 4.0 - 2.1 = 1.9 (共价分子)<br>• <strong>电子云分布</strong>：氟电负性极大，电子云极度偏向 F 端，H 核几乎呈裸露质子态。<br>• <strong>键型归类</strong>：<span class='inline-ans'>强极性共价键 (分子间易成氢键)</span>",
         shift: 55,
         atomA: "H (δ⁺⁺)", atomB: "F (δ⁻⁻)",
         colorA: "#38bdf8", colorB: "#ec4899"
       },
       NaCl: {
         title: "氯化钠 (Na-Cl) · 离子键 (电子实质转移)",
-        desc: "• <strong>电负性差值</strong>：Δχ = 3.0 - 0.9 = 2.1 ≥ 1.7<br>• <strong>电子云分布</strong>：电子完全转移至 Cl 原子外层，形成孤立的 Na⁺ 与 Cl⁻ 电子云球体，依靠库仑力结合。<br>• <strong>键型结论</strong>：<span class='inline-ans'>离子键</span>",
+        desc: "• <strong>电负性差值</strong>：Δχ = 3.0 - 0.9 = 2.1 ≥ 1.7<br>• <strong>电子云分布</strong>：电子完全转移至 Cl 原子外层，形成孤立的 Na⁺ 与 Cl⁻ 电子云球体，依靠库仑力结合。<br>• <strong>键型归类</strong>：<span class='inline-ans'>离子键</span>",
         shift: 80,
         atomA: "Na⁺", atomB: "Cl⁻",
         colorA: "#f59e0b", colorB: "#10b981"
@@ -2007,7 +2007,7 @@
       const node = header.parentElement;
       const children = node.querySelector('.node-children');
       const btn = header.querySelector('.toggle-btn');
-      hif: if (children) {
+      if (children) {
         children.classList.toggle('collapsed');
         btn.innerText = children.classList.contains('collapsed') ? '[+]' : '[-]';
       }
