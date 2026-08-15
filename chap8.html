@@ -64,18 +64,35 @@
             transition: max-width 0.3s ease;
         }
 
-        /* 顶部全功能快捷导航栏样式 */
+        /* 顶部全局导航栏与移动端折叠控制 */
         .global-top-nav {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 24px;
-            padding: 12px 16px;
+            padding: 12px 20px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .nav-brand-area {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
         }
 
         .nav-pill-btn {
@@ -91,6 +108,13 @@
             font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        body.dark-mode .nav-pill-btn {
+            background: var(--bg-card-sub);
+            color: var(--text-main);
+            border-color: var(--border-color);
         }
 
         .nav-pill-btn:hover {
@@ -105,7 +129,46 @@
             border-color: #1e3a5f;
         }
 
-        /* 顶部悬浮工具栏 */
+        .nav-menu-toggle {
+            display: none;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (max-width: 850px) {
+            .nav-menu-toggle {
+                display: block;
+            }
+            .nav-links-wrapper {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-card);
+                padding: 16px;
+                border: 1px solid var(--border-color);
+                border-radius: 0 0 14px 14px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                z-index: 1005;
+                align-items: stretch;
+            }
+            .nav-links-wrapper.active {
+                display: flex;
+            }
+            .nav-pill-btn {
+                justify-content: center;
+            }
+        }
+
+        /* 顶部悬浮工具栏 (支持移动端折叠/展开面板) */
         .toolbar {
             position: sticky;
             top: 0;
@@ -128,6 +191,36 @@
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
+        }
+
+        .toolbar-panel-toggle {
+            display: none;
+            background: var(--bg-card-sub);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .toolbar-panel-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .toolbar-collapsible {
+                display: none;
+                width: 100%;
+                padding-top: 8px;
+                border-top: 1px solid var(--border-color);
+                margin-top: 4px;
+            }
+            .toolbar-collapsible.active {
+                display: flex;
+            }
         }
 
         .btn {
@@ -562,7 +655,7 @@
         }
 
         @media print {
-            .global-top-nav, .toolbar, .canvas-toolbar, .btn, .canvas-box, .hotspot-point, .stepper-nav, .tab-box {
+            .global-top-nav, .toolbar, .canvas-toolbar, .btn, .canvas-box, .hotspot-point, .stepper-nav, .tab-box, .toolbar-panel-toggle {
                 display: none !important;
             }
             body {
@@ -596,23 +689,29 @@
 
     <div class="container">
         
-        <!-- 顶部全功能快捷导航栏 -->
+        <!-- 顶部全局导航栏 (已按需求规范化) -->
         <nav class="global-top-nav">
-            <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
-            <a href="2024.html" class="nav-pill-btn">📅 2024统测</a>
-            <a href="2025.html" class="nav-pill-btn">📅 2025统测</a>
-            <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
-            <a href="index.html" class="nav-pill-btn">📝 历届考题解析</a>
-            <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
+            <div class="nav-brand-area">
+                <span>⚗️ 教学中心平台</span>
+            </div>
+            <button class="nav-menu-toggle" onclick="toggleNavMenu()">☰ 导航菜单</button>
+            <div class="nav-links-wrapper" id="globalNavLinks">
+                <a href="chapters_select.html" class="nav-pill-btn">📖 章节教学内容</a>
+                <a href="past_exams_select.html" class="nav-pill-btn">📚 历届考题解析</a>
+                <a href="quiz.html" class="nav-pill-btn">✍️ 随堂小测验解析</a>
+            </div>
         </nav>
 
-        <!-- 顶部固定工具栏 -->
+        <!-- 顶部固定工具栏 (支持手机端默认收起与展开切换) -->
         <header class="toolbar">
             <div class="toolbar-group">
                 <span style="font-weight: 800; color: var(--primary);">⚗️ ChemInteract Studio</span>
                 <span style="color: var(--text-sub);">| 高一化学 第8章 氧化还原反应</span>
             </div>
             <div class="toolbar-group">
+                <button class="toolbar-panel-toggle" onclick="toggleToolbarPanel()">⚙️ 展开/收起面板</button>
+            </div>
+            <div class="toolbar-group toolbar-collapsible" id="toolbarCollapsiblePanel">
                 <button class="btn btn-primary" id="btn-toggle-all" onclick="toggleAllAnswers()">🔓 展开所有答案</button>
                 <select class="btn" id="select-fontsize" onchange="changeFontSize(this.value)">
                     <option value="1">字号: 100%</option>
@@ -1050,7 +1149,17 @@
 
     <!-- 交互与动画引擎脚本 -->
     <script>
-        /* 0. 核心自清洗拦截引擎：递归清理整棵 DOM 树中的引用标签与残留 */
+        /* 0. 手机端顶部菜单折叠控制 */
+        function toggleNavMenu() {
+            document.getElementById('globalNavLinks').classList.toggle('active');
+        }
+
+        /* 0.1 手机端工具栏面板折叠/展开切换 */
+        function toggleToolbarPanel() {
+            document.getElementById('toolbarCollapsiblePanel').classList.toggle('active');
+        }
+
+        /* 0.2 核心自清洗拦截引擎：递归清理整棵 DOM 树中的引用标签与残留 */
         function purgeCitationsFromDOM(node) {
             if (!node) return;
             if (node.nodeType === Node.TEXT_NODE) {
