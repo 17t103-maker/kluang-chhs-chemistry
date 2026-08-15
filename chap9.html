@@ -45,12 +45,12 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* 整体字号放大两号设计 */
+        /* 整体字号调整设计 */
         body.font-small { font-size: 16px; }
-        body.font-medium { font-size: 18px; } /* 默认字号 18px */
+        body.font-medium { font-size: 18px; }
         body.font-large { font-size: 21px; }
 
-        /* 顶部统一全局快捷导航栏样式 */
+        /* 顶部统一全局快捷导航栏样式 (响应式手机端折叠) */
         .global-nav {
             background: var(--container-bg);
             border-bottom: 3px solid var(--accent-color);
@@ -58,10 +58,18 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             position: relative;
             z-index: 1001;
+        }
+
+        .nav-links-container {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-btn {
@@ -85,6 +93,44 @@
             border-color: var(--accent-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
+        }
+
+        .nav-menu-toggle {
+            display: none;
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (max-width: 850px) {
+            .nav-menu-toggle {
+                display: block;
+            }
+            .nav-links-container {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--container-bg);
+                padding: 15px;
+                border-bottom: 3px solid var(--accent-color);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+                z-index: 1005;
+                align-items: stretch;
+            }
+            .nav-links-container.active {
+                display: flex;
+            }
+            .nav-btn {
+                justify-content: center;
+            }
         }
 
         .container {
@@ -487,12 +533,18 @@
 </head>
 <body class="font-medium">
 
-    <!-- 统一全局快捷导航栏（已按需求调整链接） -->
+    <!-- 统一全局快捷导航栏 -->
     <nav class="global-nav">
-        <a href="index.html" class="nav-btn">🏠 平台首页</a>
-        <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
-        <a href="past_exams_select.html" class="nav-btn">📝 历届考题解析</a>
-        <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+        <div style="font-weight: 800; color: var(--accent-color); display:flex; align-items:center; gap:6px;">
+            <span>⚗️ 居銮中华中学化学研学</span>
+        </div>
+        <button class="nav-menu-toggle" onclick="toggleGlobalNavMenu()">☰ 导航菜单</button>
+        <div class="nav-links-container" id="globalNavLinksContainer">
+            <a href="index.html" class="nav-btn">🏠 平台首页</a>
+            <a href="index.html" class="nav-btn">📖 章节教学内容</a>
+            <a href="2024.html" class="nav-btn">📝 历届考题解析</a>
+            <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+        </div>
     </nav>
 
     <div class="container" id="mainContainer">
@@ -927,7 +979,6 @@
             </div>
         </div>
 
-        <!-- 工业制备与微观/宏观双视角电解槽模拟器 -->
         <div class="content-card">
             <div class="sub-section-title">9.1.3 工业制取金属钠与金属钾的反应机理与原理</div>
             <ul>
@@ -1317,7 +1368,7 @@
                             <ul>
                                 <li><div class="h-node leaf">物理本质：基态 &rarr; 激发态 &rarr; 跃迁回基态发射特定波长光子（明线发射光谱）</div></li>
                                 <li><div class="h-node leaf">标准操作：洗(稀盐酸) &rarr; 烧(至无色) &rarr; 蘸(试样) &rarr; 烧(观察显色) &rarr; 滤/洗(蓝钴玻璃滤黄光)</div></li>
-                                <li><div class="h-node leaf">特征颜色：Na 黄色 (589nm 双黄线)；K 淡紫色 (透过蓝钴玻璃)；Li 紫红；Ca 砖红；Cu 绿</div></li>
+                                <li><div class="h-node leaf">特征颜色：Na 黄色 (589nm 双黄线)；K 淡紫色 (透过蓝色钴玻璃)；Li 紫红；Ca 砖红；Cu 绿</div></li>
                             </ul>
                         </li>
 
@@ -1342,6 +1393,11 @@
 
     <!-- JavaScript 逻辑交互控制引擎 -->
     <script>
+        // --- 0. 手机端导航折叠控制 ---
+        function toggleGlobalNavMenu() {
+            document.getElementById('globalNavLinksContainer').classList.toggle('active');
+        }
+
         // --- 1. 全局字号与版面 ---
         function setFontSize(sizeClass) {
             document.body.classList.remove('font-small', 'font-medium', 'font-large');
