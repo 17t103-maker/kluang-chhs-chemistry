@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第11章 IIIA族元素：铝 互动深度探究平台</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-color: #2d3748;
+            --primary-color: #1a365d;
+            --accent-color: #3182ce;
+            --ans-color: #c53030;
+            --ans-bg: #fff5f5;
+            --card-bg: #f8fafc;
+            --border-color: #cbd5e0;
+            --tree-bg: #1e2227;
+            --tree-text: #abb2bf;
+        }
+
+        body.eye-care-mode {
+            --bg-color: #1a1d20;
+            --container-bg: #24292e;
+            --text-color: #d1d5db;
+            --primary-color: #63b3ed;
+            --accent-color: #4299e1;
+            --ans-color: #f56565;
+            --ans-bg: #2d1f24;
+            --card-bg: #2d333b;
+            --border-color: #4b5563;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.font-small { font-size: 16px; }
+        body.font-medium { font-size: 18px; } /* 默认字号 18px */
+        body.font-large { font-size: 21px; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            transition: max-width 0.3s ease;
+        }
+        .container.wide-mode { max-width: 96% !important; }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px 22px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover { background-color: var(--border-color); }
+
+        select.control-select {
+            padding: 7px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--container-bg);
+            color: var(--text-color);
+            font-size: 14.5px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 18px;
+            margin-bottom: 25px;
+        }
+        .school-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 6px 0 12px 0;
+        }
+        .info-bar {
+            font-size: 15px;
+            opacity: 0.85;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .objectives-card {
+            background-color: var(--card-bg);
+            border-left: 6px solid var(--accent-color);
+            border-radius: 0 10px 10px 0;
+            padding: 18px 24px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            border-left-width: 6px;
+        }
+        .objectives-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 12px;
+            font-size: 15.5px;
+            padding-left: 0;
+            list-style: none;
+            margin: 0;
+        }
+        .objectives-grid li {
+            position: relative;
+            padding-left: 22px;
+        }
+        .objectives-grid li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 35px 0 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sub-section-title {
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 20px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .content-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* 隐形挖空样式 */
+        .ans-inline {
+            display: inline-block;
+            position: relative;
+            margin: 0 3px;
+        }
+        .ans-trigger {
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            border: 1px dashed var(--accent-color);
+            padding: 2px 9px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }
+        .ans-trigger:hover {
+            background-color: #feebc8;
+            color: #c05621;
+            border-color: #f6ad55;
+        }
+        .ans-content {
+            display: none;
+            color: var(--ans-color);
+            font-weight: 700;
+            background-color: var(--ans-bg);
+            border-bottom: 2px solid var(--ans-color);
+            padding: 2px 10px;
+            border-radius: 5px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .ans-content.show { display: inline-block; }
+        .ans-trigger.hidden { display: none; }
+
+        .block-ans-box { margin: 15px 0; }
+        .block-ans-content {
+            display: none;
+            background-color: var(--ans-bg);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--ans-color);
+            padding: 14px 18px;
+            border-radius: 6px;
+            color: var(--ans-color);
+            font-weight: 600;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .block-ans-content.show { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .canvas-card {
+            background: #1a202c;
+            color: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+        }
+        .canvas-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* 视频容器样式 (适配 Google Drive 预览) */
+        .video-box {
+            background: #171923;
+            border: 1px solid #4a5568;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 18px 0;
+            text-align: center;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 标准比例 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            max-width: 760px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            background: var(--container-bg);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 11px 15px;
+            font-size: 15.5px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* 知识图谱 (NotebookLM 风格) */
+        .mindmap-container {
+            margin-top: 35px;
+            background-color: var(--tree-bg);
+            color: #f8f9fa;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+        .mindmap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3e4451;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .mindmap-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #61afef;
+        }
+        .mindmap-content {
+            overflow-x: auto;
+            padding: 10px 5px;
+        }
+        .h-tree { display: flex; align-items: center; }
+        .h-tree ul {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 30px;
+            position: relative;
+            list-style: none;
+            margin: 0;
+        }
+        .h-tree ul.layer-open { display: flex; animation: fadeIn 0.3s ease-in-out; }
+        .h-tree li {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .h-tree li::before {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background-color: #4b5263;
+        }
+        .h-tree li::after {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: #4b5263;
+        }
+        .h-tree li:first-child::after { top: 50%; height: 50%; }
+        .h-tree li:last-child::after { height: 50%; }
+        .h-tree li:only-child::after { display: none; }
+
+        .h-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 15px;
+            border-radius: 8px;
+            font-size: 14.5px;
+            font-weight: 500;
+            border: 1px solid #3e4451;
+            background: #2c313a;
+            color: var(--tree-text);
+            white-space: nowrap;
+            user-select: none;
+            transition: 0.2s;
+        }
+        .h-node.has-children { cursor: pointer; }
+        .h-node.has-children:hover { border-color: #61afef; color: #fff; box-shadow: 0 0 10px rgba(97, 175, 239, 0.4); }
+        .h-node .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: #3e4451;
+            color: #61afef;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .h-node.root { background: #2b3a4e; color: #61afef; font-weight: 700; border-color: #61afef; font-size: 15.5px; }
+        .h-node.branch { background: #282c34; color: #e5c07b; font-weight: 600; }
+        .h-node.leaf { background: #21252b; color: #98c379; font-size: 13.5px; }
+
+        @media print {
+            .toolbar, .canvas-toolbar, .btn, .control-select, .video-box { display: none !important; }
+            body { padding: 0; background: #fff !important; color: #000 !important; font-size: 14px !important; }
+            .container { box-shadow: none; padding: 0; max-width: 100% !important; }
+            .ans-trigger { display: none !important; }
+            .ans-content { display: inline-block !important; background: transparent !important; color: #c53030 !important; }
+            .block-ans-content { display: block !important; }
+            .mindmap-container { background: #fff !important; color: #000 !important; border: 1px solid #ccc; }
+            .h-node { background: #f0f0f0 !important; color: #000 !important; border-color: #aaa !important; }
+            .h-tree li::before, .h-tree li::after { background-color: #999 !important; }
+        }
+    </style>
+</head>
+<body class="font-medium">
+
+    <div class="container" id="mainContainer">
+
+        <!-- 顶部交互控制栏 -->
+        <div class="toolbar">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-weight: 700; color: var(--primary-color);">🧭 课堂互动控制台</span>
+                <select class="control-select" onchange="setFontSize(this.value)">
+                    <option value="font-small">字号: 16px (标准)</option>
+                    <option value="font-medium" selected>字号: 18px (放大两号)</option>
+                    <option value="font-large">字号: 21px (超大)</option>
+                </select>
+                <select class="control-select" onchange="setLayoutWidth(this.value)">
+                    <option value="normal" selected>版面: 标准居中</option>
+                    <option value="wide">版面: 宽屏全景</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap:wrap;">
+                <button class="btn" onclick="toggleAllAnswers(true)">🔓 展开全部答案</button>
+                <button class="btn btn-outline" onclick="toggleAllAnswers(false)">🔒 隐藏全部答案</button>
+                <button class="btn btn-outline" onclick="toggleEyeCare()">👁️ 护眼模式</button>
+                <button class="btn btn-outline" onclick="window.print()">🖨️ 打印学案</button>
+            </div>
+        </div>
+
+        <!-- 课程标头 -->
+        <div class="header">
+            <div class="school-name">居銮中华中学 高中化学课堂</div>
+            <div class="title">第11章 IIIA族元素：铝（全景知识与深度探究平台）</div>
+            <div class="info-bar">
+                <span>适用年级：高一理科班</span>
+                <span>核心维度：结构 &rarr; 性质 &rarr; 两性反应 &rarr; 冶炼 &rarr; 用途</span>
+                <span>教学模式：情境探究与微观动力学建模</span>
+            </div>
+        </div>
+
+        <!-- 🎯 章节学习目标卡片 -->
+        <div class="objectives-card">
+            <h3>🎯 本章核心素养与考试目标清单</h3>
+            <ul class="objectives-grid">
+                <li><strong>原子结构与地壳丰度：</strong>掌握 Al 的原子结构（3s² 3p¹）及作为地壳中含量最多金属元素的地位。</li>
+                <li><strong>单质的物化特性与钝化：</strong>掌握铝的轻质导电性、常温遇浓硝酸/浓硫酸的钝化机理及铝热反应。</li>
+                <li><strong>两性反应微观本质：</strong>熟练掌握 Al、Al₂O₃、Al(OH)₃ 既溶于强酸又溶于强碱的特征与离子方程式。</li>
+                <li><strong>“铝三角”转化规律：</strong>掌握 Al³⁺、Al(OH)₃、AlO₂⁻ 之间的相互转化与滴定沉淀图像分析。</li>
+                <li><strong>复盐与明矾净水：</strong>掌握明矾 KAl(SO₄)₂·12H₂O 的组成与水解生成胶体吸附杂质的净水原理。</li>
+                <li><strong>工业炼铝与冰晶石助熔：</strong>掌握拜耳法提纯铝土矿与电解熔融 Al₂O₃ 反应机理。</li>
+            </ul>
+        </div>
+
+        <!-- ======================= 11.1 铝的性质 ======================= -->
+        <div class="section-title">
+            <span>11.1 铝的性质（存在形态、物理特性、两性反应与铝热反应）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务一</span>
+        </div>
+
+        <div class="content-card">
+            <p><strong>1. 自然存在与地壳丰度：</strong><br>
+                铝（Aluminium, Al）元素占地壳总质量的
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">百分比</button>
+                    <span class="ans-content">7.73%</span>
+                </span>，是地壳中含量
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">最多/最少</button>
+                    <span class="ans-content">最多</span>
+                </span> 的金属元素（在地壳全部元素中仅次于氧和硅排第三位）。在自然界中均以
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">单质/化合态</button>
+                    <span class="ans-content">化合态</span>
+                </span> 形式存在（如铝土矿主要成分为 Al₂O₃）。铝位于元素周期表中第
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">周期与族</button>
+                    <span class="ans-content">3 周期、第 IIIA 族</span>
+                </span>，原子的核外最外层电子排布式为
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">电子构型</button>
+                    <span class="ans-content">3s² 3p¹</span>
+                </span>。
+            </p>
+
+            <div class="sub-section-title">11.1.1 铝的物理性质与实际应用对应关系</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">物理性质</th>
+                        <th style="width: 35%;">具体特性与数据</th>
+                        <th style="width: 40%;">对应的生产与生活用途</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>密度与机械性</strong></td>
+                        <td>密度 
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">2700 kg·m⁻³ (2.7 g/cm³)</span>
+                            </span>，质轻且合金机械强度高
+                        </td>
+                        <td>制造飞机、高铁车身、汽车轻量化结构件及铝合金门窗</td>
+                    </tr>
+                    <tr>
+                        <td><strong>熔点与沸点</strong></td>
+                        <td>熔点 
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">660℃</span>
+                            </span>，沸点 
+                            <span class="ans-inline">
+                                <button class="ans-trigger" onclick="toggleAns(this)">数据</button>
+                                <span class="ans-content">2327℃</span>
+                            </span>
+                        </td>
+                        <td>熔铸简便，制备各种耐热轻质合金构件</td>
+                    </tr>
+                    <tr>
+                        <td><strong>延展性</strong></td>
+                        <td>极佳（仅次于金、铂、银）</td>
+                        <td>压延成薄于 0.01 mm 的铝箔，用于食品保鲜包装、电容器</td>
+                    </tr>
+                    <tr>
+                        <td><strong>导电与导热性</strong></td>
+                        <td>优良导体（仅次于银、铜）</td>
+                        <td>制造高压输电线缆、炊具锅具及电子散热器</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">11.1.2 铝的化学性质（点击查看方程式产物与状态）</div>
+            <p><strong>1. 与非金属及水的反应：</strong></p>
+            <ul>
+                <li><strong>与氧气常温氧化：</strong>表面迅速生成一层致密坚固的 Al₂O₃ 氧化膜，阻止内部金属继续被氧化。</li>
+                <li><strong>在纯氧中加热燃烧：</strong>剧烈燃烧，放出大量热并发出耀眼白光：<br>
+                    <code>4Al(s) + 3O₂(g) —点燃&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2Al₂O₃(s)</span>
+                    </span>
+                </li>
+                <li><strong>与卤素、硫化合：</strong><br>
+                    • <code>2Al(s) + 3Cl₂(g) —Δ&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2AlCl₃(s)</span>
+                    </span><br>
+                    • <code>2Al(s) + 3S(s) —Δ&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">Al₂S₃(s)</span>
+                    </span>
+                </li>
+                <li><strong>熔融铝与水剧烈反应：</strong><br>
+                    <code>2Al(l) + 3H₂O(l) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">Al₂O₃(s) + 3H₂(g)&uarr;</span>
+                    </span>
+                </li>
+            </ul>
+
+            <p><strong>2. 钝化现象（Passivation）与微观动态探究：</strong><br>
+                在常温下，铝遇
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">强氧化性酸</button>
+                    <span class="ans-content">浓硝酸或浓硫酸</span>
+                </span> 时，表面最外层原子被迅速氧化生成一层极薄而致密坚固的氧化物薄膜，阻碍内部金属进一步发生反应，这种现象称为<strong>钝化</strong>。因此工业上常用
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">材质容器</button>
+                    <span class="ans-content">铝制槽罐/容器</span>
+                </span> 来储运冷浓硫酸或冷浓硝酸。
+            </p>
+
+            <!-- 钝化微观机理动态模拟器 -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">🔬 微观世界：金属铝遇浓硝酸钝化过程动态模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#48bb78;" onclick="startPassivationSim()">🧪 注入冷浓硝酸 (HNO₃)</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetPassivationSim()">重置金属表面</button>
+                    </div>
+                </div>
+                <canvas id="passCanvas" width="900" height="230" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="passStatusText">当前状态：金属铝晶格完好，表面未发生钝化</span>
+                    <span style="color:#f6e05e;">微观机理：强氧化性 HNO₃ 氧化表层 Al 原子生成致密无孔隙 Al₂O₃ 保护膜</span>
+                </div>
+            </div>
+
+            <p><strong>3. 两性反应：与酸和强碱的反应：</strong><br>
+                铝既能与非氧化性强酸反应，也能与强碱溶液反应放出氢气，体现特殊的两性金属性！
+            </p>
+            <ul>
+                <li><strong>与非氧化性酸反应（稀盐酸）：</strong><br>
+                    • 化学方程式：<code>2Al(s) + 6HCl(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2AlCl₃(aq) + 3H₂(g)&uarr;</span>
+                    </span><br>
+                    • 离子方程式：<code>2Al(s) + 6H⁺(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">2Al³⁺(aq) + 3H₂(g)&uarr;</span>
+                    </span>
+                </li>
+                <li><strong>与强碱溶液反应（NaOH 溶液）：</strong><br>
+                    • 化学方程式：<code>2Al(s) + 2NaOH(aq) + 2H₂O(l) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2NaAlO₂(aq) + 3H₂(g)&uarr;</span>
+                    </span><br>
+                    • 离子方程式：<code>2Al(s) + 2OH⁻(aq) + 2H₂O(l) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">2AlO₂⁻(aq) + 3H₂(g)&uarr;</span>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="block-ans-box">
+                <span>❓ <strong>核心计量规律：</strong>等质量的铝分别与足量稀盐酸和足量 NaOH 溶液反应，产生气体的比例是多少？消耗酸碱的比例是多少？</span>
+                <button class="ans-trigger" onclick="toggleBlockAns(this)">展开定量对比</button>
+                <div class="block-ans-content">
+                    • <strong>产生 H₂ 物质的量之比：</strong>根据得失电子守恒（2Al ~ 3H₂），生成 H₂ 的体积之比为 <strong>1 : 1</strong>！<br>
+                    • <strong>消耗 HCl 与 NaOH 物质的量之比：</strong>消耗 HCl 与 NaOH 之比为 <strong>3 : 1</strong>（因 6HCl ~ 2Al ~ 2NaOH）。
+                </div>
+            </div>
+        </div>
+
+        <!-- 铝热反应探究器与动态模拟器 -->
+        <div class="content-card">
+            <div class="sub-section-title">11.1.3 铝热反应（Thermite Reaction）原理与真实实验视窗</div>
+            <p>把铝粉和某些难熔金属氧化物（如 Fe₂O₃、Cr₂O₃、V₂O₅、MnO₂）的混合物称为<strong>铝热剂</strong>。用镁条和氯酸钾引燃后发生剧烈氧化还原反应，放出巨大热量使生成的金属熔化为铁水流出，广泛应用于<strong>野外无缝铁轨焊接</strong>与<strong>冶炼难熔金属</strong>。</p>
+            <ul>
+                <li><strong>焊接铁轨核心反应：</strong><code>2Al(s) + Fe₂O₃(s) —高温&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2Fe(l) + Al₂O₃(l)</span>
+                    </span>
+                </li>
+                <li><strong>冶炼金属铬反应：</strong><code>2Al(s) + Cr₂O₃(s) —高温&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2Cr(l) + Al₂O₃(l)</span>
+                    </span>
+                </li>
+            </ul>
+
+            <!-- 经典铝热反应模拟器（标准漏斗铁架台装置） -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#f6ad55;">💥 经典铝热反应（标准纸漏斗与熔融铁析出）动态模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#e53e3e;" onclick="startThermiteReaction()">🔥 点燃镁条引燃铝热剂</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetThermiteSim()">重置实验装置</button>
+                    </div>
+                </div>
+                <canvas id="thermiteCanvas" width="920" height="320" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="thermiteStatus">当前状态：待命已就绪，铁圈上双层纸漏斗已装入 Al + Fe₂O₃ 混合粉末</span>
+                    <span style="color:#f6e05e;">2Al(s) + Fe₂O₃(s) —高温&rarr; 2Fe(l) + Al₂O₃(l) (释放数千度剧烈强热)</span>
+                </div>
+            </div>
+
+            <!-- 嵌入真实实验视窗 1：Google Drive 铝热反应实验视频 -->
+            <div class="video-box">
+                <div style="font-weight:bold; color:#63b3ed; margin-bottom:8px; font-size:15px;">🎥 真实实验室演示：铝热反应剧烈火花与液态铁水生成</div>
+                <div class="video-wrapper">
+                    <iframe src="https://drive.google.com/file/d/1gYgYGvWnOrej-zr2r2iItFyLBwd8a00t/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+                <div style="font-size:13px; color:#a0aec0; margin-top:6px;">💡 可点击播放窗口右下角或弹出图标全屏观看</div>
+            </div>
+
+            <!-- 嵌入真实应用视窗 2：Google Drive 野外无缝铁轨焊接视频 -->
+            <div class="video-box">
+                <div style="font-weight:bold; color:#f6ad55; margin-bottom:8px; font-size:15px;">🚆 工业应用现场：野外利用铝热反应进行无缝铁轨精密焊接</div>
+                <div class="video-wrapper">
+                    <iframe src="https://drive.google.com/file/d/1H0ErTc_0O_87EqZgbikv6ccIl88Th5aL/preview" allow="autoplay" allowfullscreen></iframe>
+                </div>
+                <div style="font-size:13px; color:#a0aec0; margin-top:6px;">💡 观察高温熔融铁水如何无缝熔接铁轨接头</div>
+            </div>
+        </div>
+
+        <!-- ======================= 11.2 铝的重要化合物 ======================= -->
+        <div class="section-title">
+            <span>11.2 铝的重要化合物（氧化铝、氢氧化铝与明矾复盐）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务二</span>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">1. 氧化铝（Al₂O₃）—— 典型的两性氧化物</div>
+            <p>氧化铝是白色难熔固体（熔点 
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">熔点数据</button>
+                    <span class="ans-content">2054℃</span>
+                </span>），硬度大，自然界中的刚玉、红宝石（含微量 Cr）、蓝宝石（含微量 Fe 和 Ti）主要成分均为 Al₂O₃。它既能溶于强酸生成铝盐，又能溶于强碱生成偏铝酸盐，属于<strong>两性氧化物</strong>：
+            </p>
+            <ul>
+                <li><strong>与强酸反应（稀硫酸）：</strong><br>
+                    • 化学方程式：<code>Al₂O₃(s) + 3H₂SO₄(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">Al₂(SO₄)₃(aq) + 3H₂O(l)</span>
+                    </span><br>
+                    • 离子方程式：<code>Al₂O₃(s) + 6H⁺(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">2Al³⁺(aq) + 3H₂O(l)</span>
+                    </span>
+                </li>
+                <li><strong>与强碱反应（NaOH 溶液）：</strong><br>
+                    • 化学方程式：<code>Al₂O₃(s) + 2NaOH(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2NaAlO₂(aq) + H₂O(l)</span>
+                    </span><br>
+                    • 离子方程式：<code>Al₂O₃(s) + 2OH⁻(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">2AlO₂⁻(aq) + H₂O(l)</span>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="sub-section-title">2. 氢氧化铝（Al(OH)₃）—— 两性氢氧化物与阻燃剂</div>
+            <p>氢氧化铝是白色胶状不溶于水的沉淀，吸附能力强。具有独特的双向电离平衡机制：</p>
+            <p style="text-align:center; font-weight:bold; color:var(--primary-color);">
+                酸式电离：$\text{AlO}_2^- + \text{H}^+ + \text{H}_2\text{O} \rightleftharpoons \text{Al(OH)}_3\text{(s)} \rightleftharpoons \text{Al}^{3+} + 3\text{OH}^-$ ：碱式电离
+            </p>
+            <ul>
+                <li><strong>实验室制备标准原则：</strong>可溶性铝盐必须与<strong>弱碱（氨水）</strong>反应，严禁使用过量强碱：<br>
+                    • 化学方程式：<code>Al₂(SO₄)₃(aq) + 6NH₃·H₂O(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                        <span class="ans-content">2Al(OH)₃(s)↓ + 3(NH₄)₂SO₄(aq)</span>
+                    </span><br>
+                    • 离子方程式：<code>Al³⁺(aq) + 3NH₃·H₂O(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">Al(OH)₃(s)↓ + 3NH₄⁺(aq)</span>
+                    </span>
+                </li>
+                <li><strong>溶解于强酸：</strong><code>Al(OH)₃(s) + 3H⁺(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">Al³⁺(aq) + 3H₂O(l)</span>
+                    </span>
+                </li>
+                <li><strong>溶解于强碱：</strong><code>Al(OH)₃(s) + OH⁻(aq) &rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开离子方程式</button>
+                        <span class="ans-content">AlO₂⁻(aq) + 2H₂O(l)</span>
+                    </span>
+                </li>
+                <li><strong>受热分解与阻燃机理：</strong><code>2Al(OH)₃(s) —Δ&rarr;</code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开分解产物</button>
+                        <span class="ans-content">Al₂O₃(s) + 3H₂O(g)</span>
+                    </span>（受热剧烈吸热降低温度，生成水蒸气稀释氧气，无毒无公害无烟阻燃剂）。
+                </li>
+            </ul>
+
+            <div class="sub-section-title">3. 硫酸铝钾与明矾（KAl(SO₄)₂·12H₂O）净水原理与微观探究</div>
+            <p>明矾化学式为 
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">化学式</button>
+                    <span class="ans-content">KAl(SO₄)₂·12H₂O</span>
+                </span>，是由两种不同的金属阳离子（K⁺, Al³⁺）与硫酸根阴离子组成的<strong>复盐</strong>。<br>
+                • <strong>净水原理解析：</strong>明矾溶于水电离出 Al³⁺ 离子，Al³⁺ 水解生成具有巨大表面积与强吸附能力的
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">胶体成分</button>
+                    <span class="ans-content">Al(OH)₃ 胶体</span>
+                </span>：<br>
+                <code>Al³⁺(aq) + 3H₂O(l) ⇌ Al(OH)₃(胶体) + 3H⁺(aq)</code>，吸附水中微小泥沙悬浮颗粒聚沉。
+            </p>
+
+            <!-- 明矾微观净水动态模拟器 -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">💧 微观世界：明矾投入浑浊污水水解与吸附杂质沉降模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#48bb78;" onclick="startAlumWaterPurifySim()">✨ 向污水投入明矾</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetAlumWaterPurifySim()">重置浑浊水样</button>
+                    </div>
+                </div>
+                <canvas id="alumCanvas" width="900" height="240" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="alumStatusText">当前状态：烧杯盛装浑浊污水（含有大量悬浮泥沙微粒）</span>
+                    <span style="color:#f6e05e;">Al³⁺ + 3H₂O ⇌ Al(OH)₃(胶体微粒) + 3H⁺ (吸附聚沉)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- “铝三角”滴加 NaOH 实验动态模拟器 -->
+        <div class="content-card">
+            <div class="sub-section-title">4. 经典探究实验：“铝三角”转化与向 AlCl₃ 逐滴滴加 NaOH 沉淀动力学</div>
+            <p style="font-size:14.5px; color:#718096;">💡 拖动滑块，向盛有 0.10 mol AlCl₃ 溶液的试管中持续滴加 NaOH 溶液，观察沉淀生成与复溶全过程及其对应的实时方程式：</p>
+
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">🧪 “铝三角”滴加碱液沉淀量实时曲线与化学原理演示</span>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span>滴加 NaOH (mol): <strong id="naohMolText" style="color:#f6e05e;">0.00 mol</strong></span>
+                        <button class="btn btn-outline" style="color:white;" onclick="autoPlayAlTriangle()">▶️ 自动连续滴加演示</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetAlTriangle()">重置</button>
+                    </div>
+                </div>
+                <div style="padding:10px 0;">
+                    <input type="range" id="naohSlider" min="0" max="0.45" step="0.01" value="0" style="width:100%; cursor:pointer;" oninput="updateAlTriangle(parseFloat(this.value))">
+                </div>
+                <canvas id="triangleCanvas" width="920" height="240" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0; flex-wrap:wrap; gap:6px;">
+                    <span id="triangleDiagText">当前状态：未滴入 NaOH，溶液为无色透明 AlCl₃ 溶液</span>
+                    <span id="triangleEqText" style="color:#f6e05e; font-weight:bold;">Al³⁺(aq) + 3OH⁻(aq) &rarr; Al(OH)₃(s)&darr;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= 11.3 铝的冶炼 ======================= -->
+        <div class="section-title">
+            <span>11.3 铝的冶炼（工业流程、冰晶石助熔电解机理）</span>
+            <span style="font-size:13px; font-weight:normal; opacity:0.8;">任务三</span>
+        </div>
+
+        <div class="content-card">
+            <div class="sub-section-title">1. 铝土矿提纯为纯净氧化铝（拜耳法工艺流程）</div>
+            <p>铝土矿主要成分为 Al₂O₃，并含有 Fe₂O₃、SiO₂ 等杂质。工业提取流程如下：</p>
+            <div style="background:var(--card-bg); border:1px solid var(--border-color); padding:16px; border-radius:8px; font-size:15px; margin:12px 0;">
+                <strong>① 碱溶：</strong>加过量 NaOH 溶液溶解 Al₂O₃（Fe₂O₃ 不溶过滤除去，作为红泥残渣）：<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<code>Al₂O₃(s) + 2NaOH(aq) &rarr; 2NaAlO₂(aq) + H₂O(l)</code><br>
+                <strong>② 酸化析出沉淀：</strong>向滤液中通入<strong>过量 CO₂ 气体</strong>沉淀析出 Al(OH)₃：<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<code>NaAlO₂(aq) + CO₂(g) + 2H₂O(l) &rarr;</code>
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                    <span class="ans-content">Al(OH)₃(s)↓ + NaHCO₃(aq)</span>
+                </span><br>
+                <strong>③ 灼烧分解：</strong>高温煅烧沉淀获得高纯度 Al₂O₃：<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<code>2Al(OH)₃(s) —高温灼烧&rarr;</code>
+                <span class="ans-inline">
+                    <button class="ans-trigger" onclick="toggleAns(this)">展开产物与状态</button>
+                    <span class="ans-content">Al₂O₃(s) + 3H₂O(g)</span>
+                </span>
+            </div>
+
+            <div class="sub-section-title">2. 工业电解熔融氧化铝原理</div>
+            <ul>
+                <li><strong>工业总反应：</strong><code>2Al₂O₃(l) ——通电(冰晶石, 1000℃)——></code>
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">展开电解产物</button>
+                        <span class="ans-content">4Al(l) + 3O₂(g)↑</span>
+                    </span>
+                </li>
+                <li><strong>为什么必须加入冰晶石（Na₃AlF₆）？</strong><br>
+                    纯 Al₂O₃ 的熔点高达 
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">熔点</button>
+                        <span class="ans-content">2054℃</span>
+                    </span>，加入<strong>冰晶石作为助熔剂</strong>后，可在 
+                    <span class="ans-inline">
+                        <button class="ans-trigger" onclick="toggleAns(this)">工作温度</button>
+                        <span class="ans-content">950~1000℃</span>
+                    </span> 形成熔盐共熔体进行电解，大幅降低能耗与设备成本！
+                </li>
+                <li><strong>阳极碳块定期更换的原因：</strong>阳极生成的高温 O₂ 会不断氧化烧蚀碳阳极石墨块（<code>C + O₂ &rarr; CO₂</code>），因此需定期补充更换阳极。</li>
+            </ul>
+
+            <!-- 工业电解熔融氧化铝微观与宏观动态模拟器 -->
+            <div class="canvas-card">
+                <div class="canvas-toolbar">
+                    <span style="font-weight:bold; color:#63b3ed;">⚙️ 工业电解熔融氧化铝微观离子迁移动态模拟器</span>
+                    <div>
+                        <button class="btn" style="background:#48bb78;" onclick="startElectrolyticAlSim()">⚡ 启动工业电解直流电</button>
+                        <button class="btn btn-outline" style="color:white;" onclick="resetElectrolyticAlSim()">重置电解槽</button>
+                    </div>
+                </div>
+                <canvas id="hallCanvas" width="920" height="270" style="width:100%; background:#171923; border-radius:8px;"></canvas>
+                <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:14px; color:#cbd5e0;">
+                    <span id="hallStatus">当前状态：待命已就绪，电解质为熔融 Al₂O₃ + Na₃AlF₆ (1000℃)</span>
+                    <span style="color:#f6e05e;">阳极(石墨): 2O²⁻ - 4e⁻ &rarr; O₂&uarr; | 阴极(槽底碳衬): Al³⁺ + 3e⁻ &rarr; Al(液态沉积)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= NotebookLM 风格全景知识图谱 ======================= -->
+        <div class="mindmap-container">
+            <div class="mindmap-header">
+                <div class="mindmap-title">🧠 第11章 IIIA族元素：铝 全景知识图谱 (Foldable Hierarchy)</div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-outline" style="color:#61afef; border-color:#3e4451; padding:3px 10px; font-size:13px;" onclick="expandAllMindmap(true)">全部展开</button>
+                    <button class="btn btn-outline" style="color:#61afef; border-color:#3e4451; padding:3px 10px; font-size:13px;" onclick="expandAllMindmap(false)">全部折叠</button>
+                </div>
+            </div>
+
+            <div class="mindmap-content">
+                <div class="h-tree">
+                    <div class="h-node root has-children" onclick="toggleHNode(this)">
+                        第11章 IIIA族元素：铝 <span class="toggle-btn">+</span>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                11.1 铝的性质与单质反应 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">原子结构：第三周期 IIIA 族，最外层 3s² 3p¹，地壳含量最高金属 (7.73%)</div></li>
+                                <li><div class="h-node leaf">物理性质：银白轻金属、密度 2.7g/cm³、熔点 660℃、导电延展优良</div></li>
+                                <li><div class="h-node leaf">钝化现象：常温遇浓硝酸/浓硫酸表面生成致密氧化膜阻止反应（可用铝槽储运）</div></li>
+                                <li><div class="h-node leaf">两性反应：2Al+6HCl&rarr;2AlCl₃+3H₂↑ ；2Al+2NaOH+2H₂O&rarr;2NaAlO₂+3H₂↑ (等量产氢比 1:1)</div></li>
+                                <li><div class="h-node leaf">铝热反应：2Al+Fe₂O₃&rarr;2Fe(l)+Al₂O₃(l) 高温剧烈放热焊接铁轨/冶炼难熔金属</div></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                11.2 铝的重要化合物 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">Al₂O₃ (两性氧化物)：高熔点刚玉红蓝宝、Al₂O₃+6H⁺&rarr;2Al³⁺+3H₂O、Al₂O₃+2OH⁻&rarr;2AlO₂⁻+H₂O</div></li>
+                                <li><div class="h-node leaf">Al(OH)₃ (两性氢氧化物)：白色胶状沉淀、溶于强酸与强碱、受热分解做无毒阻燃剂、中和胃酸药</div></li>
+                                <li><div class="h-node leaf">实验室制备：铝盐加弱碱氨水 Al³⁺+3NH₃·H₂O&rarr;Al(OH)₃↓+3NH₄⁺ (防强碱过量复溶)</div></li>
+                                <li><div class="h-node leaf">明矾 KAl(SO₄)₂·12H₂O：复盐，水解生成 Al(OH)₃ 胶体吸附悬浮杂质达到净水目的</div></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <div class="h-node branch has-children" onclick="toggleHNode(this)">
+                                11.3 铝的冶炼与工业工艺 <span class="toggle-btn">+</span>
+                            </div>
+                            <ul>
+                                <li><div class="h-node leaf">铝土矿提纯：NaOH 碱溶提取 NaAlO₂ &rarr; 通过量 CO₂ 沉淀 Al(OH)₃ &rarr; 煅烧得纯 Al₂O₃</div></li>
+                                <li><div class="h-node leaf">熔融电解：2Al₂O₃ ——通电(冰晶石 1000℃)——> 4Al(l) + 3O₂↑</div></li>
+                                <li><div class="h-node leaf">冰晶石 Na₃AlF₆ 作用：助熔剂，将 2054℃ 极高熔点降至 1000℃ 降低能耗</div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript 逻辑交互控制引擎 -->
+    <script>
+        // --- 1. 全局字号与版面 ---
+        function setFontSize(sizeClass) {
+            document.body.classList.remove('font-small', 'font-medium', 'font-large');
+            document.body.classList.add(sizeClass);
+        }
+
+        function setLayoutWidth(layoutType) {
+            const container = document.getElementById('mainContainer');
+            if (layoutType === 'wide') {
+                container.classList.add('wide-mode');
+            } else {
+                container.classList.remove('wide-mode');
+            }
+        }
+
+        function toggleEyeCare() {
+            document.body.classList.toggle('eye-care-mode');
+        }
+
+        // 点读挖空控制
+        function toggleAns(btnElement) {
+            const content = btnElement.nextElementSibling;
+            content.classList.toggle('show');
+            btnElement.classList.toggle('hidden');
+        }
+
+        function toggleBlockAns(btnElement) {
+            const content = btnElement.nextElementSibling;
+            const isShow = content.classList.toggle('show');
+            btnElement.textContent = isShow ? "收起对比" : "展开定量对比";
+        }
+
+        function toggleAllAnswers(showAll) {
+            document.querySelectorAll('.ans-content').forEach(c => c.classList.toggle('show', showAll));
+            document.querySelectorAll('.ans-inline .ans-trigger').forEach(t => t.classList.toggle('hidden', showAll));
+            document.querySelectorAll('.block-ans-content').forEach(c => c.classList.toggle('show', showAll));
+            document.querySelectorAll('.block-ans-box .ans-trigger').forEach(t => {
+                t.textContent = showAll ? "收起解析" : "展开定量对比";
+            });
+        }
+
+        // --- 2. 钝化微观机理动态模拟器 ---
+        const pCanvas = document.getElementById('passCanvas');
+        const pCtx = pCanvas.getContext('2d');
+        let passAnimId = null;
+        let isPassRunning = false;
+
+        function resetPassivationSim() {
+            if (passAnimId) cancelAnimationFrame(passAnimId);
+            isPassRunning = false;
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 18; col++) {
+                    pCtx.fillStyle = '#94a3b8';
+                    pCtx.beginPath();
+                    pCtx.arc(100 + col * 42, 130 + row * 38, 16, 0, Math.PI * 2);
+                    pCtx.fill();
+                    pCtx.fillStyle = '#0f172a';
+                    pCtx.font = '11px sans-serif';
+                    pCtx.fillText("Al", 94 + col * 42, 134 + row * 38);
+                }
+            }
+
+            pCtx.fillStyle = '#cbd5e0';
+            pCtx.font = '14px sans-serif';
+            pCtx.fillText("内部金属铝晶格 (Al)", 380, 215);
+            pCtx.fillText("上方：等待注入冷浓硝酸溶液...", 350, 45);
+
+            document.getElementById('passStatusText').innerText = "当前状态：金属铝晶格完好，表面未发生钝化";
+        }
+
+        function startPassivationSim() {
+            if (isPassRunning) return;
+            isPassRunning = true;
+            let frame = 0;
+            const acidMols = [];
+
+            for (let i = 0; i < 25; i++) {
+                acidMols.push({ x: 100 + Math.random() * 700, y: 15 + Math.random() * 45, vy: 1.2 + Math.random() });
+            }
+
+            function animate() {
+                pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+                for (let row = 1; row < 3; row++) {
+                    for (let col = 0; col < 18; col++) {
+                        pCtx.fillStyle = '#94a3b8';
+                        pCtx.beginPath();
+                        pCtx.arc(100 + col * 42, 130 + row * 38, 16, 0, Math.PI * 2);
+                        pCtx.fill();
+                        pCtx.fillStyle = '#0f172a';
+                        pCtx.font = '11px sans-serif';
+                        pCtx.fillText("Al", 94 + col * 42, 134 + row * 38);
+                    }
+                }
+
+                let passProgress = Math.min(1, frame / 60);
+                for (let col = 0; col < 18; col++) {
+                    pCtx.fillStyle = passProgress > 0.6 ? '#38bdf8' : '#cbd5e0';
+                    pCtx.beginPath();
+                    pCtx.arc(100 + col * 42, 130, 16, 0, Math.PI * 2);
+                    pCtx.fill();
+                    pCtx.fillStyle = '#0f172a';
+                    pCtx.font = '10px sans-serif';
+                    pCtx.fillText(passProgress > 0.6 ? "Al₂O₃" : "Al", 88 + col * 42, 134);
+                }
+
+                if (passProgress > 0.6) {
+                    pCtx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+                    pCtx.fillRect(80, 110, 750, 40);
+                    pCtx.strokeStyle = '#0284c7';
+                    pCtx.lineWidth = 2;
+                    pCtx.strokeRect(80, 110, 750, 40);
+                }
+
+                for (let i = 0; i < acidMols.length; i++) {
+                    let m = acidMols[i];
+                    pCtx.fillStyle = '#ef4444';
+                    pCtx.beginPath();
+                    pCtx.arc(m.x, m.y, 6, 0, Math.PI * 2);
+                    pCtx.fill();
+                    pCtx.fillStyle = '#fff';
+                    pCtx.font = '9px sans-serif';
+                    pCtx.fillText("HNO₃", m.x - 12, m.y - 8);
+
+                    if (m.y < 105 || passProgress < 0.6) {
+                        m.y += m.vy;
+                    } else {
+                        m.vy = -1;
+                        m.y += m.vy;
+                    }
+                    if (m.y < 10) m.vy = 1;
+                }
+
+                pCtx.fillStyle = '#cbd5e0';
+                pCtx.font = '14px sans-serif';
+                pCtx.fillText("内部金属铝晶格 (受到致密保护)", 350, 220);
+                if (passProgress > 0.6) {
+                    pCtx.fillStyle = '#38bdf8';
+                    pCtx.fillText("🛡️ 致密无孔隙 Al₂O₃ 钝化保护层（阻挡酸分子进一步渗透）", 260, 95);
+                }
+
+                frame++;
+                if (frame < 140) {
+                    passAnimId = requestAnimationFrame(animate);
+                    document.getElementById('passStatusText').innerText = "钝化进行中：冷浓硝酸迅速氧化最外层 Al 原子，形成致密无孔隙的 Al₂O₃ 保护膜！";
+                } else {
+                    isPassRunning = false;
+                    document.getElementById('passStatusText').innerText = "钝化完成：致密氧化膜彻底阻隔酸分子与内部 Al 接触，反应完全停止（钝化现象）。";
+                }
+            }
+            animate();
+        }
+
+        // --- 3. 铝热反应（Thermite Reaction）精准标准装置模拟器 ---
+        const thCanvas = document.getElementById('thermiteCanvas');
+        const thCtx = thCanvas.getContext('2d');
+        let thermiteAnimId = null;
+        let isThermiteRunning = false;
+
+        function resetThermiteSim() {
+            if (thermiteAnimId) cancelAnimationFrame(thermiteAnimId);
+            isThermiteRunning = false;
+            thCtx.clearRect(0, 0, thCanvas.width, thCanvas.height);
+
+            // 铁架台
+            thCtx.fillStyle = '#475569';
+            thCtx.fillRect(60, 275, 160, 15);
+            thCtx.fillRect(90, 20, 12, 260);
+            thCtx.fillStyle = '#64748b';
+            thCtx.fillRect(90, 105, 140, 10);
+
+            // 蒸发皿与细沙
+            thCtx.fillStyle = '#cbd5e0';
+            thCtx.beginPath();
+            thCtx.arc(460, 280, 110, 0, Math.PI);
+            thCtx.closePath();
+            thCtx.fill();
+            thCtx.fillStyle = '#d97706';
+            thCtx.fillRect(370, 270, 180, 25);
+            thCtx.fillStyle = '#f8fafc';
+            thCtx.font = '13.5px sans-serif';
+            thCtx.fillText("细沙 (盛于蒸发皿中，防高温铁水炸裂)", 345, 310);
+
+            // 铁圈与双层纸漏斗
+            thCtx.fillStyle = '#334155';
+            thCtx.fillRect(360, 105, 200, 10);
+
+            thCtx.strokeStyle = '#e2e8f0';
+            thCtx.lineWidth = 3;
+            thCtx.beginPath();
+            thCtx.moveTo(370, 90);
+            thCtx.lineTo(550, 90);
+            thCtx.lineTo(460, 210);
+            thCtx.closePath();
+            thCtx.stroke();
+            thCtx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            thCtx.fill();
+
+            // 铝热剂
+            thCtx.fillStyle = '#475569';
+            thCtx.beginPath();
+            thCtx.moveTo(385, 110);
+            thCtx.lineTo(535, 110);
+            thCtx.lineTo(460, 205);
+            thCtx.closePath();
+            thCtx.fill();
+
+            // 氯酸钾
+            thCtx.fillStyle = '#f8fafc';
+            thCtx.fillRect(400, 102, 120, 8);
+
+            // 镁条
+            thCtx.strokeStyle = '#f8fafc';
+            thCtx.lineWidth = 3.5;
+            thCtx.beginPath();
+            thCtx.moveTo(460, 160);
+            thCtx.lineTo(460, 60);
+            thCtx.stroke();
+
+            thCtx.fillStyle = '#f8fafc';
+            thCtx.font = '13.5px sans-serif';
+            thCtx.fillText("镁条 (引燃)", 468, 65);
+            thCtx.fillText("氯酸钾 (助燃)", 540, 95);
+            thCtx.fillText("铝热剂 (Al + Fe₂O₃)", 540, 145);
+
+            document.getElementById('thermiteStatus').innerText = "当前状态：待命已就绪，双层纸漏斗已架设在铁圈上，内装铝热剂与引燃系统";
+        }
+
+        function startThermiteReaction() {
+            if (isThermiteRunning) return;
+            isThermiteRunning = true;
+            let frame = 0;
+            const sparks = [];
+            const moltenFeDrops = [];
+
+            function animate() {
+                resetThermiteSim();
+
+                if (frame < 45) {
+                    let mgFlicker = Math.sin(frame * 0.5) * 6;
+                    thCtx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+                    thCtx.beginPath();
+                    thCtx.arc(460, 65 + frame * 0.9, 10 + mgFlicker, 0, Math.PI * 2);
+                    thCtx.fill();
+                }
+
+                if (frame >= 35 && frame < 150) {
+                    thCtx.fillStyle = 'rgba(239, 68, 68, 0.9)';
+                    thCtx.beginPath();
+                    thCtx.moveTo(385, 110); thCtx.lineTo(535, 110); thCtx.lineTo(460, 205);
+                    thCtx.closePath();
+                    thCtx.fill();
+
+                    thCtx.fillStyle = 'rgba(254, 240, 138, 0.95)';
+                    thCtx.beginPath();
+                    thCtx.arc(460, 145, 28 + Math.random() * 15, 0, Math.PI * 2);
+                    thCtx.fill();
+
+                    for (let i = 0; i < 8; i++) {
+                        sparks.push({
+                            x: 460 + (Math.random() - 0.5) * 50,
+                            y: 145 + (Math.random() - 0.5) * 40,
+                            vx: (Math.random() - 0.5) * 14,
+                            vy: (Math.random() - 0.5) * 14 - 2,
+                            life: 20
+                        });
+                    }
+
+                    if (frame % 3 === 0) {
+                        moltenFeDrops.push({ x: 460 + (Math.random() - 0.5) * 8, y: 205, vy: 4.5 });
+                    }
+                }
+
+                for (let i = sparks.length - 1; i >= 0; i--) {
+                    let s = sparks[i];
+                    thCtx.fillStyle = '#f59e0b';
+                    thCtx.beginPath();
+                    thCtx.arc(s.x, s.y, 2 + Math.random() * 2.5, 0, Math.PI * 2);
+                    thCtx.fill();
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    s.life--;
+                    if (s.life <= 0) sparks.splice(i, 1);
+                }
+
+                for (let i = moltenFeDrops.length - 1; i >= 0; i--) {
+                    let d = moltenFeDrops[i];
+                    thCtx.fillStyle = '#ef4444';
+                    thCtx.beginPath();
+                    thCtx.arc(d.x, d.y, 4.5, 0, Math.PI * 2);
+                    thCtx.fill();
+                    d.y += d.vy;
+                    if (d.y >= 275) {
+                        thCtx.fillStyle = '#dc2626';
+                        thCtx.beginPath();
+                        thCtx.arc(d.x, 278, 7, 0, Math.PI * 2);
+                        thCtx.fill();
+                    }
+                }
+
+                frame++;
+                if (frame < 170) {
+                    thermiteAnimId = requestAnimationFrame(animate);
+                    document.getElementById('thermiteStatus').innerText = "反应进行中：铝粉夺取 Fe₂O₃ 中的氧，释放数千度极高热量，铁单质熔化为耀眼液态铁水注入沙中！";
+                } else {
+                    isThermiteRunning = false;
+                    document.getElementById('thermiteStatus').innerText = "反应结束：漏斗下方细沙中冷却析出黑色具铁磁性的高纯度铁块。";
+                }
+            }
+            animate();
+        }
+
+        // --- 4. 明矾微观净水动态模拟器 ---
+        const alCanvas = document.getElementById('alumCanvas');
+        const alCtx = alCanvas.getContext('2d');
+        let alumAnimId = null;
+        let isAlumRunning = false;
+
+        function resetAlumWaterPurifySim() {
+            if (alumAnimId) cancelAnimationFrame(alumAnimId);
+            isAlumRunning = false;
+            alCtx.clearRect(0, 0, alCanvas.width, alCanvas.height);
+
+            // 烧杯轮廓
+            alCtx.strokeStyle = '#64748b';
+            alCtx.lineWidth = 4;
+            alCtx.strokeRect(150, 25, 600, 190);
+
+            // 浑浊污水背景 (黄褐色)
+            alCtx.fillStyle = 'rgba(180, 83, 9, 0.35)';
+            alCtx.fillRect(152, 65, 596, 148);
+
+            // 随机生成悬浮泥沙杂质微粒
+            for (let i = 0; i < 45; i++) {
+                let dirtX = 170 + Math.random() * 560;
+                let dirtY = 75 + Math.random() * 125;
+                alCtx.fillStyle = '#78350f';
+                alCtx.beginPath();
+                alCtx.arc(dirtX, dirtY, 2.5 + Math.random() * 2, 0, Math.PI * 2);
+                alCtx.fill();
+            }
+
+            alCtx.fillStyle = '#f8fafc';
+            alCtx.font = '14px sans-serif';
+            alCtx.fillText("浑浊污水 (含微细悬浮泥沙微粒)", 350, 50);
+
+            document.getElementById('alumStatusText').innerText = "当前状态：烧杯盛装浑浊污水（含有大量悬浮泥沙微粒）";
+        }
+
+        function startAlumWaterPurifySim() {
+            if (isAlumRunning) return;
+            isAlumRunning = true;
+            let frame = 0;
+
+            const dirts = [];
+            const colloids = [];
+
+            for (let i = 0; i < 40; i++) {
+                dirts.push({ x: 170 + Math.random() * 560, y: 75 + Math.random() * 110, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, caught: false });
+            }
+
+            function animate() {
+                alCtx.clearRect(0, 0, alCanvas.width, alCanvas.height);
+
+                // 烧杯
+                alCtx.strokeStyle = '#64748b';
+                alCtx.lineWidth = 4;
+                alCtx.strokeRect(150, 25, 600, 190);
+
+                // 随着净水进行，水体由浑浊变为清澈浅蓝
+                let clarify = Math.min(1, frame / 100);
+                let rVal = Math.floor(180 - clarify * (180 - 56));
+                let gVal = Math.floor(83 + clarify * (189 - 83));
+                let bVal = Math.floor(9 + clarify * (248 - 9));
+                let aVal = 0.35 - clarify * 0.15;
+                alCtx.fillStyle = `rgba(${rVal}, ${gVal}, ${bVal}, ${aVal})`;
+                alCtx.fillRect(152, 65, 596, 148);
+
+                // 产生 Al(OH)3 白色絮状胶体微粒
+                if (frame === 10) {
+                    for (let i = 0; i < 18; i++) {
+                        colloids.push({ x: 180 + Math.random() * 540, y: 75 + Math.random() * 50, r: 8 + Math.random() * 4, vy: 0.8 });
+                    }
+                }
+
+                // 胶体微粒扩散并吸附杂质下沉
+                for (let i = 0; i < colloids.length; i++) {
+                    let c = colloids[i];
+                    alCtx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                    alCtx.beginPath();
+                    alCtx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+                    alCtx.fill();
+                    alCtx.strokeStyle = '#38bdf8';
+                    alCtx.lineWidth = 1.5;
+                    alCtx.stroke();
+
+                    alCtx.fillStyle = '#0f172a';
+                    alCtx.font = '9px sans-serif';
+                    alCtx.fillText("胶体", c.x - 9, c.y + 3);
+
+                    if (c.y < 200) c.y += c.vy;
+
+                    // 吸附判定
+                    for (let j = 0; j < dirts.length; j++) {
+                        let d = dirts[j];
+                        let dist = Math.hypot(d.x - c.x, d.y - c.y);
+                        if (dist < c.r + 5) {
+                            d.caught = true;
+                            d.x = c.x + (Math.random() - 0.5) * c.r;
+                            d.y = c.y + (Math.random() - 0.5) * c.r;
+                        }
+                    }
+                }
+
+                // 绘制杂质微粒
+                for (let i = 0; i < dirts.length; i++) {
+                    let d = dirts[i];
+                    alCtx.fillStyle = '#78350f';
+                    alCtx.beginPath();
+                    alCtx.arc(d.x, d.y, 3, 0, Math.PI * 2);
+                    alCtx.fill();
+                    if (!d.caught) {
+                        d.x += d.vx;
+                        d.y += d.vy;
+                    }
+                }
+
+                alCtx.fillStyle = '#f8fafc';
+                alCtx.font = '14px sans-serif';
+                if (clarify < 0.8) {
+                    alCtx.fillText("投入明矾：Al³⁺ 水解生成带正电的 Al(OH)₃ 胶体，主动吸附带负电的悬浮泥沙微粒", 200, 50);
+                } else {
+                    alCtx.fillStyle = '#38bdf8';
+                    alCtx.fillText("✨ 净水完成：絮状胶体沉降底部，上层水质变得清澈透明！", 280, 50);
+                }
+
+                frame++;
+                if (frame < 150) {
+                    alumAnimId = requestAnimationFrame(animate);
+                    document.getElementById('alumStatusText').innerText = "净水中：Al³⁺ 水解生成 Al(OH)₃ 胶体微粒，吸附悬浮泥沙杂质凝聚成大颗粒絮状物聚沉！";
+                } else {
+                    isAlumRunning = false;
+                    document.getElementById('alumStatusText').innerText = "净水完成：悬浮杂质已全部被胶体吸附聚沉于烧杯底部，上层溶液清澈透明。";
+                }
+            }
+            animate();
+        }
+
+        // --- 5. “铝三角”滴加 NaOH 沉淀动力学与实时原理模拟器 ---
+        const trCanvas = document.getElementById('triangleCanvas');
+        const trCtx = trCanvas.getContext('2d');
+        let triangleTimer = null;
+
+        function updateAlTriangle(naohMol) {
+            document.getElementById('naohMolText').innerText = `${naohMol.toFixed(2)} mol`;
+            trCtx.clearRect(0, 0, trCanvas.width, trCanvas.height);
+
+            trCtx.strokeStyle = '#cbd5e0';
+            trCtx.lineWidth = 3;
+            trCtx.beginPath();
+            trCtx.moveTo(120, 30);
+            trCtx.lineTo(120, 190);
+            trCtx.arc(145, 190, 25, Math.PI, 0, true);
+            trCtx.lineTo(170, 30);
+            trCtx.stroke();
+
+            trCtx.fillStyle = 'rgba(56, 189, 248, 0.2)';
+            trCtx.fillRect(122, 90, 46, 110);
+
+            let pptMol = 0;
+            let statusDesc = "";
+            let eqDesc = "";
+
+            if (naohMol <= 0.30) {
+                pptMol = naohMol / 3.0;
+                statusDesc = `【沉淀生成阶段】生成白色胶状沉淀 Al(OH)₃：${pptMol.toFixed(3)} mol`;
+                eqDesc = "Al³⁺(aq) + 3OH⁻(aq) → Al(OH)₃(s)↓ (比例 1 : 3)";
+            } else if (naohMol <= 0.40) {
+                pptMol = 0.10 - (naohMol - 0.30);
+                statusDesc = `【沉淀溶解阶段】白色沉淀逐渐复溶，剩余：${pptMol.toFixed(3)} mol`;
+                eqDesc = "Al(OH)₃(s) + OH⁻(aq) → AlO₂⁻(aq) + 2H₂O(l) (比例 1 : 1)";
+            } else {
+                pptMol = 0;
+                statusDesc = `【完全复溶阶段】NaOH 过量，沉淀完全溶解转化为澄清 NaAlO₂ 溶液！`;
+                eqDesc = "Al³⁺(aq) + 4OH⁻(aq) → AlO₂⁻(aq) + 2H₂O(l) (总反应)";
+            }
+
+            if (pptMol > 0.001) {
+                let pptHeight = (pptMol / 0.10) * 55;
+                trCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                trCtx.fillRect(123, 205 - pptHeight, 44, pptHeight);
+            }
+
+            trCtx.strokeStyle = '#94a3b8';
+            trCtx.lineWidth = 2;
+            trCtx.beginPath();
+            trCtx.moveTo(300, 200); trCtx.lineTo(820, 200);
+            trCtx.moveTo(300, 200); trCtx.lineTo(300, 40);
+            trCtx.stroke();
+
+            trCtx.fillStyle = '#cbd5e0';
+            trCtx.font = '13px sans-serif';
+            trCtx.fillText("0", 285, 215);
+            trCtx.fillText("0.3 mol (3:1 沉淀峰值)", 500, 218);
+            trCtx.fillText("0.4 mol (1:1 完全溶解)", 680, 218);
+            trCtx.fillText("NaOH 加入量 (mol)", 740, 190);
+            trCtx.fillText("Al(OH)₃ 沉淀量 (mol)", 305, 35);
+
+            trCtx.strokeStyle = '#38bdf8';
+            trCtx.lineWidth = 3;
+            trCtx.beginPath();
+            trCtx.moveTo(300, 200);
+            trCtx.lineTo(580, 60);
+            trCtx.lineTo(700, 200);
+            trCtx.stroke();
+
+            let currX = 300 + (naohMol / 0.45) * (700 - 300) * (0.45 / 0.40);
+            let currY = 200 - (pptMol / 0.10) * 140;
+            trCtx.fillStyle = '#ef4444';
+            trCtx.beginPath();
+            trCtx.arc(Math.min(760, currX), currY, 6, 0, Math.PI * 2);
+            trCtx.fill();
+
+            document.getElementById('triangleDiagText').innerHTML = statusDesc;
+            document.getElementById('triangleEqText').innerHTML = eqDesc;
+        }
+
+        function autoPlayAlTriangle() {
+            let val = 0;
+            if (triangleTimer) clearInterval(triangleTimer);
+            triangleTimer = setInterval(() => {
+                val += 0.008;
+                if (val > 0.45) {
+                    val = 0.45;
+                    clearInterval(triangleTimer);
+                }
+                document.getElementById('naohSlider').value = val;
+                updateAlTriangle(val);
+            }, 50);
+        }
+
+        function resetAlTriangle() {
+            if (triangleTimer) clearInterval(triangleTimer);
+            document.getElementById('naohSlider').value = 0;
+            updateAlTriangle(0);
+        }
+
+        // --- 6. 工业电解熔融氧化铝（微观离子迁移）动态模拟器 ---
+        const hCanvas = document.getElementById('hallCanvas');
+        const hCtx = hCanvas.getContext('2d');
+        let hallAnimId = null;
+        let isHallRunning = false;
+
+        function resetElectrolyticAlSim() {
+            if (hallAnimId) cancelAnimationFrame(hallAnimId);
+            isHallRunning = false;
+            hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
+
+            // 槽体与碳素衬里 (阴极 Cathode -)
+            hCtx.fillStyle = '#334155';
+            hCtx.fillRect(120, 35, 680, 200);
+            hCtx.fillStyle = '#1e293b';
+            hCtx.fillRect(135, 50, 650, 175);
+
+            // 熔融电解质 (Al2O3 + Na3AlF6 橙红色熔盐体系 1000℃)
+            hCtx.fillStyle = 'rgba(234, 88, 12, 0.45)';
+            hCtx.fillRect(140, 55, 640, 150);
+
+            // 石墨碳阳极 (Graphite Anodes +)
+            hCtx.fillStyle = '#475569';
+            hCtx.fillRect(230, 20, 65, 105);
+            hCtx.fillRect(410, 20, 65, 105);
+            hCtx.fillRect(590, 20, 65, 105);
+
+            // 底部沉积的液态铝 (Liquid Al)
+            hCtx.fillStyle = '#cbd5e0';
+            hCtx.fillRect(140, 190, 640, 35);
+
+            hCtx.fillStyle = '#f8fafc';
+            hCtx.font = '13.5px sans-serif';
+            hCtx.fillText("石墨阳极 (+)", 225, 15);
+            hCtx.fillText("石墨阳极 (+)", 405, 15);
+            hCtx.fillText("石墨阳极 (+)", 585, 15);
+            hCtx.fillText("槽底阴极碳衬 (-)", 145, 245);
+            hCtx.fillText("熔融铝液层 (密度大，沉积汇聚于槽底)", 420, 212);
+
+            document.getElementById('hallStatus').innerText = "当前状态：待命已就绪，电解质为熔融 Al₂O₃ + Na₃AlF₆ (1000℃)";
+        }
+
+        function startElectrolyticAlSim() {
+            if (isHallRunning) return;
+            isHallRunning = true;
+            let frame = 0;
+
+            const alIons = [];
+            const oIons = [];
+            const o2Bubbles = [];
+            const alDrops = [];
+
+            // 初始化微观离子
+            for (let i = 0; i < 18; i++) {
+                alIons.push({ x: 160 + Math.random() * 600, y: 70 + Math.random() * 80, vy: 1 + Math.random() });
+                oIons.push({ x: 160 + Math.random() * 600, y: 110 + Math.random() * 60, vy: -(1 + Math.random()) });
+            }
+
+            function animate() {
+                resetElectrolyticAlSim();
+
+                // 1. 微观离子定向移动
+                // O²⁻ 向阳极迁移
+                for (let i = oIons.length - 1; i >= 0; i--) {
+                    let o = oIons[i];
+                    hCtx.fillStyle = '#ef4444';
+                    hCtx.beginPath();
+                    hCtx.arc(o.x, o.y, 4.5, 0, Math.PI * 2);
+                    hCtx.fill();
+                    hCtx.fillStyle = '#fff';
+                    hCtx.font = '9px sans-serif';
+                    hCtx.fillText("O²⁻", o.x - 7, o.y + 3);
+
+                    o.y += o.vy;
+
+                    // 到达阳极失电子生成 O2
+                    if (o.y <= 125) {
+                        o2Bubbles.push({ x: o.x, y: o.y, r: 3 + Math.random() * 3, vy: 2 });
+                        o.x = 160 + Math.random() * 600;
+                        o.y = 120 + Math.random() * 50;
+                    }
+                }
+
+                // Al³⁺ 向阴极槽底迁移
+                for (let i = alIons.length - 1; i >= 0; i--) {
+                    let a = alIons[i];
+                    hCtx.fillStyle = '#38bdf8';
+                    hCtx.beginPath();
+                    hCtx.arc(a.x, a.y, 5, 0, Math.PI * 2);
+                    hCtx.fill();
+                    hCtx.fillStyle = '#000';
+                    hCtx.font = '9px sans-serif';
+                    hCtx.fillText("Al³⁺", a.x - 7, a.y + 3);
+
+                    a.y += a.vy;
+
+                    // 到达阴极得电子生成液态金属铝
+                    if (a.y >= 190) {
+                        alDrops.push({ x: a.x, y: 190 });
+                        a.x = 160 + Math.random() * 600;
+                        a.y = 70 + Math.random() * 50;
+                    }
+                }
+
+                // 2. 绘制氧气气泡上升
+                for (let i = o2Bubbles.length - 1; i >= 0; i--) {
+                    let b = o2Bubbles[i];
+                    hCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                    hCtx.beginPath();
+                    hCtx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                    hCtx.fill();
+                    b.y -= b.vy;
+                    if (b.y < 45) o2Bubbles.splice(i, 1);
+                }
+
+                frame++;
+                if (frame < 200) {
+                    hallAnimId = requestAnimationFrame(animate);
+                    document.getElementById('hallStatus').innerText = "微观反应中：O²⁻ 向阳极失电子生成 O₂ 气泡；Al³⁺ 向阴极得电子生成高密度液态铝沉积在槽底！";
+                } else {
+                    isHallRunning = false;
+                    document.getElementById('hallStatus').innerText = "电解完成：熔融液态金属铝源源不断汇聚在槽底，定期由真空抬包抽取铸造。";
+                }
+            }
+            animate();
+        }
+
+        // --- 7. NotebookLM 全景树状折叠控制 ---
+        function toggleHNode(nodeElement) {
+            const nextUl = nodeElement.nextElementSibling;
+            const toggleBtn = nodeElement.querySelector('.toggle-btn');
+            if (nextUl && nextUl.tagName === 'UL') {
+                const isOpen = nextUl.classList.toggle('layer-open');
+                if (toggleBtn) toggleBtn.textContent = isOpen ? '-' : '+';
+            }
+        }
+
+        function expandAllMindmap(expand) {
+            document.querySelectorAll('.h-tree ul').forEach(ul => {
+                ul.classList.toggle('layer-open', expand);
+            });
+            document.querySelectorAll('.h-tree .toggle-btn').forEach(btn => {
+                btn.textContent = expand ? '-' : '+';
+            });
+        }
+
+        // --- 页面初始化 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            resetPassivationSim();
+            resetThermiteSim();
+            resetAlumWaterPurifySim();
+            resetAlTriangle();
+            resetElectrolyticAlSim();
+        });
+    </script>
+</body>
+</html>
