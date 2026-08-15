@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>第7章 化学键与分子间作用力 - 互动研学平台</title>
+  <!-- 网页浏览器图标 (Favicon) -->
+  <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
   <style>
     /* ==========================================================================
-       CSS 变量设计与双主题系统
-       ========================================================================== */
+        CSS 变量设计与双主题系统
+        ========================================================================== */
     :root {
       --bg-primary: #f8fafc;
       --bg-card: #ffffff;
@@ -64,7 +66,7 @@
       color: var(--text-main);
       font-size: calc(15.5px * var(--font-scale));
       line-height: 1.65;
-      padding-top: 75px;
+      padding-top: 135px; /* 为两行顶部栏腾出空间 */
       padding-bottom: 60px;
     }
 
@@ -74,10 +76,50 @@
       padding: 0 20px;
     }
 
-    /* 顶部工具栏 */
-    .top-toolbar {
+    /* 顶部统一全局快捷导航栏 */
+    .global-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--bg-card);
+      border-bottom: 3px solid var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      z-index: 1001;
+      box-shadow: var(--shadow-sm);
+      padding: 0 15px;
+    }
+
+    .nav-btn {
+      background: var(--bg-card-subtle);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--primary-color);
+      color: var(--text-inverse) !important;
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    /* 顶部互动工具栏 */
+    .top-toolbar {
+      position: fixed;
+      top: 60px; left: 0; right: 0;
       height: 65px;
       background: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -197,16 +239,36 @@
       box-shadow: var(--shadow-sm);
     }
 
+    /* 标题包装器：实现校徽与大标题同行展示 */
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .school-logo {
+      width: 50px;
+      height: auto;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
     .card-title {
       font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin: 0;
       display: flex;
       align-items: center;
       gap: 10px;
       color: var(--primary-color);
+    }
+
+    .chapter-heading-box {
       border-bottom: 2px solid var(--accent-bg);
       padding-bottom: 8px;
+      margin-bottom: 14px;
     }
 
     .sub-title {
@@ -415,7 +477,7 @@
 
     @media print {
       body { padding: 0; background: #fff; color: #000; font-size: 11pt; }
-      .top-toolbar, .btn, .tab-pills, input[type="range"] { display: none !important; }
+      .global-nav, .top-toolbar, .btn, .tab-pills, input[type="range"] { display: none !important; }
       .card { border: none; box-shadow: none; padding: 10px 0; }
       .inline-ans { color: #000 !important; background: transparent !important; border-bottom: 1px solid #000 !important; }
       .inline-ans::after { display: none !important; }
@@ -425,6 +487,16 @@
   </style>
 </head>
 <body>
+
+  <!-- 顶部统一全局快捷导航栏 -->
+  <nav class="global-nav">
+    <a href="index.html" class="nav-btn">🏠 平台首页</a>
+    <a href="2024.html" class="nav-btn">📝 2024统测</a>
+    <a href="2025.html" class="nav-btn">📝 2025统测</a>
+    <a href="index.html" class="nav-btn">📖 章节教学内容</a>
+    <a href="index.html" class="nav-btn">📚 历届考题解析</a>
+    <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
+  </nav>
 
   <!-- ==================== 顶部交互工具栏 ==================== -->
   <header class="top-toolbar">
@@ -465,7 +537,10 @@
 
     <!-- ==================== 🎯 章节核心目标 ==================== -->
     <section class="card">
-      <h2 class="card-title">🎯 本章核心学习与备考目标</h2>
+      <div class="title-wrapper">
+        <img src="image/校徽.jpg" alt="校徽" class="school-logo">
+        <h2 class="card-title" style="margin:0;">🎯 本章核心学习与备考目标</h2>
+      </div>
       <div class="grid-3">
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
           <strong>1. 化学键分类与本质</strong>：掌握相邻微粒间的强烈相互作用（离子键、共价键、金属键）。
@@ -490,7 +565,9 @@
 
     <!-- ==================== 7.1 化学键 ==================== -->
     <section class="card">
-      <h2 class="card-title">🔬 7.1 化学键 (Chemical Bonds)</h2>
+      <div class="chapter-heading-box">
+        <h2 class="card-title" style="border:none; padding:0; margin:0;">🔬 7.1 化学键 (Chemical Bonds)</h2>
+      </div>
 
       <!-- 课本指导插图预留：三大化学键对比图 -->
       <div class="textbook-guide-img">
@@ -827,7 +904,9 @@
 
     <!-- ==================== 7.2 分子间作用力 ==================== -->
     <section class="card">
-      <h2 class="card-title">💧 7.2 分子间作用力 (Intermolecular Forces)</h2>
+      <div class="chapter-heading-box">
+        <h2 class="card-title" style="border:none; padding:0; margin:0;">💧 7.2 分子间作用力 (Intermolecular Forces)</h2>
+      </div>
       
       <!-- 7.2.1 范德华力 5 大影响因素表格 -->
       <h3 class="sub-title">7.2.1 范德华力 (微弱静电引力) 及 5 大影响因素全景表</h3>
@@ -919,7 +998,9 @@
 
     <!-- ==================== 7.3 四大晶体 ==================== -->
     <section class="card">
-      <h2 class="card-title">🧊 7.3 晶体类型及其 3D 晶胞结构探究</h2>
+      <div class="chapter-heading-box">
+        <h2 class="card-title" style="border:none; padding:0; margin:0;">🧊 7.3 晶体类型及其 3D 晶胞结构探究</h2>
+      </div>
       <div class="tab-pills">
         <button class="tab-pill active" onclick="switch3DCrystal('NaCl')">离子晶体: NaCl 立方晶胞</button>
         <button class="tab-pill" onclick="switch3DCrystal('Diamond')">原子晶体: 金刚石空间网状</button>
@@ -1062,7 +1143,7 @@
     const cloudData = {
       H2: {
         title: "氢气分子 (H-H) · 非极性共价键",
-        desc: "• <strong>电负性差值</strong>：Δχ = 2.1 - 2.1 = 0<br>• <strong>电子云分布</strong>：两核引力相同，电子云在核间对称均匀分布，两端无电荷分离。<br>• <strong>键型结论</strong>：<span class='inline-ans'>非极性共价键</span>",
+        desc: "• <strong>电负性差值</strong>：Δχ = 2.1 - 2.1 = 0<br>• <strong>电子云分布</strong>：两核引力相同，电子云在核间对称均匀分布，两端不显电性。<br>• <strong>键型结论</strong>：<span class='inline-ans'>非极性共价键</span>",
         shift: 0,
         atomA: "H (2.1)", atomB: "H (2.1)",
         colorA: "#38bdf8", colorB: "#38bdf8"
@@ -1126,7 +1207,6 @@
       const cx = w / 2;
       const cy = h / 2;
 
-      // 绘制电子云渐变椭圆
       const cloudGrad = cloudCtx.createRadialGradient(
         cx + data.shift * ratio, cy, 10 * ratio,
         cx, cy, 90 * ratio
@@ -1140,7 +1220,6 @@
       cloudCtx.ellipse(cx + (data.shift * 0.4) * ratio, cy, 110 * ratio, 55 * ratio, 0, 0, Math.PI * 2);
       cloudCtx.fill();
 
-      // 原子核 A
       const ax = cx - 60 * ratio;
       cloudCtx.fillStyle = data.colorA;
       cloudCtx.beginPath();
@@ -1150,7 +1229,6 @@
       cloudCtx.lineWidth = 1.5 * ratio;
       cloudCtx.stroke();
 
-      // 原子核 B
       const bx = cx + 60 * ratio;
       cloudCtx.fillStyle = data.colorB;
       cloudCtx.beginPath();
@@ -1158,7 +1236,6 @@
       cloudCtx.fill();
       cloudCtx.stroke();
 
-      // 标签文字
       cloudCtx.fillStyle = "#ffffff";
       cloudCtx.font = `bold ${10 * ratio}px sans-serif`;
       cloudCtx.textAlign = "center";
@@ -1219,7 +1296,7 @@
         if (dativeStep === 0) {
           stage.innerHTML = `
             <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:20px;">
-              <div>H-Ö̈-H <span style="font-size:0.8rem; color:#38bdf8;">(O含2对孤对电子)</span></div>
+              <div>H-Ö̈-H <span style="font-size:0.8rem; color:#38bdf8;">(O含2对孤对电子)</span></div>
               <div style="color:var(--accent-ans); font-weight:bold;">+</div>
               <div>H⁺ <span style="font-size:0.8rem; color:#ef4444;">(空轨道)</span></div>
             </div>
@@ -1236,7 +1313,7 @@
         } else {
           stage.innerHTML = `
             <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:16px;">
-              <div>[ H — Ö(H) ➔ H ]⁺ (H₃O⁺)</div>
+              <div>[ H — Ö(H) ➔ H ]⁺ (H₃O⁺)</div>
               <div style="font-size:0.85rem; color:#059669; font-weight:bold;">(保留1对孤对电子)</div>
             </div>
           `;
@@ -1307,7 +1384,6 @@
 
       const conf = metalConfig[currentMetalKey];
 
-      // 自由电子海
       metalElectrons.forEach(e => {
         e.x += e.vx * ratio;
         e.y += e.vy * ratio;
@@ -1322,7 +1398,6 @@
         metalCtx.fill();
       });
 
-      // 金属阳离子点阵
       const rows = 3, cols = 5;
       const sx = w / (cols + 1);
       const sy = h / (rows + 1);
@@ -1352,7 +1427,7 @@
     }
 
     /* ==========================================================================
-       4. 3D VSEPR 分子立体模型 (含真实双键与孤对电子云包络)
+       4. 3D VSEPR 分子立体模型
        ========================================================================== */
     let molCanvas, molCtx;
     let molAngleX = 0.3, molAngleY = 0.5;
@@ -1497,7 +1572,6 @@
       const projectedAtoms = data.atoms.map(project);
       const projectedLones = data.lonePairs.map(project);
 
-      // 单键
       data.singleBonds.forEach(([i, j]) => {
         const p1 = projectedAtoms[i];
         const p2 = projectedAtoms[j];
@@ -1509,7 +1583,6 @@
         molCtx.stroke();
       });
 
-      // 双键 (真实渲染两条平行线)
       data.doubleBonds.forEach(([i, j]) => {
         const p1 = projectedAtoms[i];
         const p2 = projectedAtoms[j];
@@ -1529,7 +1602,6 @@
         molCtx.stroke();
       });
 
-      // 孤对电子云包络
       projectedLones.forEach(lp => {
         molCtx.fillStyle = lp.color;
         molCtx.beginPath();
@@ -1541,7 +1613,6 @@
         molCtx.setLineDash([]);
       });
 
-      // 绘制原子
       projectedAtoms.sort((a, b) => b.pz - a.pz);
       projectedAtoms.forEach(p => {
         molCtx.beginPath();
@@ -1561,7 +1632,7 @@
     }
 
     /* ==========================================================================
-       5. 氢键网络动态模拟 (H2O, HF, NH3)
+       5. 氢键网络动态模拟
        ========================================================================== */
     let hbondCanvas, hbondCtx;
     let currentHBondType = 'H2O';
@@ -1614,7 +1685,6 @@
       const ratio = window.devicePixelRatio || 1;
       hbondCtx.clearRect(0, 0, w, h);
 
-      // 运动更新
       hbondMolecules.forEach(m => {
         m.x += m.vx * ratio;
         m.y += m.vy * ratio;
@@ -1622,7 +1692,6 @@
         if (m.y < 30 || m.y > h - 30) m.vy *= -1;
       });
 
-      // 绘制氢键虚线
       for (let i = 0; i < hbondMolecules.length; i++) {
         for (let j = i + 1; j < hbondMolecules.length; j++) {
           const dx = hbondMolecules[i].x - hbondMolecules[j].x;
@@ -1642,42 +1711,35 @@
         }
       }
 
-      // 绘制小分子
       hbondMolecules.forEach(m => {
         hbondCtx.save();
         hbondCtx.translate(m.x, m.y);
         hbondCtx.rotate(m.angle);
 
         if (currentHBondType === 'H2O') {
-          // O
           hbondCtx.fillStyle = '#ef4444';
           hbondCtx.beginPath();
           hbondCtx.arc(0, 0, 10 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
-          // 2 H
           hbondCtx.fillStyle = '#e2e8f0';
           hbondCtx.beginPath();
           hbondCtx.arc(10 * ratio, 7 * ratio, 5 * ratio, 0, Math.PI * 2);
           hbondCtx.arc(-10 * ratio, 7 * ratio, 5 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
         } else if (currentHBondType === 'HF') {
-          // F
           hbondCtx.fillStyle = '#ec4899';
           hbondCtx.beginPath();
           hbondCtx.arc(0, 0, 11 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
-          // H
           hbondCtx.fillStyle = '#e2e8f0';
           hbondCtx.beginPath();
           hbondCtx.arc(10 * ratio, 0, 5 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
         } else {
-          // N
           hbondCtx.fillStyle = '#2563eb';
           hbondCtx.beginPath();
           hbondCtx.arc(0, 0, 10 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
-          // 3 H
           hbondCtx.fillStyle = '#e2e8f0';
           hbondCtx.beginPath();
           hbondCtx.arc(9 * ratio, 6 * ratio, 4.5 * ratio, 0, Math.PI * 2);
@@ -1692,7 +1754,7 @@
     }
 
     /* ==========================================================================
-       6. 氢化物沸点变化曲线 (图 7-14 Canvas 图谱)
+       6. 氢化物沸点变化曲线
        ========================================================================== */
     function initBoilingCanvas() {
       const canvas = document.getElementById('boiling-curve-canvas');
