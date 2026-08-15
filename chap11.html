@@ -753,8 +753,8 @@
 
             <div class="sub-section-title">2. 氢氧化铝（Al(OH)₃）—— 两性氢氧化物与阻燃剂</div>
             <p>氢氧化铝是白色胶状不溶于水的沉淀，吸附能力强。具有独特的双向电离平衡机制：</p>
-            <p style="text-align:center; font-weight:bold; color:var(--primary-color);">
-                酸式电离：$\text{AlO}_2^- + \text{H}^+ + \text{H}_2\text{O} \rightleftharpoons \text{Al(OH)}_3\text{(s)} \rightleftharpoons \text{Al}^{3+} + 3\text{OH}^-$ ：碱式电离
+            <p style="text-align:center; font-weight:bold; color:var(--primary-color); font-size:17px; margin: 15px 0;">
+                酸式电离：AlO₂⁻ + H⁺ + H₂O ⇌ Al(OH)₃(s) ⇌ Al³⁺ + 3OH⁻ ：碱式电离
             </p>
             <ul>
                 <li><strong>实验室制备标准原则：</strong>可溶性铝盐必须与<strong>弱碱（氨水）</strong>反应，严禁使用过量强碱：<br>
@@ -1296,16 +1296,13 @@
             isAlumRunning = false;
             alCtx.clearRect(0, 0, alCanvas.width, alCanvas.height);
 
-            // 烧杯轮廓
             alCtx.strokeStyle = '#64748b';
             alCtx.lineWidth = 4;
             alCtx.strokeRect(150, 25, 600, 190);
 
-            // 浑浊污水背景 (黄褐色)
             alCtx.fillStyle = 'rgba(180, 83, 9, 0.35)';
             alCtx.fillRect(152, 65, 596, 148);
 
-            // 随机生成悬浮泥沙杂质微粒
             for (let i = 0; i < 45; i++) {
                 let dirtX = 170 + Math.random() * 560;
                 let dirtY = 75 + Math.random() * 125;
@@ -1337,12 +1334,10 @@
             function animate() {
                 alCtx.clearRect(0, 0, alCanvas.width, alCanvas.height);
 
-                // 烧杯
                 alCtx.strokeStyle = '#64748b';
                 alCtx.lineWidth = 4;
                 alCtx.strokeRect(150, 25, 600, 190);
 
-                // 随着净水进行，水体由浑浊变为清澈浅蓝
                 let clarify = Math.min(1, frame / 100);
                 let rVal = Math.floor(180 - clarify * (180 - 56));
                 let gVal = Math.floor(83 + clarify * (189 - 83));
@@ -1351,14 +1346,12 @@
                 alCtx.fillStyle = `rgba(${rVal}, ${gVal}, ${bVal}, ${aVal})`;
                 alCtx.fillRect(152, 65, 596, 148);
 
-                // 产生 Al(OH)3 白色絮状胶体微粒
                 if (frame === 10) {
                     for (let i = 0; i < 18; i++) {
                         colloids.push({ x: 180 + Math.random() * 540, y: 75 + Math.random() * 50, r: 8 + Math.random() * 4, vy: 0.8 });
                     }
                 }
 
-                // 胶体微粒扩散并吸附杂质下沉
                 for (let i = 0; i < colloids.length; i++) {
                     let c = colloids[i];
                     alCtx.fillStyle = 'rgba(255, 255, 255, 0.75)';
@@ -1375,7 +1368,6 @@
 
                     if (c.y < 200) c.y += c.vy;
 
-                    // 吸附判定
                     for (let j = 0; j < dirts.length; j++) {
                         let d = dirts[j];
                         let dist = Math.hypot(d.x - c.x, d.y - c.y);
@@ -1387,7 +1379,6 @@
                     }
                 }
 
-                // 绘制杂质微粒
                 for (let i = 0; i < dirts.length; i++) {
                     let d = dirts[i];
                     alCtx.fillStyle = '#78350f';
@@ -1531,23 +1522,19 @@
             isHallRunning = false;
             hCtx.clearRect(0, 0, hCanvas.width, hCanvas.height);
 
-            // 槽体与碳素衬里 (阴极 Cathode -)
             hCtx.fillStyle = '#334155';
             hCtx.fillRect(120, 35, 680, 200);
             hCtx.fillStyle = '#1e293b';
             hCtx.fillRect(135, 50, 650, 175);
 
-            // 熔融电解质 (Al2O3 + Na3AlF6 橙红色熔盐体系 1000℃)
             hCtx.fillStyle = 'rgba(234, 88, 12, 0.45)';
             hCtx.fillRect(140, 55, 640, 150);
 
-            // 石墨碳阳极 (Graphite Anodes +)
             hCtx.fillStyle = '#475569';
             hCtx.fillRect(230, 20, 65, 105);
             hCtx.fillRect(410, 20, 65, 105);
             hCtx.fillRect(590, 20, 65, 105);
 
-            // 底部沉积的液态铝 (Liquid Al)
             hCtx.fillStyle = '#cbd5e0';
             hCtx.fillRect(140, 190, 640, 35);
 
@@ -1572,7 +1559,6 @@
             const o2Bubbles = [];
             const alDrops = [];
 
-            // 初始化微观离子
             for (let i = 0; i < 18; i++) {
                 alIons.push({ x: 160 + Math.random() * 600, y: 70 + Math.random() * 80, vy: 1 + Math.random() });
                 oIons.push({ x: 160 + Math.random() * 600, y: 110 + Math.random() * 60, vy: -(1 + Math.random()) });
@@ -1581,8 +1567,6 @@
             function animate() {
                 resetElectrolyticAlSim();
 
-                // 1. 微观离子定向移动
-                // O²⁻ 向阳极迁移
                 for (let i = oIons.length - 1; i >= 0; i--) {
                     let o = oIons[i];
                     hCtx.fillStyle = '#ef4444';
@@ -1595,7 +1579,6 @@
 
                     o.y += o.vy;
 
-                    // 到达阳极失电子生成 O2
                     if (o.y <= 125) {
                         o2Bubbles.push({ x: o.x, y: o.y, r: 3 + Math.random() * 3, vy: 2 });
                         o.x = 160 + Math.random() * 600;
@@ -1603,7 +1586,6 @@
                     }
                 }
 
-                // Al³⁺ 向阴极槽底迁移
                 for (let i = alIons.length - 1; i >= 0; i--) {
                     let a = alIons[i];
                     hCtx.fillStyle = '#38bdf8';
@@ -1616,7 +1598,6 @@
 
                     a.y += a.vy;
 
-                    // 到达阴极得电子生成液态金属铝
                     if (a.y >= 190) {
                         alDrops.push({ x: a.x, y: 190 });
                         a.x = 160 + Math.random() * 600;
@@ -1624,7 +1605,6 @@
                     }
                 }
 
-                // 2. 绘制氧气气泡上升
                 for (let i = o2Bubbles.length - 1; i >= 0; i--) {
                     let b = o2Bubbles[i];
                     hCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
