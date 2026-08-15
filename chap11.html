@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>第11章 IIIA族元素：铝 互动深度探究平台</title>
     <!-- 网页浏览器图标 (Favicon) -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -114,6 +114,25 @@
             gap: 12px;
         }
 
+        /* 手机端折叠控制台面板 */
+        .mobile-toggle-panel {
+            display: none;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 12px; }
+            .mobile-toggle-panel { display: block; }
+            .toolbar {
+                display: none; /* 手机端默认收起，避免强行 freeze 占用过多屏幕空间 */
+                position: static;
+                margin-bottom: 15px;
+            }
+            .toolbar.expanded {
+                display: flex;
+            }
+        }
+
         .btn {
             background-color: var(--accent-color);
             color: white;
@@ -161,7 +180,6 @@
             margin-bottom: 6px;
         }
         
-        /* 标题包装器：实现校徽与大标题同行展示 */
         .title-wrapper {
             display: flex;
             align-items: center;
@@ -326,7 +344,6 @@
             gap: 10px;
         }
 
-        /* 视频容器样式 (适配 Google Drive 预览) */
         .video-box {
             background: #171923;
             border: 1px solid #4a5568;
@@ -337,7 +354,7 @@
         }
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 标准比例 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 8px;
@@ -372,7 +389,7 @@
             font-weight: 700;
         }
 
-        /* 知识图谱 (NotebookLM 风格) */
+        /* 知识图谱 */
         .mindmap-container {
             margin-top: 35px;
             background-color: var(--tree-bg);
@@ -471,7 +488,7 @@
         .h-node.leaf { background: #21252b; color: #98c379; font-size: 13.5px; }
 
         @media print {
-            .global-nav, .toolbar, .canvas-toolbar, .btn, .control-select, .video-box { display: none !important; }
+            .global-nav, .toolbar, .mobile-toggle-panel, .canvas-toolbar, .btn, .control-select, .video-box { display: none !important; }
             body { padding: 0; background: #fff !important; color: #000 !important; font-size: 14px !important; }
             .container { box-shadow: none; padding: 0; max-width: 100% !important; }
             .ans-trigger { display: none !important; }
@@ -485,21 +502,26 @@
 </head>
 <body class="font-medium">
 
-    <!-- 统一全局快捷导航栏 -->
+    <!-- 顶部统一全局快捷导航栏 -->
     <nav class="global-nav">
         <a href="index.html" class="nav-btn">🏠 平台首页</a>
-        <a href="2024.html" class="nav-btn">📝 2024统测</a>
-        <a href="2025.html" class="nav-btn">📝 2025统测</a>
-        <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-        <a href="index.html" class="nav-btn">📚 历届考题解析</a>
+        <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
+        <a href="past_exams_select.html" class="nav-btn">📝 历届考题解析</a>
         <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
     </nav>
 
     <div class="container" id="mainContainer">
 
+        <!-- 手机端折叠控制台按钮 -->
+        <div class="mobile-toggle-panel">
+            <button class="btn" style="width: 100%; justify-content: center; padding: 12px;" onclick="toggleMobileToolbar()">
+                ⚙️ 展开/收起 课堂互动控制台
+            </button>
+        </div>
+
         <!-- 顶部交互控制栏 -->
-        <div class="toolbar">
-            <div style="display:flex; align-items:center; gap:12px;">
+        <div class="toolbar" id="controlToolbar">
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                 <span style="font-weight: 700; color: var(--primary-color);">🧭 课堂互动控制台</span>
                 <select class="control-select" onchange="setFontSize(this.value)">
                     <option value="font-small">字号: 16px (标准)</option>
@@ -899,7 +921,7 @@
             <div class="canvas-card">
                 <div class="canvas-toolbar">
                     <span style="font-weight:bold; color:#63b3ed;">🧪 “铝三角”滴加碱液沉淀量实时曲线与化学原理演示</span>
-                    <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
                         <span>滴加 NaOH (mol): <strong id="naohMolText" style="color:#f6e05e;">0.00 mol</strong></span>
                         <button class="btn btn-outline" style="color:white;" onclick="autoPlayAlTriangle()">▶️ 自动连续滴加演示</button>
                         <button class="btn btn-outline" style="color:white;" onclick="resetAlTriangle()">重置</button>
@@ -1042,6 +1064,12 @@
 
     <!-- JavaScript 逻辑交互控制引擎 -->
     <script>
+        // --- 手机端控制台展开/收起 ---
+        function toggleMobileToolbar() {
+            const tb = document.getElementById('controlToolbar');
+            tb.classList.toggle('expanded');
+        }
+
         // --- 1. 全局字号与版面 ---
         function setFontSize(sizeClass) {
             document.body.classList.remove('font-small', 'font-medium', 'font-large');
