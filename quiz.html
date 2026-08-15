@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>化学随堂小测验解析系统</title>
   <!-- 网页浏览器标签图标 (Favicon) -->
   <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -577,15 +577,16 @@
 
 <div class="main-wrapper">
 
-  <!-- 顶部全功能快捷导航栏 (已更新指定跳转链接与移动端折叠) -->
+  <!-- 顶部全功能快捷导航栏 (已修正链接并移除分散统测按钮) -->
   <nav class="global-top-nav">
     <div class="nav-brand-area">
       <span>⚗️ 教学中心平台</span>
     </div>
     <button class="nav-menu-toggle" onclick="toggleNavMenu()">☰ 导航菜单</button>
     <div class="nav-links-wrapper" id="globalNavLinks">
-      <a href="chapters_select.html" class="nav-pill-btn">📖 章节教学内容</a>
-      <a href="past_exams_select.html" class="nav-pill-btn">📚 历届考题解析</a>
+      <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
+      <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
+      <a href="2024.html" class="nav-pill-btn">📝 历届考题解析</a>
       <a href="quiz.html" class="nav-pill-btn active">✍️ 随堂小测验解析</a>
     </div>
   </nav>
@@ -599,9 +600,9 @@
         <span>随堂小测验解析系统</span>
       </div>
     </div>
-    <a href="chapters_select.html" class="back-home-btn">
+    <a href="index.html" class="back-home-btn">
       <span>⬅️</span>
-      <span>返回章节选择</span>
+      <span>返回平台首页</span>
     </a>
   </div>
 
@@ -894,7 +895,7 @@ function toggleControlPanel() {
   document.getElementById('panelCollapsibleContent').classList.toggle('active');
 }
 
-/* 护眼模式切换 */
+/* 护眼/深色模式切换 */
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
