@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>化学随堂小测验解析系统</title>
+  <!-- 网页浏览器标签图标 (Favicon) -->
+  <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
   <style>
     :root {
       --primary: #1e3a8a;
@@ -37,12 +39,73 @@
       margin: 0 auto;
     }
 
-    /* 顶部导航与标题 */
+    /* 顶部全功能快捷导航栏样式 */
+    .global-top-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+      border-color: #94a3b8;
+    }
+
+    .nav-pill-btn.active {
+      background: #1e3a5f;
+      color: #ffffff;
+      border-color: #1e3a5f;
+    }
+
+    /* 顶部栏与校徽 Logo */
     .header-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .school-badge-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .header-school-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+      padding: 2px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
     }
 
     .header-title {
@@ -353,11 +416,24 @@
 
 <div class="main-wrapper">
 
-  <!-- 顶部栏 -->
+  <!-- 顶部全功能快捷导航栏 -->
+  <nav class="global-top-nav">
+    <a href="index.html" class="nav-pill-btn">🏠 平台首页</a>
+    <a href="2024.html" class="nav-pill-btn">📅 2024统测</a>
+    <a href="2025.html" class="nav-pill-btn">📅 2025统测</a>
+    <a href="index.html" class="nav-pill-btn">📖 章节教学内容</a>
+    <a href="index.html" class="nav-pill-btn">📝 历届考题解析</a>
+    <a href="quiz.html" class="nav-pill-btn active">✍️ 随堂小测验解析</a>
+  </nav>
+
+  <!-- 顶部栏与校徽 Logo -->
   <div class="header-bar">
-    <div class="header-title">
-      <span>✍️</span>
-      <span>随堂小测验解析系统</span>
+    <div class="school-badge-title">
+      <img src="image/校徽.jpg" alt="校徽" class="header-school-logo">
+      <div class="header-title">
+        <span>✍️</span>
+        <span>随堂小测验解析系统</span>
+      </div>
     </div>
     <a href="index.html" class="back-home-btn">
       <span>⬅️</span>
@@ -427,7 +503,7 @@ const quizData = {
         title: "第 2 题：NH₄⁺",
         prompt: "写出 NH₄⁺ (铵根离子) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】\n      H\n[ H : N : H ]⁺\n      H\n\n【结构式】\n      H\n[ H — N — H ]⁺\n      |\n      H</div>
+          <div class="formula-display">【电子式】\n     H\n[ H : N : H ]⁺\n     H\n\n【结构式】\n     H\n[ H — N — H ]⁺\n     |\n     H</div>
           <div style="font-size: 0.9rem; color: #64748b;">* 含有 1 个配位键与 3 个极性共价键。</div>
         `
       },
@@ -436,7 +512,7 @@ const quizData = {
         title: "第 3 题：CH₃Cl",
         prompt: "写出 CH₃Cl (一氯甲烷) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】\n      H\n  H : C : :Cl̈:\n      H\n\n【结构式】\n      H\n      |\n  H — C — Cl\n      |\n      H</div>
+          <div class="formula-display">【电子式】\n     H\n  H : C : :Cl̈:\n     H\n\n【结构式】\n     H\n     |\n  H — C — Cl\n     |\n     H</div>
         `
       },
       {
