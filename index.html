@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>化学教学资源网 | Kluang CHHS Chemistry</title>
+  <!-- 网页浏览器标签图标 -->
+  <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
   <style>
     :root {
       --primary: #2563eb;
@@ -48,11 +50,24 @@
       text-align: center;
     }
 
+    /* 校徽 Logo 样式 */
+    .school-logo {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+      padding: 2px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid var(--border);
+    }
+
     header h1 {
       font-size: 1.6rem;
       font-weight: 700;
       color: #0f172a;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     header p {
@@ -165,6 +180,8 @@
 
   <div class="container">
     <header>
+      <!-- 校徽 Logo 图片 -->
+      <img src="image/校徽.jpg" alt="居銮中华中学校徽" class="school-logo">
       <h1>⚗️ 化学学习与复习平台</h1>
       <p>Kluang Chong Hwa High School</p>
     </header>
