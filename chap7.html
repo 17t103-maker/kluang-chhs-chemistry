@@ -7,9 +7,6 @@
   <!-- 网页浏览器图标 (Favicon) -->
   <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
   <style>
-    /* ==========================================================================
-        CSS 变量设计与双主题系统
-        ========================================================================== */
     :root {
       --bg-primary: #f8fafc;
       --bg-card: #ffffff;
@@ -66,7 +63,7 @@
       color: var(--text-main);
       font-size: calc(15.5px * var(--font-scale));
       line-height: 1.65;
-      padding-top: 135px; /* 为两行顶部栏腾出空间 */
+      padding-top: 135px;
       padding-bottom: 60px;
     }
 
@@ -253,7 +250,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* 标题包装器：实现校徽与大标题同行展示 */
     .title-wrapper {
       display: flex;
       align-items: center;
@@ -310,7 +306,6 @@
       gap: 12px;
     }
 
-    /* 电子式结构展示卡片 */
     .lewis-struct-card {
       background: var(--bg-card-subtle);
       border: 1px solid var(--border-color);
@@ -330,7 +325,6 @@
       min-height: 52px;
     }
 
-    /* 课本指导图预留展示框 */
     .textbook-guide-img {
       background: var(--bg-card-subtle);
       border: 1px dashed var(--border-color);
@@ -354,7 +348,6 @@
       font-size: 0.88rem;
     }
 
-    /* Canvas 容器与 Tab 按钮组 */
     .canvas-wrapper {
       background: #090d16;
       border-radius: var(--radius);
@@ -414,7 +407,6 @@
       border-color: var(--primary-color);
     }
 
-    /* 样式表格 */
     .table-container {
       overflow-x: auto;
       margin: 12px 0;
@@ -438,7 +430,6 @@
       font-weight: 700;
     }
 
-    /* 思维导图 */
     .mindmap-wrapper {
       background: #090d16;
       color: #e2e8f0;
@@ -485,7 +476,6 @@
 
     .node-children.collapsed { display: none; }
 
-    /* 手机端响应式布局控制 */
     @media (max-width: 900px) {
       .grid-2 { grid-template-columns: 1fr; }
     }
@@ -521,11 +511,11 @@
 </head>
 <body>
 
-  <!-- 顶部统一全局快捷导航栏 -->
+  <!-- 顶部统一全局快捷导航栏（已修正对应跳转链接，解决404问题） -->
   <nav class="global-nav">
     <a href="index.html" class="nav-btn">🏠 平台首页</a>
-    <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
-    <a href="past_exams_select.html" class="nav-btn">📝 历届考题解析</a>
+    <a href="index.html" class="nav-btn">📖 章节教学内容</a>
+    <a href="index.html" class="nav-btn">📝 历届考题解析</a>
     <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
   </nav>
 
@@ -931,8 +921,8 @@
           <h4 id="mol-info-name" style="font-size:1.1rem; color:var(--primary-color); margin-bottom:8px;">二氧化碳 (CO₂)</h4>
           <div style="font-size:0.88rem; line-height:1.7; color:var(--text-main);" id="mol-info-desc">
             中心 C 原子形成 2 组碳氧双键 (C=O)，无孤对电子。<br>
-            • <strong>立体构型</strong>：<span class="inline-ans">直线型</span>，键角 <strong>180°</strong><br>
-            • <strong>极性判断</strong>：含 2 个极性 C=O 键，但两个偶极反向完全抵消，分子偶极矩为 0，属于 <span class="inline-ans">非极性分子</span>。
+            • <strong>立体构型</strong>：<span class='inline-ans'>直线型</span>，键角 <strong>180°</strong><br>
+            • <strong>极性判断</strong>：含 2 个极性 C=O 键，但两个偶极反向完全抵消，分子偶极矩为 0，属于 <span class='inline-ans'>非极性分子</span>。
           </div>
         </div>
       </div>
@@ -1096,7 +1086,7 @@
                   </span>
                   <div class="node-children">
                     <ul>
-                      <li><span style="color:#94a3b8;"><strong>范德华力</strong>：受式量、极性、原子数、电子数、支链接触面积 5 大因素影响</span></li>
+                      <li><span style="color:#94a3b8;"><strong>范德华力</strong>：受式量、极性、原子数、电子数, 支链接触面积 5 大因素影响</span></li>
                       <li><span style="color:#94a3b8;"><strong>氢键 (X-H···Y)</strong>：存在于 N, O, F 氢化物中，引起沸点反常跳跃与冰密度反常</span></li>
                     </ul>
                   </div>
@@ -2017,7 +2007,7 @@
       const node = header.parentElement;
       const children = node.querySelector('.node-children');
       const btn = header.querySelector('.toggle-btn');
-      if (children) {
+      hif: if (children) {
         children.classList.toggle('collapsed');
         btn.innerText = children.classList.contains('collapsed') ? '[+]' : '[-]';
       }
