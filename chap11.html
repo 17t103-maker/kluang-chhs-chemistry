@@ -45,12 +45,12 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* 整体字号放大两号设计 */
+        /* 整体字号调整 */
         body.font-small { font-size: 16px; }
-        body.font-medium { font-size: 18px; } /* 默认字号 18px */
+        body.font-medium { font-size: 18px; }
         body.font-large { font-size: 21px; }
 
-        /* 顶部统一全局快捷导航栏样式 (已修正 404 路径) */
+        /* 顶部统一全局快捷导航栏样式 (已移除分散按钮，解决404路径) */
         .global-nav {
             background: var(--container-bg);
             border-bottom: 3px solid var(--accent-color);
@@ -126,7 +126,7 @@
             .container { padding: 20px 12px; }
             .mobile-toggle-panel { display: block; }
             .toolbar {
-                display: none; /* 手机端默认收起，避免强行 freeze 占用过多屏幕空间 */
+                display: none; /* 手机端默认收起，避免占用过多屏幕空间 */
                 position: static;
                 margin-bottom: 15px;
             }
@@ -366,11 +366,7 @@
         }
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+            top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
         table {
@@ -504,12 +500,11 @@
 </head>
 <body class="font-medium">
 
-    <!-- 顶部统一全局快捷导航栏 (已修复 404 跳转) -->
+    <!-- 顶部统一全局快捷导航栏 (已修正跳转链接，消除404) -->
     <nav class="global-nav">
         <a href="index.html" class="nav-btn">🏠 平台首页</a>
         <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-        <a href="2024.html" class="nav-btn">📝 历届考题解析 (2024)</a>
-        <a href="2025.html" class="nav-btn">📝 历届考题解析 (2025)</a>
+        <a href="2024.html" class="nav-btn">📝 历届考题解析</a>
         <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
     </nav>
 
@@ -547,7 +542,6 @@
         <!-- 课程标头 -->
         <div class="header">
             <div class="school-name">居銮中华中学 高中化学课堂</div>
-            <!-- 大标题左侧插入校徽 Logo -->
             <div class="title-wrapper">
                 <img src="image/校徽.jpg" alt="校徽" class="school-logo">
                 <h1 class="title">第11章 IIIA族元素：铝（全景知识与深度探究平台）</h1>
@@ -771,7 +765,7 @@
                 </li>
             </ul>
 
-            <!-- 经典铝热反应模拟器（标准漏斗铁架台装置） -->
+            <!-- 经典铝热反应模拟器 -->
             <div class="canvas-card">
                 <div class="canvas-toolbar">
                     <span style="font-weight:bold; color:#f6ad55;">💥 经典铝热反应（标准纸漏斗与熔融铁析出）动态模拟器</span>
@@ -787,22 +781,20 @@
                 </div>
             </div>
 
-            <!-- 嵌入真实实验视窗 1：Google Drive 铝热反应实验视频 -->
+            <!-- 真实实验视窗 1 -->
             <div class="video-box">
                 <div style="font-weight:bold; color:#63b3ed; margin-bottom:8px; font-size:15px;">🎥 真实实验室演示：铝热反应剧烈火花与液态铁水生成</div>
                 <div class="video-wrapper">
                     <iframe src="https://drive.google.com/file/d/1gYgYGvWnOrej-zr2r2iItFyLBwd8a00t/preview" allow="autoplay" allowfullscreen></iframe>
                 </div>
-                <div style="font-size:13px; color:#a0aec0; margin-top:6px;">💡 可点击播放窗口右下角或弹出图标全屏观看</div>
             </div>
 
-            <!-- 嵌入真实应用视窗 2：Google Drive 野外无缝铁轨焊接视频 -->
+            <!-- 真实应用视窗 2 -->
             <div class="video-box">
                 <div style="font-weight:bold; color:#f6ad55; margin-bottom:8px; font-size:15px;">🚆 工业应用现场：野外利用铝热反应进行无缝铁轨精密焊接</div>
                 <div class="video-wrapper">
                     <iframe src="https://drive.google.com/file/d/1H0ErTc_0O_87EqZgbikv6ccIl88Th5aL/preview" allow="autoplay" allowfullscreen></iframe>
                 </div>
-                <div style="font-size:13px; color:#a0aec0; margin-top:6px;">💡 观察高温熔融铁水如何无缝熔接铁轨接头</div>
             </div>
         </div>
 
