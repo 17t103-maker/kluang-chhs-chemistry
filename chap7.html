@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>第7章 化学键与分子间作用力 - 互动研学平台</title>
   <!-- 网页浏览器图标 (Favicon) -->
   <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -151,6 +151,20 @@
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+    }
+
+    /* 手机端折叠控制台按钮 */
+    .mobile-toggle-btn {
+      display: none;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     .btn {
@@ -471,13 +485,32 @@
 
     .node-children.collapsed { display: none; }
 
+    /* 手机端响应式布局控制 */
     @media (max-width: 900px) {
       .grid-2 { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 768px) {
+      body {
+        padding-top: 130px;
+      }
+      .mobile-toggle-btn {
+        display: block;
+      }
+      .top-toolbar {
+        display: none;
+        position: static;
+        height: auto;
+        padding: 10px 0;
+      }
+      .top-toolbar.active {
+        display: flex;
+      }
+    }
+
     @media print {
       body { padding: 0; background: #fff; color: #000; font-size: 11pt; }
-      .global-nav, .top-toolbar, .btn, .tab-pills, input[type="range"] { display: none !important; }
+      .global-nav, .top-toolbar, .mobile-toggle-btn, .btn, .tab-pills, input[type="range"] { display: none !important; }
       .card { border: none; box-shadow: none; padding: 10px 0; }
       .inline-ans { color: #000 !important; background: transparent !important; border-bottom: 1px solid #000 !important; }
       .inline-ans::after { display: none !important; }
@@ -491,10 +524,8 @@
   <!-- 顶部统一全局快捷导航栏 -->
   <nav class="global-nav">
     <a href="index.html" class="nav-btn">🏠 平台首页</a>
-    <a href="2024.html" class="nav-btn">📝 2024统测</a>
-    <a href="2025.html" class="nav-btn">📝 2025统测</a>
-    <a href="index.html" class="nav-btn">📖 章节教学内容</a>
-    <a href="index.html" class="nav-btn">📚 历届考题解析</a>
+    <a href="chapters_select.html" class="nav-btn">📖 章节教学内容</a>
+    <a href="past_exams_select.html" class="nav-btn">📝 历届考题解析</a>
     <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
   </nav>
 
@@ -534,6 +565,11 @@
   </header>
 
   <main class="container">
+
+    <!-- 手机端折叠控制台切换按钮 -->
+    <button class="mobile-toggle-btn" onclick="document.querySelector('.top-toolbar').classList.toggle('active')">
+      ⚙️ 展开/收起 课堂互动控制台
+    </button>
 
     <!-- ==================== 🎯 章节核心目标 ==================== -->
     <section class="card">
