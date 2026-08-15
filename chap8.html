@@ -641,7 +641,6 @@
             <!-- 引导式互动：一步一步画出双线桥 (多题目切换) -->
             <h3 class="sub-title">4. 引导式互动：一步步构建双线桥 (多案例实操)</h3>
             <div class="guide-stepper">
-                <!-- 题目选择器 -->
                 <div style="margin-bottom: 12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                     <span style="font-weight:700; font-size:0.9rem;">选择实操案例：</span>
                     <button class="step-btn active" id="case-btn-0" onclick="switchBridgeCase(0)">案例 1: 2Na + Cl₂ ➔ 2NaCl</button>
@@ -649,7 +648,6 @@
                     <button class="step-btn" id="case-btn-2" onclick="switchBridgeCase(2)">案例 3: 2FeCl₃ + H₂S ➔ 2FeCl₂ + 2HCl + S↓</button>
                 </div>
 
-                <!-- 步骤切换导航 -->
                 <div class="stepper-nav">
                     <button class="step-btn active" id="step-btn-0" onclick="switchBridgeStep(0)">第 1 步：正上方标出变价氧化数</button>
                     <button class="step-btn" id="step-btn-1" onclick="switchBridgeStep(1)">第 2 步：画出指向线桥</button>
@@ -682,7 +680,7 @@
                 <li><strong>代数和守恒</strong>：中性化合物中各元素氧化数的代数和恒为 <span class="inline-ans">0</span>；多原子离子中各元素氧化数的代数和等于 <span class="inline-ans">该离子所带的电荷数</span>。</li>
             </ul>
 
-            <!-- 互动训练：氧化数计算 (无乱码纯净版) -->
+            <!-- 互动训练：氧化数计算 -->
             <h3 class="sub-title">2. 互动训练：计算指定物质中的元素氧化数（附详细解题步骤）</h3>
             
             <div class="interactive-quiz-card">
@@ -819,30 +817,46 @@
                 <strong style="color:var(--primary); font-size:1.05rem;">方式一：双线桥法表达配平 (化合价精准居中对齐于元素正上方)</strong>
                 <div style="margin-top: 14px; display:flex; justify-content:center;">
                     <svg width="680" height="150" viewBox="0 0 680 150">
-                        <!-- 方程式主体 (等宽字体精确定位) -->
-                        <text x="340" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                            2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
-                        </text>
+                        <!-- 1. 前缀 2 -->
+                        <text x="80" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                        
+                        <!-- 2. 反应物变价 Fe (中心 X=100) -->
+                        <text x="100" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                        <text x="100" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                        
+                        <!-- 3. 后续未变价 Cl3(aq) + H2 -->
+                        <text x="175" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₃(aq) + H₂</text>
+                        
+                        <!-- 4. 反应物变价 S (中心 X=250) -->
+                        <text x="250" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                        <text x="250" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                        
+                        <!-- 5. 中间箭头与生成物前缀 (g) ➔ 2 -->
+                        <text x="315" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(g) ➔ 2</text>
+                        
+                        <!-- 6. 生成物变价 Fe (中心 X=368) -->
+                        <text x="368" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                        <text x="368" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                        
+                        <!-- 7. 生成物未变价 Cl2(aq) + 2HCl(aq) + -->
+                        <text x="480" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₂(aq) + 2HCl(aq) +</text>
+                        
+                        <!-- 8. 生成物变价 S (中心 X=605) -->
+                        <text x="605" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                        <text x="605" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                        
+                        <!-- 9. 沉淀与状态符号 (s)↓ -->
+                        <text x="638" y="80" font-size="18" font-family="'Courier New', Courier, monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)↓</text>
 
-                        <!-- 精确氧化数标注 (对应字符 X 坐标) -->
-                        <!-- Fe in 2FeCl3 at X=120 -->
-                        <text x="120" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
-                        <!-- S in H2S at X=248 -->
-                        <text x="248" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
-                        <!-- Fe in 2FeCl2 at X=378 -->
-                        <text x="378" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                        <!-- S in S(s) at X=615 -->
-                        <text x="615" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                        <!-- 上桥线：S(-2) ➔ S(0) 失电子 / 被氧化 (精确起点 X=250, 精确终点 X=605) -->
+                        <path d="M 250,65 L 250,25 L 605,25 L 605,65" fill="none" stroke="#2563eb" stroke-width="2"/>
+                        <polygon points="605,72 600,62 610,62" fill="#2563eb"/>
+                        <text x="427" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
 
-                        <!-- 上桥线：S(-2) ➔ S(0) 失电子 / 被氧化 (起点 X=248, 终点 X=615) -->
-                        <path d="M 248,65 L 248,25 L 615,25 L 615,65" fill="none" stroke="#2563eb" stroke-width="2"/>
-                        <polygon points="615,72 610,62 620,62" fill="#2563eb"/>
-                        <text x="431" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
-
-                        <!-- 下桥线：Fe(+3) ➔ Fe(+2) 得电子 / 被还原 (起点 X=120, 终点 X=378) -->
-                        <path d="M 120,95 L 120,132 L 378,132 L 378,95" fill="none" stroke="#ef4444" stroke-width="2"/>
-                        <polygon points="378,88 373,98 383,98" fill="#ef4444"/>
-                        <text x="249" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
+                        <!-- 下桥线：Fe(+3) ➔ Fe(+2) 得电子 / 被还原 (精确起点 X=100, 精确终点 X=368) -->
+                        <path d="M 100,95 L 100,132 L 368,132 L 368,95" fill="none" stroke="#ef4444" stroke-width="2"/>
+                        <polygon points="368,88 363,98 373,98" fill="#ef4444"/>
+                        <text x="234" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
                     </svg>
                 </div>
             </div>
@@ -958,6 +972,20 @@
 
     <!-- 交互与动画引擎脚本 -->
     <script>
+        /* 0. 核心自清洗拦截引擎：递归清理整棵 DOM 树中的引用标签与残留 */
+        function purgeCitationsFromDOM(node) {
+            if (!node) return;
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.nodeValue) {
+                    node.nodeValue = node.nodeValue.replace(/\+\]/gi, '');
+                }
+            } else {
+                for (let child of node.childNodes) {
+                    purgeCitationsFromDOM(child);
+                }
+            }
+        }
+
         /* 1. 答案显隐全局控制器 */
         let allAnswersVisible = false;
 
@@ -975,6 +1003,17 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // 立即对 DOM 进行全面纯净化清洗
+            purgeCitationsFromDOM(document.body);
+
+            // 监听动态内容变化并清洗
+            const observer = new MutationObserver(() => {
+                observer.disconnect();
+                purgeCitationsFromDOM(document.body);
+                observer.observe(document.body, { childList: true, subtree: true });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+
             document.querySelectorAll('.inline-ans').forEach(ans => {
                 ans.addEventListener('click', function() {
                     this.classList.toggle('revealed');
@@ -1001,7 +1040,7 @@
 
         /* 3. 钠与氯微观电子转移动画 (Canvas 单次演变与自动进入离子态) */
         let naCanvas, naCtx;
-        let simStage = 0; // 0: 原料原子, 1: 电子迁移, 2: 离子态与晶体
+        let simStage = 0;
         let animProgress = 0;
         let animId;
 
@@ -1106,7 +1145,7 @@
                 const ey = centerY;
                 drawElectron(ex, ey);
             } 
-            // 阶段 2：单次飞跃迁移，到达后自动切换到阶段 3
+            // 阶段 2：单次飞跃迁移
             else if (simStage === 1) {
                 naCtx.strokeStyle = '#64748b';
                 naCtx.setLineDash([4, 4]);
@@ -1197,47 +1236,62 @@
                 steps: [
                     {
                         svg: `<svg width="520" height="110" viewBox="0 0 520 110">
-                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
-                                </text>
-                                <text x="140" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="240" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <text x="370" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
-                                <text x="392" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <text x="120" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="145" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="145" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="195" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="260" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="325" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">₂(g) ➔ 2</text>
+                                <text x="390" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="390" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="415" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="415" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <text x="445" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
                               </svg>`,
                         note: "<strong>第 1 步【标变价】</strong>：在变价元素符号正上方精确标出化合价。反应前 Na 为 0，Cl 为 0；反应后 Na 为 +1，Cl 为 -1。"
                     },
                     {
                         svg: `<svg width="520" height="135" viewBox="0 0 520 135">
-                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
-                                </text>
-                                <text x="140" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="240" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <text x="370" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
-                                <text x="392" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
-                                <path d="M 140,55 L 140,25 L 370,25 L 370,55" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="370,62 365,52 375,52" fill="#ef4444"/>
-                                <path d="M 240,85 L 240,115 L 392,115 L 392,85" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="392,78 387,88 397,88" fill="#2563eb"/>
+                                <text x="120" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="145" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="145" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="195" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="260" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="260" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="325" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">₂(g) ➔ 2</text>
+                                <text x="390" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="390" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="415" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="415" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <text x="445" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
+                                <path d="M 145,55 L 145,25 L 390,25 L 390,55" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="390,62 385,52 395,52" fill="#ef4444"/>
+                                <path d="M 260,85 L 260,115 L 415,115 L 415,85" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="415,78 410,88 420,88" fill="#2563eb"/>
                               </svg>`,
                         note: "<strong>第 2 步【连线桥】</strong>：箭头从反应物的变价元素（Na、Cl）精准出发，分别指向产物中对应的变价元素符号（Na、Cl）。"
                     },
                     {
                         svg: `<svg width="550" height="150" viewBox="0 0 550 150">
-                                <text x="275" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2Na(s) + Cl₂(g) ➔ 2NaCl(s)
-                                </text>
-                                <text x="155" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="255" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <text x="385" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
-                                <text x="407" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
-                                <path d="M 155,65 L 155,25 L 385,25 L 385,65" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="385,72 380,62 390,62" fill="#ef4444"/>
-                                <text x="270" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2×1e⁻ = 2e⁻，化合价升高，被氧化</text>
-                                <path d="M 255,95 L 255,130 L 407,130 L 407,95" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="407,88 402,98 412,98" fill="#2563eb"/>
-                                <text x="331" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2×1e⁻ = 2e⁻，化合价降低，被还原</text>
+                                <text x="120" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="145" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="145" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="195" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="260" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="260" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="325" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">₂(g) ➔ 2</text>
+                                <text x="390" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Na</text>
+                                <text x="390" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+1</text>
+                                <text x="415" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl</text>
+                                <text x="415" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-1</text>
+                                <text x="445" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
+                                <path d="M 145,65 L 145,25 L 390,25 L 390,65" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="390,72 385,62 395,62" fill="#ef4444"/>
+                                <text x="267" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2×1e⁻ = 2e⁻，化合价升高，被氧化</text>
+                                <path d="M 260,95 L 260,130 L 415,130 L 415,95" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="415,88 410,98 420,98" fill="#2563eb"/>
+                                <text x="337" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2×1e⁻ = 2e⁻，化合价降低，被还原</text>
                               </svg>`,
                         note: "<strong>第 3 步【注得失】</strong>：在线桥上必须准确写明“失/得”几电子（如 2×1e⁻）、“化合价升高/降低”及“被氧化/被还原”。"
                     }
@@ -1249,47 +1303,62 @@
                 steps: [
                     {
                         svg: `<svg width="560" height="110" viewBox="0 0 560 110">
-                                <text x="280" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
-                                </text>
-                                <text x="135" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="228" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
-                                <text x="345" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="450" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="110" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="110" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="160" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="215" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="215" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="290" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) ➔</text>
+                                <text x="365" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="365" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="435" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) +</text>
+                                <text x="500" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="500" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="530" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
                               </svg>`,
                         note: "<strong>第 1 步【标变价】</strong>：标出变价元素：Zn 从 0 升至 +2；Cu 从 +2 降至 0。"
                     },
                     {
                         svg: `<svg width="560" height="135" viewBox="0 0 560 135">
-                                <text x="280" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
-                                </text>
-                                <text x="135" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="228" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
-                                <text x="345" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="450" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <path d="M 135,55 L 135,25 L 345,25 L 345,55" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="345,62 340,52 350,52" fill="#ef4444"/>
-                                <path d="M 228,85 L 228,115 L 450,115 L 450,85" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="450,78 445,88 455,88" fill="#2563eb"/>
+                                <text x="110" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="110" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="160" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="215" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="215" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="290" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) ➔</text>
+                                <text x="365" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="365" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="435" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) +</text>
+                                <text x="500" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="500" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="530" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
+                                <path d="M 110,55 L 110,25 L 365,25 L 365,55" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="365,62 360,52 370,52" fill="#ef4444"/>
+                                <path d="M 215,85 L 215,115 L 500,115 L 500,85" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="500,78 495,88 505,88" fill="#2563eb"/>
                               </svg>`,
                         note: "<strong>第 2 步【连线桥】</strong>：Zn 指向 ZnSO₄ 中的 Zn；CuSO₄ 中的 Cu 指向单质 Cu。"
                     },
                     {
                         svg: `<svg width="580" height="150" viewBox="0 0 580 150">
-                                <text x="290" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    Zn(s) + CuSO₄(aq) ➔ ZnSO₄(aq) + Cu(s)
-                                </text>
-                                <text x="145" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
-                                <text x="238" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
-                                <text x="355" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="460" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <path d="M 145,65 L 145,25 L 355,25 L 355,65" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="355,72 350,62 360,62" fill="#ef4444"/>
-                                <text x="250" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2e⁻，化合价升高，被氧化</text>
-                                <path d="M 238,95 L 238,130 L 460,130 L 460,95" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="460,88 455,98 465,98" fill="#2563eb"/>
-                                <text x="349" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2e⁻，化合价降低，被还原</text>
+                                <text x="110" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="110" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">0</text>
+                                <text x="160" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s) +</text>
+                                <text x="215" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="215" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">+2</text>
+                                <text x="290" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) ➔</text>
+                                <text x="365" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Zn</text>
+                                <text x="365" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="435" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">SO₄(aq) +</text>
+                                <text x="500" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cu</text>
+                                <text x="500" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="530" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)</text>
+                                <path d="M 110,65 L 110,25 L 365,25 L 365,65" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="365,72 360,62 370,62" fill="#ef4444"/>
+                                <text x="237" y="18" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">失去 2e⁻，化合价升高，被氧化</text>
+                                <path d="M 215,95 L 215,130 L 500,130 L 500,95" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="500,88 495,98 505,98" fill="#2563eb"/>
+                                <text x="357" y="145" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">得到 2e⁻，化合价降低，被还原</text>
                               </svg>`,
                         note: "<strong>第 3 步【注得失】</strong>：标明 Zn 失去 2e⁻ 被氧化；Cu²⁺ 得到 2e⁻ 被还原。"
                     }
@@ -1301,47 +1370,65 @@
                 steps: [
                     {
                         svg: `<svg width="680" height="110" viewBox="0 0 680 110">
-                                <text x="340" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
-                                </text>
-                                <text x="120" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
-                                <text x="248" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
-                                <text x="378" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="615" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="80" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="100" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="100" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="175" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₃(aq) + H₂</text>
+                                <text x="250" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="250" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="315" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(g) ➔ 2</text>
+                                <text x="368" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="368" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="480" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₂(aq) + 2HCl(aq) +</text>
+                                <text x="605" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="605" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="638" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)↓</text>
                               </svg>`,
                         note: "<strong>第 1 步【标变价】</strong>：Fe 从 +3 降至 +2；S 从 -2 升至 0。"
                     },
                     {
                         svg: `<svg width="680" height="135" viewBox="0 0 680 135">
-                                <text x="340" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
-                                </text>
-                                <text x="120" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
-                                <text x="248" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
-                                <text x="378" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="615" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <path d="M 248,55 L 248,25 L 615,25 L 615,55" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="615,62 610,52 620,52" fill="#2563eb"/>
-                                <path d="M 120,85 L 120,115 L 378,115 L 378,85" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="378,78 373,88 383,88" fill="#ef4444"/>
+                                <text x="80" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="100" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="100" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="175" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₃(aq) + H₂</text>
+                                <text x="250" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="250" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="315" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(g) ➔ 2</text>
+                                <text x="368" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="368" y="48" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="480" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₂(aq) + 2HCl(aq) +</text>
+                                <text x="605" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="605" y="48" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="638" y="70" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)↓</text>
+                                <path d="M 250,55 L 250,25 L 605,25 L 605,55" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="605,62 600,52 610,52" fill="#2563eb"/>
+                                <path d="M 100,85 L 100,115 L 368,115 L 368,85" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="368,78 363,88 373,88" fill="#ef4444"/>
                               </svg>`,
                         note: "<strong>第 2 步【连线桥】</strong>：H₂S 中的 S 指向单质 S；FeCl₃ 中的 Fe 指向 FeCl₂ 中的 Fe。"
                     },
                     {
                         svg: `<svg width="680" height="150" viewBox="0 0 680 150">
-                                <text x="340" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">
-                                    2FeCl₃(aq) + H₂S(g) ➔ 2FeCl₂(aq) + 2HCl(aq) + S(s)↓
-                                </text>
-                                <text x="120" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
-                                <text x="248" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
-                                <text x="378" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
-                                <text x="615" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
-                                <path d="M 248,65 L 248,25 L 615,25 L 615,65" fill="none" stroke="#2563eb" stroke-width="2"/>
-                                <polygon points="615,72 610,62 620,62" fill="#2563eb"/>
-                                <text x="431" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
-                                <path d="M 120,95 L 120,132 L 378,132 L 378,95" fill="none" stroke="#ef4444" stroke-width="2"/>
-                                <polygon points="378,88 373,98 383,98" fill="#ef4444"/>
-                                <text x="249" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
+                                <text x="80" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="100" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="100" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+3</text>
+                                <text x="175" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₃(aq) + H₂</text>
+                                <text x="250" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="250" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">-2</text>
+                                <text x="315" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(g) ➔ 2</text>
+                                <text x="368" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Fe</text>
+                                <text x="368" y="58" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+2</text>
+                                <text x="480" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">Cl₂(aq) + 2HCl(aq) +</text>
+                                <text x="605" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">S</text>
+                                <text x="605" y="58" font-size="13" font-weight="bold" fill="#2563eb" text-anchor="middle">0</text>
+                                <text x="638" y="80" font-size="18" font-family="'Courier New', monospace" font-weight="bold" fill="currentColor" text-anchor="middle">(s)↓</text>
+                                <path d="M 250,65 L 250,25 L 605,25 L 605,65" fill="none" stroke="#2563eb" stroke-width="2"/>
+                                <polygon points="605,72 600,62 610,62" fill="#2563eb"/>
+                                <text x="427" y="18" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">化合价升高，失去 2e⁻，被氧化</text>
+                                <path d="M 100,95 L 100,132 L 368,132 L 368,95" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                <polygon points="368,88 363,98 373,98" fill="#ef4444"/>
+                                <text x="234" y="146" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">化合价降低，得到 2×1e⁻ = 2e⁻，被还原</text>
                               </svg>`,
                         note: "<strong>第 3 步【注得失】</strong>：标明 S²⁻ 失去 2e⁻ 被氧化，2 个 Fe³⁺ 共得到 2e⁻ 被还原。"
                     }
