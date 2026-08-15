@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>居銮中华中学 - 2024年下半年统一测验 高一理科化学</title>
     <!-- 网页浏览器标签图标 -->
     <link rel="icon" href="image/校徽.jpg" type="image/jpeg">
@@ -148,7 +148,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* 导航控制卡片 */
+        /* 导航控制卡片优化 */
         .nav-card {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
@@ -168,11 +168,21 @@
             gap: 6px;
         }
 
-        .section-btn-group, .num-btn-group {
+        .section-btn-group {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 20px;
+        }
+
+        .num-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            max-height: 130px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
         .btn-section {
@@ -201,7 +211,7 @@
             background: var(--bg-card);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: var(--radius-btn);
             font-size: 0.88rem;
             font-weight: 500;
@@ -266,6 +276,11 @@
             background: var(--primary-light);
             color: var(--primary);
             border-color: var(--primary);
+        }
+
+        /* 手机端专属控制台收纳栏（默认隐藏，仅小屏幕生效） */
+        .mobile-toggle-panel {
+            display: none;
         }
 
         /* 内容展示区卡片 */
@@ -440,8 +455,46 @@
             border: 1px solid var(--border-light);
         }
 
+        /* 手机端响应式特殊微调 */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px 8px 60px 8px;
+            }
+            .main-title {
+                font-size: 1.35rem;
+            }
+            .nav-card {
+                padding: 12px;
+                margin-bottom: 16px;
+            }
+            .mobile-toggle-panel {
+                display: block;
+                margin-bottom: 12px;
+            }
+            .collapse-content {
+                display: none;
+            }
+            .collapse-content.expanded {
+                display: block;
+            }
+            .mode-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .mode-btn-group {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .btn-tool {
+                justify-content: center;
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+        }
+
         @media print {
-            .global-top-nav, .nav-card, .mode-toolbar, .action-bar, .btn-tool {
+            .global-top-nav, .nav-card, .mode-toolbar, .action-bar, .btn-tool, .mobile-toggle-panel {
                 display: none !important;
             }
             body {
@@ -488,25 +541,35 @@
 
         <!-- 导航与控制面板 -->
         <section class="nav-card">
-            <div class="step-label">第一步：选择题型项目</div>
-            <div class="section-btn-group" id="section-tabs">
-                <button class="btn-section active" onclick="switchSection('A')">甲) 选择题 (20题)</button>
-                <button class="btn-section" onclick="switchSection('B')">乙) 填充题 (2大题)</button>
-                <button class="btn-section" onclick="switchSection('C')">丙) 氧化还原 (4题)</button>
-                <button class="btn-section" onclick="switchSection('D')">丁) 氧化数配平 (4题)</button>
-                <button class="btn-section" onclick="switchSection('E')">戊) 实验题 (3大题)</button>
-                <button class="btn-section" onclick="switchSection('F')">己) 作答题 (4大题)</button>
-                <button class="btn-section" onclick="switchSection('G')">庚) 加分题 (2题)</button>
+            <!-- 手机端专属收纳/展开折叠按钮 -->
+            <div class="mobile-toggle-panel">
+                <button class="btn-action" style="width:100%; padding:10px; font-size:0.95rem;" onclick="toggleControlPanel()">
+                    📱 <span id="toggle-btn-text">展开题型与题号控制面板 (防遮挡)</span>
+                </button>
             </div>
 
-            <div class="step-label">第二步：点击题号直接查看</div>
-            <div class="num-btn-group" id="number-tabs">
-                <!-- 动态生成题号按钮 -->
+            <!-- 控制面板主体折叠容器 -->
+            <div class="collapse-content" id="control-collapse-box">
+                <div class="step-label">第一步：选择题型项目</div>
+                <div class="section-btn-group" id="section-tabs">
+                    <button class="btn-section active" onclick="switchSection('A')">甲) 选择题 (20题)</button>
+                    <button class="btn-section" onclick="switchSection('B')">乙) 填充题 (2大题)</button>
+                    <button class="btn-section" onclick="switchSection('C')">丙) 氧化还原 (4题)</button>
+                    <button class="btn-section" onclick="switchSection('D')">丁) 氧化数配平 (4题)</button>
+                    <button class="btn-section" onclick="switchSection('E')">戊) 实验题 (3大题)</button>
+                    <button class="btn-section" onclick="switchSection('F')">己) 作答题 (4大题)</button>
+                    <button class="btn-section" onclick="switchSection('G')">庚) 加分题 (2题)</button>
+                </div>
+
+                <div class="step-label">第二步：点击题号直接查看</div>
+                <div class="num-btn-group" id="number-tabs">
+                    <!-- 动态生成题号按钮 -->
+                </div>
+
+                <hr class="divider">
             </div>
 
-            <hr class="divider">
-
-            <!-- 模式切换与工具条 -->
+            <!-- 模式切换与工具条（常显，方便随时切换阅读模式） -->
             <div class="mode-toolbar">
                 <div class="mode-btn-group">
                     <button class="btn-tool" id="btn-mode-print" onclick="renderFullExam(false)">📄 列出全卷题目 (用于打印/清览)</button>
@@ -1260,6 +1323,18 @@
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
+        }
+
+        // 手机端控制台折叠展开逻辑
+        function toggleControlPanel() {
+            const box = document.getElementById('control-collapse-box');
+            const btnText = document.getElementById('toggle-btn-text');
+            box.classList.toggle('expanded');
+            if (box.classList.contains('expanded')) {
+                btnText.innerText = "收起控制面板";
+            } else {
+                btnText.innerText = "展开题型与题号控制面板 (防遮挡)";
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
