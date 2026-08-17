@@ -491,10 +491,30 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: #047857;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 6px;
+    }
+
+    /* 答案图片显示容器与控制 */
+    .answer-img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 8px 0;
+    }
+
+    .answer-img {
+      max-width: 100%;
+      width: auto;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      background: #ffffff;
+      padding: 4px;
     }
 
     .formula-display {
@@ -512,27 +532,44 @@
       margin-bottom: 12px;
     }
 
+    /* 表格样式及水平滚动支持 */
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
     .grid-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
       background: var(--card-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--border);
+      min-width: 600px;
     }
 
     .grid-table th, .grid-table td {
       border: 1px solid var(--border);
-      padding: 10px 14px;
+      padding: 10px 12px;
       text-align: left;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      vertical-align: middle;
     }
 
     .grid-table th {
       background: var(--bg);
       font-weight: 700;
       color: var(--text);
+      white-space: nowrap;
+    }
+
+    .grid-table td.row-header {
+      background: var(--bg);
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      text-align: center;
     }
 
     .hidden {
@@ -563,6 +600,9 @@
       .extra-tools {
         justify-content: flex-end;
       }
+      .answer-img {
+        max-height: 280px;
+      }
     }
 
     @media print {
@@ -570,6 +610,9 @@
       .global-top-nav, .header-bar .back-home-btn, .control-panel, .toggle-answer-btn { display: none !important; }
       .question-card, .all-list-item { border: 1px solid #ccc; box-shadow: none; break-inside: avoid; }
       .answer-box { display: block !important; background: #fff !important; border: 1px solid #ddd; }
+      .answer-img { max-height: 320px; border: none; box-shadow: none; }
+      .table-responsive-wrapper { overflow: visible; border: none; }
+      .grid-table { min-width: 100%; font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -577,7 +620,7 @@
 
 <div class="main-wrapper">
 
-  <!-- 顶部全功能快捷导航栏 (已修正链接并移除分散统测按钮) -->
+  <!-- 顶部全功能快捷导航栏 -->
   <nav class="global-top-nav">
     <div class="nav-brand-area">
       <span>⚗️ 教学中心平台</span>
@@ -672,8 +715,9 @@ const quizData = {
         title: "第 1 题：KOH",
         prompt: "写出 KOH 的电子式与结构式（或说明）。",
         answer: `
-          <div class="formula-display">【化学式】KOH\n【电子式】K⁺ [ :Ö: H ]⁻\n【结构式】K⁺ [ O — H ]⁻</div>
-          <div style="font-size: 0.9rem; color: var(--text-muted);">* KOH 为离子化合物，钾离子与氢氧根离子之间为离子键，氢氧根内部为共价键。</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130225.jpg" alt="KOH 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -681,8 +725,9 @@ const quizData = {
         title: "第 2 题：NH₄⁺",
         prompt: "写出 NH₄⁺ (铵根离子) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】\n     H\n[ H : N : H ]⁺\n     H\n\n【结构式】\n     H\n[ H — N — H ]⁺\n     |\n     H</div>
-          <div style="font-size: 0.9rem; color: var(--text-muted);">* 含有 1 个配位键与 3 个极性共价键。</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130449.jpg" alt="NH4+ 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -690,7 +735,9 @@ const quizData = {
         title: "第 3 题：CH₃Cl",
         prompt: "写出 CH₃Cl (一氯甲烷) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】\n     H\n   H : C : :Cl̈:\n     H\n\n【结构式】\n     H\n     |\n   H — C — Cl\n     |\n     H</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130515.jpg" alt="CH3Cl 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -698,7 +745,9 @@ const quizData = {
         title: "第 4 题：MgO",
         prompt: "写出 MgO (氧化镁) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】Mg²⁺ [ :Ö: ]²⁻\n【结构式】无结构式（离子化合物通常不写共价结构式）</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130537.jpg" alt="MgO 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -706,7 +755,9 @@ const quizData = {
         title: "第 5 题：CS₂",
         prompt: "写出 CS₂ (二硫化碳) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】:S̈: : C : : S̈:  （即 :S̈::C::S̈:）\n【结构式】S = C = S</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130559.jpg" alt="CS2 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -714,7 +765,9 @@ const quizData = {
         title: "第 6 题：C₂H₂",
         prompt: "写出 C₂H₂ (乙炔) 的电子式与结构式。",
         answer: `
-          <div class="formula-display">【电子式】H : C ::: C : H\n【结构式】H — C ≡ C — H</div>
+          <div class="answer-img-container">
+            <img src="image/CH7/Screenshot 2026-08-17 130631.jpg" alt="C2H2 电子式与结构式解析" class="answer-img">
+          </div>
         `
       },
       {
@@ -722,37 +775,125 @@ const quizData = {
         title: "第 7 题：晶体类型与微粒间作用力",
         prompt: "写出以下物质的晶体类型及其晶体微粒间的作用力：<br>1. 铁 (Fe)<br>2. 干冰 (CO₂)<br>3. 氢氧化钠 (NaOH)<br>4. 碳化硅 (SiC)",
         answer: `
-          <table class="grid-table">
-            <thead>
-              <tr>
-                <th>物质</th>
-                <th>晶体类型</th>
-                <th>晶体微粒间的作用力</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>铁 (Fe)</strong></td>
-                <td>金属晶体</td>
-                <td>金属键</td>
-              </tr>
-              <tr>
-                <td><strong>干冰 (CO₂)</strong></td>
-                <td>分子晶体</td>
-                <td>分子间作用力 / 范德华力</td>
-              </tr>
-              <tr>
-                <td><strong>氢氧化钠 (NaOH)</strong></td>
-                <td>离子晶体</td>
-                <td>离子键（Na⁺ 与 OH⁻ 之间）</td>
-              </tr>
-              <tr>
-                <td><strong>碳化硅 (SiC)</strong></td>
-                <td>共价晶体（原子晶体）</td>
-                <td>共价键</td>
-              </tr>
-            </tbody>
-          </table>
+          <div style="font-weight:700; color:var(--text); margin-bottom:6px;">【本题参考答案】</div>
+          <div class="table-responsive-wrapper" style="margin-top:0;">
+            <table class="grid-table" style="min-width:100%;">
+              <thead>
+                <tr>
+                  <th>物质</th>
+                  <th>晶体类型</th>
+                  <th>晶体微粒间的作用力</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>铁 (Fe)</strong></td>
+                  <td>金属晶体</td>
+                  <td>金属键</td>
+                </tr>
+                <tr>
+                  <td><strong>干冰 (CO₂)</strong></td>
+                  <td>分子晶体</td>
+                  <td>范德华力</td>
+                </tr>
+                <tr>
+                  <td><strong>氢氧化钠 (NaOH)</strong></td>
+                  <td>离子晶体</td>
+                  <td>离子键（Na⁺ 与 OH⁻ 之间）</td>
+                </tr>
+                <tr>
+                  <td><strong>碳化硅 (SiC)</strong></td>
+                  <td>共价晶体（原子晶体）</td>
+                  <td>共价键</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="font-weight:700; color:var(--primary); margin:16px 0 6px 0; display:flex; align-items:center; gap:6px;">
+            <span>📚</span><span>【核心考点拓展：四大晶体类型特征全面对比表】</span>
+          </div>
+          
+          <div class="table-responsive-wrapper">
+            <table class="grid-table">
+              <thead>
+                <tr>
+                  <th style="width:140px; text-align:center;">晶体类型</th>
+                  <th>分子晶体</th>
+                  <th>原子晶体（共价晶体）</th>
+                  <th>金属晶体</th>
+                  <th>离子晶体</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-header">定 义</td>
+                  <td>分子通过分子间作用力形成的晶体</td>
+                  <td>相邻原子间通过共价键形成的立体网状结构的晶体</td>
+                  <td>金属原子通过金属键形成的晶体</td>
+                  <td>阴、阳离子通过离子键形成的晶体</td>
+                </tr>
+                <tr>
+                  <td class="row-header">组成晶体的粒子</td>
+                  <td>分子</td>
+                  <td>原子</td>
+                  <td>金属阳离子和自由电子</td>
+                  <td>阳离子和阴离子</td>
+                </tr>
+                <tr>
+                  <td class="row-header">组成晶体粒子间的相互作用</td>
+                  <td>范德华力或氢键</td>
+                  <td>共价键</td>
+                  <td>金属键（没有饱和性和方向性）</td>
+                  <td>离子键（没有饱和性和方向性）</td>
+                </tr>
+                <tr>
+                  <td class="row-header">典型实例</td>
+                  <td>冰 (H₂O)、P₄、I₂、干冰 (CO₂)、S₈</td>
+                  <td>金刚石、晶体硅、SiO₂、SiC</td>
+                  <td>Na、Mg、Al、Fe</td>
+                  <td>NaOH、NaCl、K₂SO₄</td>
+                </tr>
+                <tr>
+                  <td class="row-header" rowspan="6" style="vertical-align:middle;">特 征</td>
+                  <td><strong>熔点、沸点：</strong>较低</td>
+                  <td><strong>熔点、沸点：</strong>高</td>
+                  <td><strong>熔点、沸点：</strong>一般较高、部分较低</td>
+                  <td><strong>熔点、沸点：</strong>较高</td>
+                </tr>
+                <tr>
+                  <td><strong>导热性：</strong>不良</td>
+                  <td><strong>导热性：</strong>不良</td>
+                  <td><strong>导热性：</strong>良好</td>
+                  <td><strong>导热性：</strong>不良</td>
+                </tr>
+                <tr>
+                  <td><strong>导电性：</strong>差，有些溶于水可导电</td>
+                  <td><strong>导电性：</strong>多数差</td>
+                  <td><strong>导电性：</strong>良好</td>
+                  <td><strong>导电性：</strong>固态不导电，熔化或溶于水能导电</td>
+                </tr>
+                <tr>
+                  <td><strong>机械加工性能：</strong>不良</td>
+                  <td><strong>机械加工性能：</strong>不良</td>
+                  <td><strong>机械加工性能：</strong>良好</td>
+                  <td><strong>机械加工性能：</strong>不良</td>
+                </tr>
+                <tr>
+                  <td><strong>硬度：</strong>较小</td>
+                  <td><strong>硬度：</strong>高硬度</td>
+                  <td><strong>硬度：</strong>一般较高、部分较低</td>
+                  <td><strong>硬度：</strong>略硬而脆</td>
+                </tr>
+                <tr>
+                  <td><strong>溶解性：</strong>相似相溶</td>
+                  <td><strong>溶解性：</strong>不溶</td>
+                  <td><strong>溶解性：</strong>不溶，但有的反应</td>
+                  <td><strong>溶解性：</strong>多数溶于水，难溶于有机溶剂</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         `
       }
     ]
@@ -765,22 +906,9 @@ const quizData = {
         title: "第 1 题：Cu₂S 与 HNO₃ 反应",
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Cu₂S(s) + HNO₃(aq) ⟶ Cu(NO₃)₂(aq) + H₂SO₄(aq) + NO₂(g) + H₂O(l)</strong>",
         answer: `
-          <div class="formula-display">【配平方程】\n1 Cu₂S(s) + 14 HNO₃(aq) ⟶ 2 Cu(NO₃)₂(aq) + 1 H₂SO₄(aq) + 10 NO₂(g) + 6 H₂O(l)</div>
-          <div style="margin: 12px 0; background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <strong>【双线桥法电子转移说明】</strong><br>
-            • <strong>失电子（氧化反应）：</strong> 1 mol Cu₂S 中 Cu (+1 ⟶ +2，失 2×1e⁻) 与 S (-2 ⟶ +6，失 8e⁻)，共失去 10 e⁻，指向产物 2Cu(NO₃)₂ 与 H₂SO₄。<br>
-            • <strong>得电子（还原反应）：</strong> 10 mol HNO₃ 中 N (+5 ⟶ +4，得 10×1e⁻ = 10 e⁻)，指向产物 10 NO₂。（另有 4 mol HNO₃ 表现酸性，形成硝酸盐）。
+          <div class="answer-img-container">
+            <img src="image/CH8/Screenshot 2026-08-17 130913.jpg" alt="第 1 题氧化还原配平解析" class="answer-img">
           </div>
-          <table class="grid-table">
-            <tr>
-              <th>氧化剂</th><td>HNO₃</td>
-              <th>还原剂</th><td>Cu₂S</td>
-            </tr>
-            <tr>
-              <th>氧化产物</th><td>Cu(NO₃)₂ 与 H₂SO₄</td>
-              <th>还原产物</th><td>NO₂</td>
-            </tr>
-          </table>
         `
       },
       {
@@ -788,22 +916,9 @@ const quizData = {
         title: "第 2 题：BiO₃⁻ 与 Mn²⁺ 反应",
         prompt: "请配平下列离子方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>BiO₃⁻(aq) + Mn²⁺(aq) + H⁺(aq) ⟶ Bi³⁺(aq) + MnO₄⁻(aq) + H₂O(l)</strong>",
         answer: `
-          <div class="formula-display">【配平方程】\n5 BiO₃⁻(aq) + 2 Mn²⁺(aq) + 14 H⁺(aq) ⟶ 5 Bi³⁺(aq) + 2 MnO₄⁻(aq) + 7 H₂O(l)</div>
-          <div style="margin: 12px 0; background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <strong>【双线桥法电子转移说明】</strong><br>
-            • <strong>失电子（氧化反应）：</strong> 2 mol Mn²⁺ ⟶ 2 mol MnO₄⁻，Mn 元素化合价由 +2 升至 +7，共失去 10 e⁻ (2 × 5e⁻)。<br>
-            • <strong>得电子（还原反应）：</strong> 5 mol BiO₃⁻ ⟶ 5 mol Bi³⁺，Bi 元素化合价由 +5 降至 +3，共得到 10 e⁻ (5 × 2e⁻)。
+          <div class="answer-img-container">
+            <img src="image/CH8/Screenshot 2026-08-17 131044.jpg" alt="第 2 题氧化还原配平解析" class="answer-img">
           </div>
-          <table class="grid-table">
-            <tr>
-              <th>氧化剂</th><td>BiO₃⁻</td>
-              <th>还原剂</th><td>Mn²⁺</td>
-            </tr>
-            <tr>
-              <th>氧化产物</th><td>MnO₄⁻</td>
-              <th>还原产物</th><td>Bi³⁺</td>
-            </tr>
-          </table>
         `
       },
       {
@@ -811,22 +926,9 @@ const quizData = {
         title: "第 3 题：Fe(OH)₂ 与 O₂ 反应",
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Fe(OH)₂(s) + O₂(g) + H₂O(l) ⟶ Fe(OH)₃(s)</strong>",
         answer: `
-          <div class="formula-display">【配平方程】\n4 Fe(OH)₂(s) + 1 O₂(g) + 2 H₂O(l) ⟶ 4 Fe(OH)₃(s)</div>
-          <div style="margin: 12px 0; background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <strong>【双线桥法电子转移说明】</strong><br>
-            • <strong>失电子（氧化反应）：</strong> 4 mol Fe(OH)₂ ⟶ 4 mol Fe(OH)₃，Fe 元素由 +2 升至 +3，共失去 4 e⁻ (4 × 1e⁻)。<br>
-            • <strong>得电子（还原反应）：</strong> 1 mol O₂ ⟶ Fe(OH)₃ 中的 O，O 元素由 0 降至 -2，共得到 4 e⁻ (1 × 4e⁻)。
+          <div class="answer-img-container">
+            <img src="image/CH8/Screenshot 2026-08-17 131108.jpg" alt="第 3 题氧化还原配平解析" class="answer-img">
           </div>
-          <table class="grid-table">
-            <tr>
-              <th>氧化剂</th><td>O₂</td>
-              <th>还原剂</th><td>Fe(OH)₂</td>
-            </tr>
-            <tr>
-              <th>氧化产物</th><td>Fe(OH)₃</td>
-              <th>还原产物</th><td>Fe(OH)₃</td>
-            </tr>
-          </table>
         `
       },
       {
@@ -834,22 +936,9 @@ const quizData = {
         title: "第 4 题：Al 与稀 HNO₃ 反应",
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Al(s) + HNO₃(aq) ⟶ Al(NO₃)₃(aq) + NO(g) + H₂O(l)</strong>",
         answer: `
-          <div class="formula-display">【配平方程】\n1 Al(s) + 4 HNO₃(aq) ⟶ 1 Al(NO₃)₃(aq) + 1 NO(g) + 2 H₂O(l)</div>
-          <div style="margin: 12px 0; background:var(--card-bg); padding:12px; border-radius:8px; border:1px solid var(--border);">
-            <strong>【双线桥法电子转移说明】</strong><br>
-            • <strong>失电子（氧化反应）：</strong> 1 mol Al ⟶ 1 mol Al(NO₃)₃，Al 元素由 0 升至 +3，失去 3 e⁻。<br>
-            • <strong>得电子（还原反应）：</strong> 1 mol HNO₃ ⟶ 1 mol NO，N 元素由 +5 降至 +2，得到 3 e⁻。（另 3 mol HNO₃ 表现酸性生成硝酸铝）。
+          <div class="answer-img-container">
+            <img src="image/CH8/Screenshot 2026-08-17 131132.jpg" alt="第 4 题氧化还原配平解析" class="answer-img">
           </div>
-          <table class="grid-table">
-            <tr>
-              <th>氧化剂</th><td>HNO₃</td>
-              <th>还原剂</th><td>Al</td>
-            </tr>
-            <tr>
-              <th>氧化产物</th><td>Al(NO₃)₃</td>
-              <th>还原产物</th><td>NO</td>
-            </tr>
-          </table>
         `
       }
     ]
@@ -931,7 +1020,7 @@ function updateActiveQuestionBtn() {
 function switchChapter(chapKey, btnElement) {
   currentChap = chapKey;
   currentQIndex = 0;
-  
+
   document.querySelectorAll('#chapter-btn-group .pill-btn').forEach(b => b.classList.remove('active'));
   btnElement.classList.add('active');
 
@@ -983,7 +1072,7 @@ function renderContent() {
         </div>
         <div class="q-title">${q.title}</div>
         <div class="q-prompt">${q.prompt}</div>
-        
+
         <div class="answer-toggle-wrapper">
           <button class="toggle-answer-btn" onclick="toggleSingleAnswer(this)">
             <span>💡 点击查看参考答案与解析</span>
