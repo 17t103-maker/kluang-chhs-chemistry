@@ -532,6 +532,38 @@
       margin-bottom: 12px;
     }
 
+    /* 反应解析说明卡片 */
+    .explanation-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    .explanation-card p {
+      margin-bottom: 8px;
+    }
+
+    .explanation-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .explanation-card .tag-label {
+      font-weight: 700;
+      color: #1e3a8a;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body.dark-mode .explanation-card .tag-label {
+      color: #38bdf8;
+    }
+
     /* 表格样式及水平滚动支持 */
     .table-responsive-wrapper {
       width: 100%;
@@ -946,26 +978,253 @@ const quizData = {
   chap9_11: {
     title: "第9～11章 化学反应方程式",
     questions: [
-      { id: 1, title: "第 1 题：钠的燃烧", prompt: "请写出钠在空气/氧气中燃烧的化学反应方程式。", answer: `<div class="formula-display">2Na(s) + O₂(g) --(点燃)--> Na₂O₂(s)</div>` },
-      { id: 2, title: "第 2 题：钠与水反应", prompt: "请写出金属钠与水反应的化学方程式。", answer: `<div class="formula-display">2Na(s) + 2H₂O(l) ⟶ 2NaOH(aq) + H₂(g)↑</div>` },
-      { id: 3, title: "第 3 题：氯碱工业", prompt: "请写出工业上电解饱和食盐水（氯碱工业）的化学方程式。", answer: `<div class="formula-display">2NaCl(aq) + 2H₂O(l) --(通电)--> 2NaOH(aq) + H₂(g)↑ + Cl₂(g)↑</div>` },
-      { id: 4, title: "第 4 题：NaOH 吸收 CO₂ 变质", prompt: "请写出氢氧化钠吸收二氧化碳变质的化学方程式。", answer: `<div class="formula-display">2NaOH(aq) + CO₂(g) ⟶ Na₂CO₃(aq) + H₂O(l)\n(若 CO₂ 过量: NaOH(aq) + CO₂(g) ⟶ NaHCO₃(aq))</div>` },
-      { id: 5, title: "第 5 题：纯碱转小苏打", prompt: "请写出由碳酸钠转化为碳酸氢钠的化学方程式。", answer: `<div class="formula-display">Na₂CO₃(aq) + CO₂(g) + H₂O(l) ⟶ 2NaHCO₃(aq)</div>` },
-      { id: 6, title: "第 6 题：小苏打热分解", prompt: "请写出碳酸氢钠受热分解的化学方程式。", answer: `<div class="formula-display">2NaHCO₃(s) --(△)--> Na₂CO₃(s) + H₂O(g) + CO₂(g)↑</div>` },
-      { id: 7, title: "第 7 题：钾在氧气中燃烧", prompt: "请写出钾在氧气中燃烧的化学方程式。", answer: `<div class="formula-display">K(s) + O₂(g) --(点燃)--> KO₂(s)</div>` },
-      { id: 8, title: "第 8 题：镁在 CO₂ 中燃烧", prompt: "请写出金属镁在二氧化碳中燃烧的化学方程式。", answer: `<div class="formula-display">2Mg(s) + CO₂(g) --(点燃)--> 2MgO(s) + C(s)</div>` },
-      { id: 9, title: "第 9 题：镁与氮气反应", prompt: "请写出镁与氮气反应的化学方程式。", answer: `<div class="formula-display">3Mg(s) + N₂(g) --(点燃)--> Mg₃N₂(s)</div>` },
-      { id: 10, title: "第 10 题：加热石膏", prompt: "请写出生石膏加热制熟石膏的化学反应方程式。", answer: `<div class="formula-display">2[CaSO₄·2H₂O](s) --(△)--> (2CaSO₄)·H₂O(s) + 3H₂O(g)</div>` },
-      { id: 11, title: "第 11 题：CaO 与水反应", prompt: "请写出生石灰与水反应（熟化）的化学方程式。", answer: `<div class="formula-display">CaO(s) + H₂O(l) ⟶ Ca(OH)₂(s)</div>` },
-      { id: 12, title: "第 12 题：煅烧石灰石", prompt: "请写出工业上煅烧石灰石的化学反应方程式。", answer: `<div class="formula-display">CaCO₃(s) --(高温)--> CaO(s) + CO₂(g)↑</div>` },
-      { id: 13, title: "第 13 题：工业上制取镁", prompt: "请写出工业上电解熔融氯化镁制镁的化学方程式。", answer: `<div class="formula-display">MgCl₂(l) --(通电)--> Mg(l) + Cl₂(g)↑</div>` },
-      { id: 14, title: "第 14 题：工业上制取铝", prompt: "请写出工业上电解熔融氧化铝制铝的化学方程式。", answer: `<div class="formula-display">2Al₂O₃(l) --(冰晶石, 通电)--> 4Al(l) + 3O₂(g)↑</div>` },
-      { id: 15, title: "第 15 题：铝与强碱反应", prompt: "请写出铝与强碱溶液反应的化学方程式。", answer: `<div class="formula-display">2Al(s) + 2NaOH(aq) + 2H₂O(l) ⟶ 2NaAlO₂(aq) + 3H₂(g)↑\n(或 2Al(s) + 2NaOH(aq) + 6H₂O(l) ⟶ 2Na[Al(OH)₄](aq) + 3H₂(g)↑)</div>` },
-      { id: 16, title: "第 16 题：铝热反应", prompt: "请写出铝粉与氧化铁反应（铝热反应）的化学方程式。", answer: `<div class="formula-display">2Al(s) + Fe₂O₃(s) --(高温)--> Al₂O₃(s) + 2Fe(l)</div>` },
-      { id: 17, title: "第 17 题：Al₂O₃ 与强碱反应", prompt: "请写出氧化铝溶于强碱溶液的化学方程式。", answer: `<div class="formula-display">Al₂O₃(s) + 2NaOH(aq) ⟶ 2NaAlO₂(aq) + H₂O(l)\n(或 Al₂O₃(s) + 2NaOH(aq) + 3H₂O(l) ⟶ 2Na[Al(OH)₄](aq))</div>` },
-      { id: 18, title: "第 18 题：Al(OH)₃ 与强碱反应", prompt: "请写出氢氧化铝溶于强碱溶液的化学方程式。", answer: `<div class="formula-display">Al(OH)₃(s) + NaOH(aq) ⟶ NaAlO₂(aq) + 2H₂O(l)\n(或 Al(OH)₃(s) + NaOH(aq) ⟶ Na[Al(OH)₄](aq))</div>` },
-      { id: 19, title: "第 19 题：实验室制 Al(OH)₃", prompt: "请写出实验室用铝盐与氨水制备氢氧化铝的化学方程式。", answer: `<div class="formula-display">AlCl₃(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄Cl(aq)\n(离子方程式: Al³⁺(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄⁺(aq))</div>` },
-      { id: 20, title: "第 20 题：Al(OH)₃ 热分解", prompt: "请写出氢氧化铝受热分解的化学反应方程式。", answer: `<div class="formula-display">2Al(OH)₃(s) --(△)--> Al₂O₃(s) + 3H₂O(g)</div>` }
+      {
+        id: 1,
+        title: "第 1 题：钠的燃烧",
+        prompt: "请写出钠在空气/氧气中燃烧的化学反应方程式。",
+        answer: `
+          <div class="formula-display">2Na(s) + O₂(g) --(点燃)--> Na₂O₂(s)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>钠是极活泼的碱金属，常温下被氧气氧化生成白色氧化钠 (Na₂O)；加热或点燃时剧烈燃烧，黄色火焰，生成更稳定的淡黄色过氧化钠 (Na₂O₂，其中氧为 -1 价，含过氧键 [O-O]²⁻)。</p>
+            <p><span class="tag-label">💡 应用价值：</span>过氧化钠可用作潜水艇和呼吸面具的供氧剂及强漂白剂；区分钠在常温与加热条件下的不同氧化产物是基础考点。</p>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        title: "第 2 题：钠与水反应",
+        prompt: "请写出金属钠与水反应的化学方程式。",
+        answer: `
+          <div class="formula-display">2Na(s) + 2H₂O(l) ⟶ 2NaOH(aq) + H₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>极强的氧化还原置换反应。钠失去电子变为 Na⁺，水中的 H⁺ 得到电子被还原为 H₂ 气体，放热使钠熔成小球并在水面上快速游动（现象：浮、熔、游、响、红）。</p>
+            <p><span class="tag-label">💡 应用价值：</span>阐明碱金属与活泼氢反应的本质；实验教学中用于展示金属性强弱及实验室取用钠的防爆安全规范。</p>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        title: "第 3 题：氯碱工业",
+        prompt: "请写出工业上电解饱和食盐水（氯碱工业）的化学方程式。",
+        answer: `
+          <div class="formula-display">2NaCl(aq) + 2H₂O(l) --(通电)--> 2NaOH(aq) + H₂(g)↑ + Cl₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>阳极上 Cl⁻ 优先于 OH⁻ 失电子被氧化生成 Cl₂；阴极上水电离出的 H⁺ 优先于 Na⁺ 得电子被还原生成 H₂，阴极区富集 OH⁻ 与 Na⁺ 形成 NaOH 溶液。</p>
+            <p><span class="tag-label">💡 应用价值：</span>现代无机基础化工的基石（氯碱工业），同时产出烧碱 (NaOH)、氯气 (Cl₂) 与氢气 (H₂)，是制造 PVC、消毒剂、盐酸和肥皂的核心上游。</p>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        title: "第 4 题：NaOH 吸收 CO₂ 变质",
+        prompt: "请写出氢氧化钠吸收二氧化碳变质的化学方程式。",
+        answer: `
+          <div class="formula-display">2NaOH(aq) + CO₂(g) ⟶ Na₂CO₃(aq) + H₂O(l)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>酸性氧化物 CO₂ 与强碱 NaOH 发生酸碱中和反应，酸酐 CO₂ 与 OH⁻ 结合转化为碳酸根离子 (CO₃²⁻) 和水，导致氢氧化钠样品逐渐转化为碳酸钠。</p>
+            <p><span class="tag-label">💡 应用价值：</span>解释了固体烧碱及 NaOH 溶液必须密闭保存的实验原因；常用于考察 NaOH 变质程度的检验（加过量 CaCl₂/BaCl₂ 除去 CO₃²⁻ 后再滴加酚酞）。</p>
+          </div>
+        `
+      },
+      {
+        id: 5,
+        title: "第 5 题：纯碱转小苏打",
+        prompt: "请写出由碳酸钠转化为碳酸氢钠的化学方程式。",
+        answer: `
+          <div class="formula-display">Na₂CO₃(aq) + CO₂(g) + H₂O(l) ⟶ 2NaHCO₃(aq)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>正盐碳酸钠溶液中的 CO₃²⁻ 结合溶于水生成的碳酸 (H₂CO₃ / H⁺)，质子转移转化为结合能力更稳的酸式酸根离子 HCO₃⁻。</p>
+            <p><span class="tag-label">💡 应用价值：</span>工业侯氏制碱法关键环节及溶液除杂（除去 CO₂ 中混有的 HCl 杂质气体时需选用饱和 NaHCO₃ 溶液而非 Na₂CO₃ 溶液，防止 CO₂ 被吸收反应）。</p>
+          </div>
+        `
+      },
+      {
+        id: 6,
+        title: "第 6 题：小苏打热分解",
+        prompt: "请写出碳酸氢钠受热分解的化学方程式。",
+        answer: `
+          <div class="formula-display">2NaHCO₃(s) --(△)--> Na₂CO₃(s) + H₂O(g) + CO₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>酸式盐中的 HCO₃⁻ 在受热条件下热稳定性差，内部发生脱水缩合与脱羧重排，释放 CO₂ 与水蒸气，转化为热稳定性极高的正盐 Na₂CO₃。</p>
+            <p><span class="tag-label">💡 应用价值：</span>烘焙膨松剂（发酵粉）的核心成分；干粉灭火器关键原理；实验室鉴别与除杂（除去 Na₂CO₃ 固体中混有的 NaHCO₃）。</p>
+          </div>
+        `
+      },
+      {
+        id: 7,
+        title: "第 7 题：钾在氧气中燃烧",
+        prompt: "请写出钾在氧气中燃烧的化学方程式。",
+        answer: `
+          <div class="formula-display">K(s) + O₂(g) --(点燃)--> KO₂(s)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>钾的金属性比钠更强，原子半径更大，电正性更强，燃烧时能稳定结合含单一未成对电子的超氧根离子 [O₂]⁻，生成橙黄色的超氧化钾 (KO₂)。</p>
+            <p><span class="tag-label">💡 应用价值：</span>超氧化钾 KO₂ 能与水和呼出的 CO₂ 反应释放 O₂（4KO₂ + 2CO₂ ⟶ 2K₂CO₃ + 3O₂），产氧率高，广泛用作航天与紧急生氧防毒面具。</p>
+          </div>
+        `
+      },
+      {
+        id: 8,
+        title: "第 8 题：镁在 CO₂ 中燃烧",
+        prompt: "请写出金属镁在二氧化碳中燃烧的化学方程式。",
+        answer: `
+          <div class="formula-display">2Mg(s) + CO₂(g) --(点燃)--> 2MgO(s) + C(s)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>剧烈的置换反应。高温下镁具有极强的夺氧还原能力，将碳元素从 +4 价还原为单质碳（瓶壁有黑色颗粒附着），自身被氧化为白色氧化镁 (MgO)。</p>
+            <p><span class="tag-label">💡 应用价值：</span>打破“二氧化碳不可燃且不支持燃烧”的常规思维；消防安全上严禁使用 CO₂ 灭火器扑灭活泼金属（镁、钠等）引起的火灾。</p>
+          </div>
+        `
+      },
+      {
+        id: 9,
+        title: "第 9 题：镁与氮气反应",
+        prompt: "请写出镁与氮气反应的化学方程式。",
+        answer: `
+          <div class="formula-display">3Mg(s) + N₂(g) --(点燃)--> Mg₃N₂(s)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>点燃提供高能量克服 N≡N 氮氮三键极高的键能，强还原剂 Mg 将氮气还原为 -3 价的氮化物，生成淡黄绿色的氮化镁 (Mg₃N₂) 固体。</p>
+            <p><span class="tag-label">💡 应用价值：</span>验证氮气在特定条件下的化学反应性；Mg₃N₂ 水解生成 Mg(OH)₂ 和刺激性 NH₃，常用于综合推断题中验证反应产物。</p>
+          </div>
+        `
+      },
+      {
+        id: 10,
+        title: "第 10 题：加热石膏",
+        prompt: "请写出生石膏加热制熟石膏的化学反应方程式。",
+        answer: `
+          <div class="formula-display">2[CaSO₄·2H₂O](s) --(△)--> (2CaSO₄)·H₂O(s) + 3H₂O(g)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>生石膏（二水硫酸钙）在约 150℃ 下发生受控脱水，失去 3/4 的结晶水，形成半水硫酸钙（熟石膏/烧石膏）。</p>
+            <p><span class="tag-label">💡 应用价值：</span>熟石膏加水后可重新水化结晶硬化为生石膏，体积微膨胀，广泛用于建筑粉刷、骨折固定石膏绷带以及精密模型铸造。</p>
+          </div>
+        `
+      },
+      {
+        id: 11,
+        title: "第 11 题：CaO 与水反应",
+        prompt: "请写出生石灰与水反应（熟化）的化学方程式。",
+        answer: `
+          <div class="formula-display">CaO(s) + H₂O(l) ⟶ Ca(OH)₂(s)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>碱性氧化物与水化合，伴随强烈的化学键重构，释放大量反应热（放出大量水蒸气甚至使水沸腾），固体膨胀崩解为白色粉末。</p>
+            <p><span class="tag-label">💡 应用价值：</span>食品自热包（发热剂）核心原料、农业土壤改良剂、建筑三合土及工业制备消石灰。</p>
+          </div>
+        `
+      },
+      {
+        id: 12,
+        title: "第 12 题：煅烧石灰石",
+        prompt: "请写出工业上煅烧石灰石的化学反应方程式。",
+        answer: `
+          <div class="formula-display">CaCO₃(s) --(高温)--> CaO(s) + CO₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>强吸热的热分解反应。高温破坏 CaCO₃ 离子晶格中的碳酸根配位，分解为更稳固的晶格结构氧化钙 (CaO) 并溢出 CO₂ 气体。</p>
+            <p><span class="tag-label">💡 应用价值：</span>水泥制造、玻璃工业、炼铁造渣剂以及工业大规模生产生石灰与二氧化碳气体的基础反应。</p>
+          </div>
+        `
+      },
+      {
+        id: 13,
+        title: "第 13 题：工业上制取镁",
+        prompt: "请写出工业上电解熔融氯化镁制镁的化学方程式。",
+        answer: `
+          <div class="formula-display">MgCl₂(l) --(通电)--> Mg(l) + Cl₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>电解熔融态离子化合物。阴极上 Mg²⁺ 获得电子被还原为液态金属镁（浮于电解质表面），阳极上 Cl⁻ 失去电子被氧化为 Cl₂ 气体。</p>
+            <p><span class="tag-label">💡 应用价值：</span>海水提镁工业的核心末端工序；不直接电解 MgO 的原因是 MgO 熔点极高（约 2852℃），消耗能量过大，而无水 MgCl₂ 熔点适中（714℃）。</p>
+          </div>
+        `
+      },
+      {
+        id: 14,
+        title: "第 14 题：工业上制取铝",
+        prompt: "请写出工业上电解熔融氧化铝制铝的化学方程式。",
+        answer: `
+          <div class="formula-display">2Al₂O₃(l) --(冰晶石, 通电)--> 4Al(l) + 3O₂(g)↑</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>以熔融冰晶石 (Na₃AlF₆) 作为助熔剂降低 Al₂O₃ 熔点（从 2050℃ 降至约 950℃），电解时阴极析出金属铝，阳极析出氧气（氧气在高温下会侵蚀阳极碳棒生成 CO/CO₂）。</p>
+            <p><span class="tag-label">💡 重点考点剖析——为什么不能电解氯化铝 (AlCl₃) 制铝？</span><br>
+            <strong>原因：</strong>氯化铝 (AlCl₃) 是典型的<strong>共价化合物</strong>（分子晶体/双聚分子 Al₂Cl₆）。在熔融状态下主要以<strong>共价分子形式存在，无法电离出自由移动的离子，几乎完全不导电</strong>；且氯化铝受热容易直接升华（约 180℃ 升华）。因此工业上必须电解熔融氧化铝制取金属铝。</p>
+          </div>
+        `
+      },
+      {
+        id: 15,
+        title: "第 15 题：铝与强碱反应",
+        prompt: "请写出铝与强碱溶液反应的化学方程式。",
+        answer: `
+          <div class="formula-display">2Al(s) + 2NaOH(aq) + 2H₂O(l) ⟶ 2NaAlO₂(aq) + 3H₂(g)↑
+(或 2Al(s) + 2NaOH(aq) + 6H₂O(l) ⟶ 2Na[Al(OH)₄](aq) + 3H₂(g)↑)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>分步反应。铝表面致密的氧化膜及铝本身先与水缓慢作用，生成的氢氧化铝具有两性，被强碱 NaOH 迅速溶解转化为可溶性偏铝酸钠 (或四羟基合铝酸钠)，促使氧化还原反应持续进行（本质是水充当氧化剂提供 H⁺ 被还原生成 H₂）。</p>
+            <p><span class="tag-label">💡 应用价值：</span>体现铝独特的两性金属特征；铝质器皿严禁接触强碱性物质；工业上用于管道疏通剂（利用铝粒与苛性钠遇水剧烈反应产热产气冲刷堵塞）。</p>
+          </div>
+        `
+      },
+      {
+        id: 16,
+        title: "第 16 题：铝热反应",
+        prompt: "请写出铝粉与氧化铁反应（铝热反应）的化学方程式。",
+        answer: `
+          <div class="formula-display">2Al(s) + Fe₂O₃(s) --(高温)--> Al₂O₃(s) + 2Fe(l)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>典型的超强放热固相置换反应。铝对氧的亲和力远大于铁，在镁条引燃和氯酸钾助燃下引发，产生 2000℃~3000℃ 的高温，使生成的单质铁呈熔融液态。</p>
+            <p><span class="tag-label">💡 应用价值：</span>野外无缝钢轨的原位焊接；冶金工业中用于还原冶炼高熔点金属（如钒 V、铬 Cr、锰 Mn 等）。</p>
+          </div>
+        `
+      },
+      {
+        id: 17,
+        title: "第 17 题：Al₂O₃ 与强碱反应",
+        prompt: "请写出氧化铝溶于强碱溶液的化学方程式。",
+        answer: `
+          <div class="formula-display">Al₂O₃(s) + 2NaOH(aq) ⟶ 2NaAlO₂(aq) + H₂O(l)
+(或 Al₂O₃(s) + 2NaOH(aq) + 3H₂O(l) ⟶ 2Na[Al(OH)₄](aq))</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>Al₂O₃ 表现为两性氧化物，与强碱反应时体现其酸性氧化物特征，与 OH⁻ 配位反应生成偏铝酸根 (AlO₂⁻) 或配位化合物四羟基合铝酸根 [Al(OH)₄]⁻。</p>
+            <p><span class="tag-label">💡 应用价值：</span>工业提纯铝土矿（拜耳法生产氧化铝）的关键提纯分离步骤；实验室中用于将铝元素从不溶性铁/镁氧化物杂质中浸出分离。</p>
+          </div>
+        `
+      },
+      {
+        id: 18,
+        title: "第 18 题：Al(OH)₃ 与强碱反应",
+        prompt: "请写出氢氧化铝溶于强碱溶液的化学方程式。",
+        answer: `
+          <div class="formula-display">Al(OH)₃(s) + NaOH(aq) ⟶ NaAlO₂(aq) + 2H₂O(l)
+(或 Al(OH)₃(s) + NaOH(aq) ⟶ Na[Al(OH)₄](aq))</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>两性氢氧化物的酸式电离平衡：H⁺ + AlO₂⁻ + H₂O ⇌ Al(OH)₃ ⇌ Al³⁺ + 3OH⁻。加入强碱后消耗 H⁺，平衡向酸式电离方向移动，沉淀完全溶解。</p>
+            <p><span class="tag-label">💡 应用价值：</span>铝盐滴定中现象分析（先生成白色沉淀后溶解）；说明实验室制备 Al(OH)₃ 不能使用强碱过量，必须选用弱碱（如氨水）。</p>
+          </div>
+        `
+      },
+      {
+        id: 19,
+        title: "第 19 题：实验室制 Al(OH)₃",
+        prompt: "请写出实验室用铝盐与氨水制备氢氧化铝的化学方程式。",
+        answer: `
+          <div class="formula-display">AlCl₃(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄Cl(aq)
+或
+Al₂(SO₄)₃(aq) + 6NH₃·H₂O(aq) ⟶ 2Al(OH)₃(s)↓ + 3(NH₄)₂SO₄(aq)
+(离子方程式: Al³⁺(aq) + 3NH₃·H₂O(aq) ⟶ Al(OH)₃(s)↓ + 3NH₄⁺(aq))</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>可溶性铝盐电离出的 Al³⁺ 与弱碱一水合氨反应生成胶状白色 Al(OH)₃ 沉淀。由于氨水碱性弱，无法提供足够高浓度的 OH⁻ 破坏沉淀，沉淀不会发生酸式溶解。</p>
+            <p><span class="tag-label">💡 应用价值：</span>实验室标准制备高纯度 Al(OH)₃ 沉淀的唯一规范方法；生成的 Al(OH)₃ 胶体具有吸附净水与胃酸中和剂（治疗胃酸过多）等药用价值。</p>
+          </div>
+        `
+      },
+      {
+        id: 20,
+        title: "第 20 题：Al(OH)₃ 热分解",
+        prompt: "请写出氢氧化铝受热分解的化学反应方程式。",
+        answer: `
+          <div class="formula-display">2Al(OH)₃(s) --(△)--> Al₂O₃(s) + 3H₂O(g)</div>
+          <div class="explanation-card">
+            <p><span class="tag-label">🔍 反应机理：</span>典型的难溶性弱碱受热脱水缩合反应，分子内羟基脱水转变为耐高温的氧化物 Al₂O₃。</p>
+            <p><span class="tag-label">💡 应用价值：</span>工业上获取高纯多孔氧化铝以及阻燃剂材料（受热分解吸收大量热，同时释放大量水蒸气隔绝氧气）的重要原料。</p>
+          </div>
+        `
+      }
     ]
   }
 };
@@ -1103,7 +1362,7 @@ function renderContent() {
         <div class="all-list-item">
           <div class="q-title" style="font-size:1.1rem;">${q.title}</div>
           <div class="q-prompt">${q.prompt}</div>
-          <div class="ans-section-title"><span>✅</span><span>参考答案：</span></div>
+          <div class="ans-section-title"><span>✅</span><span>参考答案与解析：</span></div>
           ${q.answer}
         </div>
       `;
