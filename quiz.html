@@ -211,7 +211,7 @@
       color: var(--primary);
     }
 
-    /* 控制面板区域 (支持手机端默认折叠/展开面板) */
+    /* 控制面板区域 */
     .control-panel {
       background: var(--card-bg);
       border-radius: 16px;
@@ -649,7 +649,7 @@
     </a>
   </div>
 
-  <!-- 控制面板 (支持手机端默认折叠与展开切换) -->
+  <!-- 控制面板 -->
   <div class="control-panel">
     <div class="panel-header-row">
       <div class="step-title" style="margin-bottom:0;">控制面板选项</div>
@@ -716,7 +716,7 @@ const quizData = {
         prompt: "写出 KOH 的电子式与结构式（或说明）。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130225.jpg" alt="KOH 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130225.jpg" alt="KOH 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -726,7 +726,7 @@ const quizData = {
         prompt: "写出 NH₄⁺ (铵根离子) 的电子式与结构式。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130449.jpg" alt="NH4+ 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130449.jpg" alt="NH4+ 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -736,7 +736,7 @@ const quizData = {
         prompt: "写出 CH₃Cl (一氯甲烷) 的电子式与结构式。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130515.jpg" alt="CH3Cl 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130515.jpg" alt="CH3Cl 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -746,7 +746,7 @@ const quizData = {
         prompt: "写出 MgO (氧化镁) 的电子式与结构式。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130537.jpg" alt="MgO 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130537.jpg" alt="MgO 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -756,7 +756,7 @@ const quizData = {
         prompt: "写出 CS₂ (二硫化碳) 的电子式与结构式。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130559.jpg" alt="CS2 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130559.jpg" alt="CS2 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -766,7 +766,7 @@ const quizData = {
         prompt: "写出 C₂H₂ (乙炔) 的电子式与结构式。",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH7/Screenshot 2026-08-17 130631.jpg" alt="C2H2 电子式与结构式解析" class="answer-img">
+            <img src="image/quiz/CH7/Screenshot 2026-08-17 130631.jpg" alt="C2H2 电子式与结构式解析" class="answer-img">
           </div>
         `
       },
@@ -820,7 +820,7 @@ const quizData = {
                 <tr>
                   <th style="width:140px; text-align:center;">晶体类型</th>
                   <th>分子晶体</th>
-                  <th>原子晶体（共价晶体）</th>
+                  <th>原子晶体</th>
                   <th>金属晶体</th>
                   <th>离子晶体</th>
                 </tr>
@@ -856,10 +856,10 @@ const quizData = {
                 </tr>
                 <tr>
                   <td class="row-header" rowspan="6" style="vertical-align:middle;">特 征</td>
-                  <td><strong>熔点、沸点：</strong>较低</td>
-                  <td><strong>熔点、沸点：</strong>高</td>
+                  <td><strong>熔点、沸点：</strong>熔、沸点较低</td>
+                  <td><strong>熔点、沸点：</strong>熔、沸点高</td>
                   <td><strong>熔点、沸点：</strong>一般较高、部分较低</td>
-                  <td><strong>熔点、沸点：</strong>较高</td>
+                  <td><strong>熔点、沸点：</strong>熔、沸点较高</td>
                 </tr>
                 <tr>
                   <td><strong>导热性：</strong>不良</td>
@@ -880,7 +880,7 @@ const quizData = {
                   <td><strong>机械加工性能：</strong>不良</td>
                 </tr>
                 <tr>
-                  <td><strong>硬度：</strong>较小</td>
+                  <td><strong>硬度：</strong>硬度较小</td>
                   <td><strong>硬度：</strong>高硬度</td>
                   <td><strong>硬度：</strong>一般较高、部分较低</td>
                   <td><strong>硬度：</strong>略硬而脆</td>
@@ -907,7 +907,7 @@ const quizData = {
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Cu₂S(s) + HNO₃(aq) ⟶ Cu(NO₃)₂(aq) + H₂SO₄(aq) + NO₂(g) + H₂O(l)</strong>",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH8/Screenshot 2026-08-17 130913.jpg" alt="第 1 题氧化还原配平解析" class="answer-img">
+            <img src="image/quiz/CH8/Screenshot 2026-08-17 130913.jpg" alt="第 1 题氧化还原配平解析" class="answer-img">
           </div>
         `
       },
@@ -917,7 +917,7 @@ const quizData = {
         prompt: "请配平下列离子方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>BiO₃⁻(aq) + Mn²⁺(aq) + H⁺(aq) ⟶ Bi³⁺(aq) + MnO₄⁻(aq) + H₂O(l)</strong>",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH8/Screenshot 2026-08-17 131044.jpg" alt="第 2 题氧化还原配平解析" class="answer-img">
+            <img src="image/quiz/CH8/Screenshot 2026-08-17 131044.jpg" alt="第 2 题氧化还原配平解析" class="answer-img">
           </div>
         `
       },
@@ -927,7 +927,7 @@ const quizData = {
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Fe(OH)₂(s) + O₂(g) + H₂O(l) ⟶ Fe(OH)₃(s)</strong>",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH8/Screenshot 2026-08-17 131108.jpg" alt="第 3 题氧化还原配平解析" class="answer-img">
+            <img src="image/quiz/CH8/Screenshot 2026-08-17 131108.jpg" alt="第 3 题氧化还原配平解析" class="answer-img">
           </div>
         `
       },
@@ -937,7 +937,7 @@ const quizData = {
         prompt: "请配平下列化学方程式，并指出氧化剂、还原剂、氧化产物与还原产物：<br><strong>Al(s) + HNO₃(aq) ⟶ Al(NO₃)₃(aq) + NO(g) + H₂O(l)</strong>",
         answer: `
           <div class="answer-img-container">
-            <img src="image/CH8/Screenshot 2026-08-17 131132.jpg" alt="第 4 题氧化还原配平解析" class="answer-img">
+            <img src="image/quiz/CH8/Screenshot 2026-08-17 131132.jpg" alt="第 4 题氧化还原配平解析" class="answer-img">
           </div>
         `
       }
