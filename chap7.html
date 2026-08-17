@@ -73,7 +73,7 @@
       padding: 0 20px;
     }
 
-    /* 顶部统一全局快捷导航栏（修复404问题） */
+    /* 顶部统一全局快捷导航栏 */
     .global-nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -150,7 +150,6 @@
       flex-wrap: wrap;
     }
 
-    /* 手机端折叠控制台按钮 */
     .mobile-toggle-btn {
       display: none;
       width: 100%;
@@ -205,7 +204,7 @@
       cursor: pointer;
     }
 
-    /* 隐形挖空点读组件 */
+    /* 挖空点读组件 */
     .inline-ans {
       display: inline-block;
       min-width: 45px;
@@ -240,7 +239,7 @@
       content: '';
     }
 
-    /* 卡片与网格排版 */
+    /* 卡片排版 */
     .card {
       background: var(--bg-card);
       border-radius: var(--radius);
@@ -302,7 +301,7 @@
 
     .grid-4 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
     }
 
@@ -310,19 +309,19 @@
       background: var(--bg-card-subtle);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 10px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 6px;
     }
 
     .lewis-svg-box {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
+      min-height: 58px;
     }
 
     .textbook-guide-img {
@@ -362,7 +361,7 @@
     .canvas-wrapper canvas {
       display: block;
       width: 100%;
-      height: 260px;
+      height: 270px;
     }
 
     .canvas-wrapper canvas.interactive-3d {
@@ -381,6 +380,7 @@
       background: rgba(15, 23, 42, 0.75);
       padding: 3px 8px;
       border-radius: 4px;
+      z-index: 2;
     }
 
     .tab-pills {
@@ -481,21 +481,10 @@
     }
 
     @media (max-width: 768px) {
-      body {
-        padding-top: 130px;
-      }
-      .mobile-toggle-btn {
-        display: block;
-      }
-      .top-toolbar {
-        display: none;
-        position: static;
-        height: auto;
-        padding: 10px 0;
-      }
-      .top-toolbar.active {
-        display: flex;
-      }
+      body { padding-top: 130px; }
+      .mobile-toggle-btn { display: block; }
+      .top-toolbar { display: none; position: static; height: auto; padding: 10px 0; }
+      .top-toolbar.active { display: flex; }
     }
 
     @media print {
@@ -519,7 +508,7 @@
     <a href="quiz.html" class="nav-btn">✍️ 随堂小测验解析</a>
   </nav>
 
-  <!-- ==================== 顶部交互工具栏 ==================== -->
+  <!-- 顶部交互工具栏 -->
   <header class="top-toolbar">
     <div class="container toolbar-content">
       <div class="toolbar-title">
@@ -556,12 +545,11 @@
 
   <main class="container">
 
-    <!-- 手机端折叠控制台切换按钮 -->
     <button class="mobile-toggle-btn" onclick="document.querySelector('.top-toolbar').classList.toggle('active')">
       ⚙️ 展开/收起 课堂互动控制台
     </button>
 
-    <!-- ==================== 🎯 章节核心目标 ==================== -->
+    <!-- 🎯 章节核心目标 -->
     <section class="card">
       <div class="title-wrapper">
         <img src="image/校徽.jpg" alt="校徽" class="school-logo">
@@ -572,60 +560,65 @@
           <strong>1. 化学键分类与本质</strong>：掌握相邻微粒间的强烈相互作用（离子键、共价键、金属键）。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
-          <strong>2. 规范电子式（八隅体）</strong>：熟练绘制常见离子化合物及共价单/双/三键与配位键的电子式。
+          <strong>2. 规范电子式（区分来源）</strong>：熟练绘制常见化合物的电子转移（点叉标示）及共用电子对电子式。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
           <strong>3. 电负性差与键极性</strong>：根据成键原子的电负性差值（Δχ）定量判断键的极性与电子云偏向。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
-          <strong>4. VSEPR 与分子立体构型</strong>：推导中心原子孤对电子与化学键排斥，判断极性/非极性分子。
+          <strong>4. VSEPR 与分子构型</strong>：推导孤对电子与成键电子对斥力，判断分子空间几何与极性。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
           <strong>5. 金属键微观模型</strong>：理解自由电子海模型，论述金属单位体积电荷数与金属键强度的关系。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
-          <strong>6. 范德华力与氢键</strong>：表格化对比 5 大影响因素，解析氢化物沸点反常图谱（图 7-14）。
+          <strong>6. 范德华力与氢键</strong>：掌握氢键 $X\text{-}H\cdots Y$ 成键方向与四面体网络，解析氢化物沸点反常图谱。
         </div>
       </div>
     </section>
 
-    <!-- ==================== 7.1 化学键 ==================== -->
+    <!-- 7.1 化学键 -->
     <section class="card">
       <div class="chapter-heading-box">
         <h2 class="card-title" style="border:none; padding:0; margin:0;">🔬 7.1 化学键 (Chemical Bonds)</h2>
       </div>
 
-      <!-- 课本指导插图预留：三大化学键对比图 -->
+      <!-- 课本指导插图预留 -->
       <div class="textbook-guide-img">
-        <img src="image/ch7_chemical_bonds_overview.jpg" alt="三大主要化学键：离子键、共价键、金属键微观机理对比图" onerror="this.style.display='none'; document.getElementById('guide-bonds-fallback').style.display='block';">
+        <img src="image/ch7_chemical_bonds_overview.jpg" alt="三大主要化学键微观机理对比图" onerror="this.style.display='none'; document.getElementById('guide-bonds-fallback').style.display='block';">
         <div id="guide-bonds-fallback" class="img-fallback-box" style="display:none;">
           <strong>📖【课本指导图 预留位】</strong>：三大主要化学键（离子键、共价键、金属键）微观对比图<br>
           <span style="font-size:0.8rem; color:var(--text-muted);">（请在本地 <code>image/</code> 文件夹中存入 <code>ch7_chemical_bonds_overview.jpg</code>）</span>
         </div>
       </div>
       
-      <!-- 7.1.1 离子键与经典电子式库 -->
+      <!-- 7.1.1 离子键与规范电子式库 -->
       <h3 class="sub-title">7.1.1 离子键 (Ionic Bond) 与规范电子式库</h3>
       <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">
-        活泼金属与活泼非金属发生电子转移，通过<span class="inline-ans">静电引力与斥力平衡</span>形成离子化合物。阴离子必须使用中括号 <code>[ ]</code> 标出 8 电子并标注电荷。
+        活泼金属与活泼非金属发生电子转移，通过<span class="inline-ans">静电引力与斥力平衡</span>形成离子化合物。阴离子必须使用中括号 <code>[ ]</code> 标出 8 电子并标注电荷；<strong>蓝色叉号/圆点代表来自金属的转移电子</strong>，<strong>红色圆点代表非金属自身的价电子</strong>。
       </p>
 
-      <!-- 离子键电子式矩阵 -->
       <div class="grid-4">
         <!-- NaCl -->
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氯化钠 (NaCl)</div>
           <div class="lewis-svg-box">
-            <svg width="150" height="42" viewBox="0 0 150 42">
-              <text x="12" y="26" font-size="14" font-weight="bold" fill="#2563eb">Na⁺</text>
-              <text x="52" y="27" font-size="20" fill="#64748b">[</text>
-              <circle cx="78" cy="11" r="2" fill="#ef4444"/><circle cx="88" cy="11" r="2" fill="#ef4444"/>
-              <circle cx="78" cy="33" r="2" fill="#ef4444"/><circle cx="88" cy="33" r="2" fill="#ef4444"/>
-              <circle cx="67" cy="19" r="2" fill="#ef4444"/><circle cx="67" cy="25" r="2" fill="#ef4444"/>
-              <circle cx="99" cy="19" r="2" fill="#ef4444"/><circle cx="99" cy="25" r="2" fill="#ef4444"/>
-              <text x="77" y="26" font-size="14" font-weight="bold" fill="#10b981">Cl</text>
-              <text x="105" y="27" font-size="20" fill="#64748b">]</text>
-              <text x="112" y="14" font-size="12" font-weight="bold" fill="#2563eb">⁻</text>
+            <svg width="150" height="46" viewBox="0 0 150 46">
+              <text x="12" y="28" font-size="14" font-weight="bold" fill="#2563eb">Na⁺</text>
+              <text x="52" y="29" font-size="20" fill="#64748b">[</text>
+              <!-- Cl 自身 7 电子 (红色) -->
+              <circle cx="78" cy="13" r="2.2" fill="#ef4444"/><circle cx="88" cy="13" r="2.2" fill="#ef4444"/>
+              <circle cx="78" cy="35" r="2.2" fill="#ef4444"/><circle cx="88" cy="35" r="2.2" fill="#ef4444"/>
+              <circle cx="99" cy="20" r="2.2" fill="#ef4444"/><circle cx="99" cy="27" r="2.2" fill="#ef4444"/>
+              <circle cx="67" cy="27" r="2.2" fill="#ef4444"/>
+              <!-- 来自 Na 的 1 电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="64.5" y1="18" x2="69.5" y2="23"/>
+                <line x1="69.5" y1="18" x2="64.5" y2="23"/>
+              </g>
+              <text x="77" y="28" font-size="14" font-weight="bold" fill="#10b981">Cl</text>
+              <text x="105" y="29" font-size="20" fill="#64748b">]</text>
+              <text x="112" y="16" font-size="12" font-weight="bold" fill="#2563eb">⁻</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">只含<span class="inline-ans">离子键</span></div>
@@ -635,16 +628,21 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氧化镁 (MgO)</div>
           <div class="lewis-svg-box">
-            <svg width="150" height="42" viewBox="0 0 150 42">
-              <text x="8" y="26" font-size="14" font-weight="bold" fill="#2563eb">Mg²⁺</text>
-              <text x="54" y="27" font-size="20" fill="#64748b">[</text>
-              <circle cx="80" cy="11" r="2" fill="#ef4444"/><circle cx="90" cy="11" r="2" fill="#ef4444"/>
-              <circle cx="80" cy="33" r="2" fill="#ef4444"/><circle cx="90" cy="33" r="2" fill="#ef4444"/>
-              <circle cx="69" cy="19" r="2" fill="#ef4444"/><circle cx="69" cy="25" r="2" fill="#ef4444"/>
-              <circle cx="101" cy="19" r="2" fill="#ef4444"/><circle cx="101" cy="25" r="2" fill="#ef4444"/>
-              <text x="80" y="26" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <text x="107" y="27" font-size="20" fill="#64748b">]</text>
-              <text x="114" y="14" font-size="12" font-weight="bold" fill="#2563eb">²⁻</text>
+            <svg width="150" height="46" viewBox="0 0 150 46">
+              <text x="6" y="28" font-size="14" font-weight="bold" fill="#2563eb">Mg²⁺</text>
+              <text x="54" y="29" font-size="20" fill="#64748b">[</text>
+              <!-- O 自身 6 电子 (红色) -->
+              <circle cx="80" cy="13" r="2.2" fill="#ef4444"/><circle cx="90" cy="13" r="2.2" fill="#ef4444"/>
+              <circle cx="80" cy="35" r="2.2" fill="#ef4444"/><circle cx="90" cy="35" r="2.2" fill="#ef4444"/>
+              <circle cx="102" cy="20" r="2.2" fill="#ef4444"/><circle cx="102" cy="27" r="2.2" fill="#ef4444"/>
+              <!-- 来自 Mg 的 2 电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="66.5" y1="18" x2="71.5" y2="23"/><line x1="71.5" y1="18" x2="66.5" y2="23"/>
+                <line x1="66.5" y1="26" x2="71.5" y2="31"/><line x1="71.5" y1="26" x2="66.5" y2="31"/>
+              </g>
+              <text x="80" y="28" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <text x="108" y="29" font-size="20" fill="#64748b">]</text>
+              <text x="115" y="16" font-size="12" font-weight="bold" fill="#2563eb">²⁻</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">高晶格能 (熔点2852℃)</div>
@@ -654,17 +652,23 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氧化钠 (Na₂O)</div>
           <div class="lewis-svg-box">
-            <svg width="180" height="42" viewBox="0 0 180 42">
-              <text x="8" y="26" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
-              <text x="44" y="27" font-size="20" fill="#64748b">[</text>
-              <circle cx="70" cy="11" r="2" fill="#ef4444"/><circle cx="80" cy="11" r="2" fill="#ef4444"/>
-              <circle cx="70" cy="33" r="2" fill="#ef4444"/><circle cx="80" cy="33" r="2" fill="#ef4444"/>
-              <circle cx="59" cy="19" r="2" fill="#ef4444"/><circle cx="59" cy="25" r="2" fill="#ef4444"/>
-              <circle cx="91" cy="19" r="2" fill="#ef4444"/><circle cx="91" cy="25" r="2" fill="#ef4444"/>
-              <text x="70" y="26" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <text x="97" y="27" font-size="20" fill="#64748b">]</text>
-              <text x="104" y="14" font-size="11" font-weight="bold" fill="#2563eb">²⁻</text>
-              <text x="135" y="26" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
+            <svg width="180" height="46" viewBox="0 0 180 46">
+              <text x="8" y="28" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
+              <text x="44" y="29" font-size="20" fill="#64748b">[</text>
+              <!-- O 自身 6 电子 (红色) -->
+              <circle cx="70" cy="13" r="2.2" fill="#ef4444"/><circle cx="80" cy="13" r="2.2" fill="#ef4444"/>
+              <circle cx="70" cy="35" r="2.2" fill="#ef4444"/><circle cx="80" cy="35" r="2.2" fill="#ef4444"/>
+              <circle cx="58" cy="24" r="2.2" fill="#ef4444"/>
+              <circle cx="92" cy="24" r="2.2" fill="#ef4444"/>
+              <!-- 左右各 1 个来自 Na 的电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="55.5" y1="16" x2="60.5" y2="21"/><line x1="60.5" y1="16" x2="55.5" y2="21"/>
+                <line x1="89.5" y1="16" x2="94.5" y2="21"/><line x1="94.5" y1="16" x2="89.5" y2="21"/>
+              </g>
+              <text x="70" y="28" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <text x="98" y="29" font-size="20" fill="#64748b">]</text>
+              <text x="105" y="15" font-size="11" font-weight="bold" fill="#2563eb">²⁻</text>
+              <text x="135" y="28" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">2个阳离子夹1个阴离子</div>
@@ -674,22 +678,24 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氯化钙 (CaCl₂)</div>
           <div class="lewis-svg-box">
-            <svg width="180" height="42" viewBox="0 0 180 42">
-              <text x="5" y="27" font-size="17" fill="#64748b">[</text>
-              <circle cx="21" cy="11" r="1.8" fill="#ef4444"/><circle cx="29" cy="11" r="1.8" fill="#ef4444"/>
-              <circle cx="21" cy="33" r="1.8" fill="#ef4444"/><circle cx="29" cy="33" r="1.8" fill="#ef4444"/>
-              <circle cx="12" cy="19" r="1.8" fill="#ef4444"/><circle cx="12" cy="25" r="1.8" fill="#ef4444"/>
-              <circle cx="38" cy="19" r="1.8" fill="#ef4444"/><circle cx="38" cy="25" r="1.8" fill="#ef4444"/>
-              <text x="20" y="26" font-size="12" font-weight="bold" fill="#10b981">Cl</text>
-              <text x="44" y="27" font-size="17" fill="#64748b">]</text><text x="49" y="14" font-size="10" fill="#2563eb">⁻</text>
-              <text x="68" y="26" font-size="13" font-weight="bold" fill="#2563eb">Ca²⁺</text>
-              <text x="110" y="27" font-size="17" fill="#64748b">[</text>
-              <circle cx="126" cy="11" r="1.8" fill="#ef4444"/><circle cx="134" cy="11" r="1.8" fill="#ef4444"/>
-              <circle cx="126" cy="33" r="1.8" fill="#ef4444"/><circle cx="134" cy="33" r="1.8" fill="#ef4444"/>
-              <circle cx="117" cy="19" r="1.8" fill="#ef4444"/><circle cx="117" cy="25" r="1.8" fill="#ef4444"/>
-              <circle cx="143" cy="19" r="1.8" fill="#ef4444"/><circle cx="143" cy="25" r="1.8" fill="#ef4444"/>
-              <text x="125" y="26" font-size="12" font-weight="bold" fill="#10b981">Cl</text>
-              <text x="149" y="27" font-size="17" fill="#64748b">]</text><text x="154" y="14" font-size="10" fill="#2563eb">⁻</text>
+            <svg width="180" height="46" viewBox="0 0 180 46">
+              <text x="3" y="28" font-size="17" fill="#64748b">[</text>
+              <circle cx="21" cy="13" r="1.8" fill="#ef4444"/><circle cx="29" cy="13" r="1.8" fill="#ef4444"/>
+              <circle cx="21" cy="35" r="1.8" fill="#ef4444"/><circle cx="29" cy="35" r="1.8" fill="#ef4444"/>
+              <circle cx="12" cy="20" r="1.8" fill="#ef4444"/><circle cx="12" cy="27" r="1.8" fill="#ef4444"/>
+              <circle cx="38" cy="27" r="1.8" fill="#ef4444"/>
+              <g stroke="#2563eb" stroke-width="1.6"><line x1="36" y1="18" x2="40" y2="22"/><line x1="40" y1="18" x2="36" y2="22"/></g>
+              <text x="20" y="28" font-size="12" font-weight="bold" fill="#10b981">Cl</text>
+              <text x="44" y="28" font-size="17" fill="#64748b">]</text><text x="49" y="15" font-size="10" fill="#2563eb">⁻</text>
+              <text x="68" y="28" font-size="13" font-weight="bold" fill="#2563eb">Ca²⁺</text>
+              <text x="110" y="28" font-size="17" fill="#64748b">[</text>
+              <circle cx="126" cy="13" r="1.8" fill="#ef4444"/><circle cx="134" cy="13" r="1.8" fill="#ef4444"/>
+              <circle cx="126" cy="35" r="1.8" fill="#ef4444"/><circle cx="134" cy="35" r="1.8" fill="#ef4444"/>
+              <circle cx="143" cy="20" r="1.8" fill="#ef4444"/><circle cx="143" cy="27" r="1.8" fill="#ef4444"/>
+              <circle cx="117" cy="27" r="1.8" fill="#ef4444"/>
+              <g stroke="#2563eb" stroke-width="1.6"><line x1="115" y1="18" x2="119" y2="22"/><line x1="119" y1="18" x2="115" y2="22"/></g>
+              <text x="125" y="28" font-size="12" font-weight="bold" fill="#10b981">Cl</text>
+              <text x="149" y="28" font-size="17" fill="#64748b">]</text><text x="154" y="15" font-size="10" fill="#2563eb">⁻</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">阴阳离子比 1:2</div>
@@ -699,17 +705,22 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氢氧化钠 (NaOH)</div>
           <div class="lewis-svg-box">
-            <svg width="160" height="42" viewBox="0 0 160 42">
-              <text x="8" y="26" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
-              <text x="48" y="27" font-size="20" fill="#64748b">[</text>
-              <circle cx="75" cy="11" r="2" fill="#ef4444"/><circle cx="85" cy="11" r="2" fill="#ef4444"/>
-              <circle cx="75" cy="33" r="2" fill="#ef4444"/><circle cx="85" cy="33" r="2" fill="#ef4444"/>
-              <circle cx="64" cy="19" r="2" fill="#ef4444"/><circle cx="64" cy="25" r="2" fill="#ef4444"/>
-              <circle cx="98" cy="22" r="2" fill="#ef4444"/><circle cx="104" cy="22" r="2" fill="#ef4444"/>
-              <text x="75" y="26" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <text x="110" y="26" font-size="13" font-weight="bold" fill="#2563eb">H</text>
-              <text x="126" y="27" font-size="20" fill="#64748b">]</text>
-              <text x="133" y="14" font-size="11" font-weight="bold" fill="#2563eb">⁻</text>
+            <svg width="160" height="46" viewBox="0 0 160 46">
+              <text x="8" y="28" font-size="13" font-weight="bold" fill="#2563eb">Na⁺</text>
+              <text x="48" y="29" font-size="20" fill="#64748b">[</text>
+              <!-- O 自身电子 (红色) -->
+              <circle cx="75" cy="13" r="2.2" fill="#ef4444"/><circle cx="85" cy="13" r="2.2" fill="#ef4444"/>
+              <circle cx="75" cy="35" r="2.2" fill="#ef4444"/><circle cx="85" cy="35" r="2.2" fill="#ef4444"/>
+              <circle cx="64" cy="28" r="2.2" fill="#ef4444"/>
+              <circle cx="98" cy="24" r="2.2" fill="#ef4444"/>
+              <!-- 来自 Na 的 1 电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.8"><line x1="61.5" y1="17" x2="66.5" y2="22"/><line x1="66.5" y1="17" x2="61.5" y2="22"/></g>
+              <!-- 来自 H 的 1 电子 (蓝色圆点) -->
+              <circle cx="105" cy="24" r="2.2" fill="#2563eb"/>
+              <text x="75" y="28" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <text x="112" y="28" font-size="13" font-weight="bold" fill="#2563eb">H</text>
+              <text x="128" y="29" font-size="20" fill="#64748b">]</text>
+              <text x="135" y="15" font-size="11" font-weight="bold" fill="#2563eb">⁻</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">含<span class="inline-ans">离子键</span>与<span class="inline-ans">极性共价键</span></div>
@@ -719,27 +730,33 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">过硫化钠 (Na₂S₂)</div>
           <div class="lewis-svg-box">
-            <svg width="180" height="42" viewBox="0 0 180 42">
-              <text x="5" y="26" font-size="12" font-weight="bold" fill="#2563eb">Na⁺</text>
-              <text x="36" y="27" font-size="19" fill="#64748b">[</text>
-              <circle cx="58" cy="11" r="1.8" fill="#ef4444"/><circle cx="66" cy="11" r="1.8" fill="#ef4444"/>
-              <circle cx="58" cy="33" r="1.8" fill="#ef4444"/><circle cx="66" cy="33" r="1.8" fill="#ef4444"/>
-              <circle cx="48" cy="19" r="1.8" fill="#ef4444"/><circle cx="48" cy="25" r="1.8" fill="#ef4444"/>
-              <text x="57" y="26" font-size="13" font-weight="bold" fill="#eab308">S</text>
-              <circle cx="78" cy="22" r="1.8" fill="#ef4444"/><circle cx="84" cy="22" r="1.8" fill="#ef4444"/>
-              <text x="94" y="26" font-size="13" font-weight="bold" fill="#eab308">S</text>
-              <circle cx="95" cy="11" r="1.8" fill="#ef4444"/><circle cx="103" cy="11" r="1.8" fill="#ef4444"/>
-              <circle cx="95" cy="33" r="1.8" fill="#ef4444"/><circle cx="103" cy="33" r="1.8" fill="#ef4444"/>
-              <circle cx="114" cy="19" r="1.8" fill="#ef4444"/><circle cx="114" cy="25" r="1.8" fill="#ef4444"/>
-              <text x="122" y="27" font-size="19" fill="#64748b">]</text><text x="128" y="14" font-size="10" fill="#2563eb">²⁻</text>
-              <text x="145" y="26" font-size="12" font-weight="bold" fill="#2563eb">Na⁺</text>
+            <svg width="180" height="46" viewBox="0 0 180 46">
+              <text x="5" y="28" font-size="12" font-weight="bold" fill="#2563eb">Na⁺</text>
+              <text x="36" y="29" font-size="19" fill="#64748b">[</text>
+              <!-- S-S 共价键与孤对 (红色) -->
+              <circle cx="58" cy="13" r="1.8" fill="#ef4444"/><circle cx="66" cy="13" r="1.8" fill="#ef4444"/>
+              <circle cx="58" cy="35" r="1.8" fill="#ef4444"/><circle cx="66" cy="35" r="1.8" fill="#ef4444"/>
+              <circle cx="48" cy="28" r="1.8" fill="#ef4444"/>
+              <circle cx="78" cy="24" r="1.8" fill="#ef4444"/><circle cx="84" cy="24" r="1.8" fill="#ef4444"/>
+              <circle cx="95" cy="13" r="1.8" fill="#ef4444"/><circle cx="103" cy="13" r="1.8" fill="#ef4444"/>
+              <circle cx="95" cy="35" r="1.8" fill="#ef4444"/><circle cx="103" cy="35" r="1.8" fill="#ef4444"/>
+              <circle cx="114" cy="28" r="1.8" fill="#ef4444"/>
+              <!-- 来自 2 个 Na 的外来电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.6">
+                <line x1="45.5" y1="18" x2="49.5" y2="22"/><line x1="49.5" y1="18" x2="45.5" y2="22"/>
+                <line x1="112.5" y1="18" x2="116.5" y2="22"/><line x1="116.5" y1="18" x2="112.5" y2="22"/>
+              </g>
+              <text x="57" y="28" font-size="13" font-weight="bold" fill="#eab308">S</text>
+              <text x="94" y="28" font-size="13" font-weight="bold" fill="#eab308">S</text>
+              <text x="122" y="29" font-size="19" fill="#64748b">]</text><text x="128" y="15" font-size="10" fill="#2563eb">²⁻</text>
+              <text x="145" y="28" font-size="12" font-weight="bold" fill="#2563eb">Na⁺</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">含<span class="inline-ans">离子键</span>与<span class="inline-ans">非极性共价键</span></div>
         </div>
       </div>
 
-      <!-- 7.1.2 共价键与电子云密度分布模拟器 -->
+      <!-- 7.1.2 共价键与电子云模拟器 -->
       <h3 class="sub-title" style="margin-top:24px;">7.1.2 共价键电子云分布、极性模拟器与配位键探究</h3>
       <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:10px;">
         选择不同分子，观察成键原子间<strong>电子云概率密度分布</strong>的变化：
@@ -768,20 +785,24 @@
         </div>
       </div>
 
-      <!-- 共价化合物规范电子式库 -->
-      <h4 style="font-size:0.95rem; margin:16px 0 8px 0; color:var(--accent-color);">📋 典型共价分子电子式与结构式矩阵 (单键、双键、三键)</h4>
+      <!-- 共价分子电子式矩阵（标出电子来源） -->
+      <h4 style="font-size:0.95rem; margin:16px 0 8px 0; color:var(--accent-color);">📋 典型共价分子电子式与结构式矩阵 (通过蓝色/红色区分成键电子来源)</h4>
       <div class="grid-4">
         <!-- HCl -->
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氯化氢 (HCl) · 单键</div>
           <div class="lewis-svg-box">
-            <svg width="110" height="40" viewBox="0 0 110 40">
-              <text x="15" y="25" font-size="14" font-weight="bold" fill="#2563eb">H</text>
-              <circle cx="38" cy="21" r="1.8" fill="#ef4444"/><circle cx="46" cy="21" r="1.8" fill="#ef4444"/>
-              <text x="56" y="25" font-size="14" font-weight="bold" fill="#10b981">Cl</text>
-              <circle cx="62" cy="10" r="1.8" fill="#ef4444"/><circle cx="70" cy="10" r="1.8" fill="#ef4444"/>
-              <circle cx="62" cy="32" r="1.8" fill="#ef4444"/><circle cx="70" cy="32" r="1.8" fill="#ef4444"/>
-              <circle cx="82" cy="17" r="1.8" fill="#ef4444"/><circle cx="82" cy="24" r="1.8" fill="#ef4444"/>
+            <svg width="120" height="42" viewBox="0 0 120 42">
+              <text x="15" y="27" font-size="14" font-weight="bold" fill="#2563eb">H</text>
+              <!-- H 贡献的电子 (蓝色叉号) -->
+              <g stroke="#2563eb" stroke-width="1.8"><line x1="36" y1="21" x2="41" y2="25"/><line x1="41" y1="21" x2="36" y2="25"/></g>
+              <!-- Cl 贡献的成键电子 (红色圆点) -->
+              <circle cx="48" cy="23" r="2.2" fill="#ef4444"/>
+              <text x="58" y="27" font-size="14" font-weight="bold" fill="#10b981">Cl</text>
+              <!-- Cl 孤电子对 (红色) -->
+              <circle cx="64" cy="11" r="2.2" fill="#ef4444"/><circle cx="72" cy="11" r="2.2" fill="#ef4444"/>
+              <circle cx="64" cy="35" r="2.2" fill="#ef4444"/><circle cx="72" cy="35" r="2.2" fill="#ef4444"/>
+              <circle cx="84" cy="19" r="2.2" fill="#ef4444"/><circle cx="84" cy="27" r="2.2" fill="#ef4444"/>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">结构式：H — Cl</div>
@@ -791,14 +812,16 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">水 (H₂O) · 2个单键</div>
           <div class="lewis-svg-box">
-            <svg width="120" height="40" viewBox="0 0 120 40">
-              <text x="12" y="25" font-size="14" font-weight="bold" fill="#2563eb">H</text>
-              <circle cx="32" cy="21" r="1.8" fill="#ef4444"/><circle cx="38" cy="21" r="1.8" fill="#ef4444"/>
-              <text x="48" y="25" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <circle cx="51" cy="9" r="1.8" fill="#ef4444"/><circle cx="59" cy="9" r="1.8" fill="#ef4444"/>
-              <circle cx="51" cy="33" r="1.8" fill="#ef4444"/><circle cx="59" cy="33" r="1.8" fill="#ef4444"/>
-              <circle cx="72" cy="21" r="1.8" fill="#ef4444"/><circle cx="78" cy="21" r="1.8" fill="#ef4444"/>
-              <text x="90" y="25" font-size="14" font-weight="bold" fill="#2563eb">H</text>
+            <svg width="130" height="42" viewBox="0 0 130 42">
+              <text x="12" y="27" font-size="14" font-weight="bold" fill="#2563eb">H</text>
+              <g stroke="#2563eb" stroke-width="1.8"><line x1="30" y1="21" x2="35" y2="25"/><line x1="35" y1="21" x2="30" y2="25"/></g>
+              <circle cx="41" cy="23" r="2.2" fill="#ef4444"/>
+              <text x="51" y="27" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <circle cx="54" cy="10" r="2.2" fill="#ef4444"/><circle cx="62" cy="10" r="2.2" fill="#ef4444"/>
+              <circle cx="54" cy="36" r="2.2" fill="#ef4444"/><circle cx="62" cy="36" r="2.2" fill="#ef4444"/>
+              <circle cx="75" cy="23" r="2.2" fill="#ef4444"/>
+              <g stroke="#2563eb" stroke-width="1.8"><line x1="81" y1="21" x2="86" y2="25"/><line x1="86" y1="21" x2="81" y2="25"/></g>
+              <text x="96" y="27" font-size="14" font-weight="bold" fill="#2563eb">H</text>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">2对孤对电子 (V形)</div>
@@ -808,18 +831,25 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">二氧化碳 (CO₂) · 双键</div>
           <div class="lewis-svg-box">
-            <svg width="140" height="40" viewBox="0 0 140 40">
-              <circle cx="10" cy="18" r="1.8" fill="#ef4444"/><circle cx="10" cy="24" r="1.8" fill="#ef4444"/>
-              <text x="18" y="25" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <circle cx="21" cy="9" r="1.8" fill="#ef4444"/><circle cx="29" cy="9" r="1.8" fill="#ef4444"/>
-              <circle cx="42" cy="18" r="1.8" fill="#ef4444"/><circle cx="48" cy="18" r="1.8" fill="#ef4444"/>
-              <circle cx="42" cy="24" r="1.8" fill="#ef4444"/><circle cx="48" cy="24" r="1.8" fill="#ef4444"/>
-              <text x="60" y="25" font-size="14" font-weight="bold" fill="#334155">C</text>
-              <circle cx="82" cy="18" r="1.8" fill="#ef4444"/><circle cx="88" cy="18" r="1.8" fill="#ef4444"/>
-              <circle cx="82" cy="24" r="1.8" fill="#ef4444"/><circle cx="88" cy="24" r="1.8" fill="#ef4444"/>
-              <text x="100" y="25" font-size="14" font-weight="bold" fill="#ea580c">O</text>
-              <circle cx="103" cy="9" r="1.8" fill="#ef4444"/><circle cx="111" cy="9" r="1.8" fill="#ef4444"/>
-              <circle cx="122" cy="18" r="1.8" fill="#ef4444"/><circle cx="122" cy="24" r="1.8" fill="#ef4444"/>
+            <svg width="150" height="42" viewBox="0 0 150 42">
+              <circle cx="10" cy="19" r="2.2" fill="#ef4444"/><circle cx="10" cy="26" r="2.2" fill="#ef4444"/>
+              <text x="18" y="27" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <circle cx="21" cy="10" r="2.2" fill="#ef4444"/><circle cx="29" cy="10" r="2.2" fill="#ef4444"/>
+              <!-- O 提供 2 电子 (红)；C 提供 2 电子 (蓝叉) -->
+              <circle cx="42" cy="19" r="2.2" fill="#ef4444"/><circle cx="42" cy="26" r="2.2" fill="#ef4444"/>
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="47" y1="17" x2="51" y2="21"/><line x1="51" y1="17" x2="47" y2="21"/>
+                <line x1="47" y1="24" x2="51" y2="28"/><line x1="51" y1="24" x2="47" y2="28"/>
+              </g>
+              <text x="63" y="27" font-size="14" font-weight="bold" fill="#334155">C</text>
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="80" y1="17" x2="84" y2="21"/><line x1="84" y1="17" x2="80" y2="21"/>
+                <line x1="80" y1="24" x2="84" y2="28"/><line x1="84" y1="24" x2="80" y2="28"/>
+              </g>
+              <circle cx="89" cy="19" r="2.2" fill="#ef4444"/><circle cx="89" cy="26" r="2.2" fill="#ef4444"/>
+              <text x="99" y="27" font-size="14" font-weight="bold" fill="#ea580c">O</text>
+              <circle cx="102" cy="10" r="2.2" fill="#ef4444"/><circle cx="110" cy="10" r="2.2" fill="#ef4444"/>
+              <circle cx="121" cy="19" r="2.2" fill="#ef4444"/><circle cx="121" cy="26" r="2.2" fill="#ef4444"/>
             </svg>
           </div>
           <div style="font-size:0.75rem; color:var(--text-muted);">结构式：O = C = O</div>
@@ -829,31 +859,37 @@
         <div class="lewis-struct-card">
           <div style="font-weight:bold; font-size:0.85rem;">氮气 (N₂) · 三键</div>
           <div class="lewis-svg-box">
-            <svg width="120" height="40" viewBox="0 0 120 40">
-              <circle cx="12" cy="21" r="1.8" fill="#ef4444"/><circle cx="18" cy="21" r="1.8" fill="#ef4444"/>
-              <text x="28" y="25" font-size="14" font-weight="bold" fill="#2563eb">N</text>
-              <circle cx="50" cy="14" r="1.8" fill="#ef4444"/><circle cx="56" cy="14" r="1.8" fill="#ef4444"/>
-              <circle cx="50" cy="21" r="1.8" fill="#ef4444"/><circle cx="56" cy="21" r="1.8" fill="#ef4444"/>
-              <circle cx="50" cy="28" r="1.8" fill="#ef4444"/><circle cx="56" cy="28" r="1.8" fill="#ef4444"/>
-              <text x="68" y="25" font-size="14" font-weight="bold" fill="#2563eb">N</text>
-              <circle cx="90" cy="21" r="1.8" fill="#ef4444"/><circle cx="96" cy="21" r="1.8" fill="#ef4444"/>
+            <svg width="130" height="42" viewBox="0 0 130 42">
+              <circle cx="12" cy="23" r="2.2" fill="#2563eb"/><circle cx="18" cy="23" r="2.2" fill="#2563eb"/>
+              <text x="28" y="27" font-size="14" font-weight="bold" fill="#2563eb">N</text>
+              <!-- 3个蓝叉 + 3个红点 -->
+              <g stroke="#2563eb" stroke-width="1.8">
+                <line x1="48" y1="13" x2="52" y2="17"/><line x1="52" y1="13" x2="48" y2="17"/>
+                <line x1="48" y1="21" x2="52" y2="25"/><line x1="52" y1="21" x2="48" y2="25"/>
+                <line x1="48" y1="29" x2="52" y2="33"/><line x1="52" y1="29" x2="48" y2="33"/>
+              </g>
+              <circle cx="59" cy="15" r="2.2" fill="#ef4444"/>
+              <circle cx="59" cy="23" r="2.2" fill="#ef4444"/>
+              <circle cx="59" cy="31" r="2.2" fill="#ef4444"/>
+              <text x="70" y="27" font-size="14" font-weight="bold" fill="#ef4444">N</text>
+              <circle cx="92" cy="23" r="2.2" fill="#ef4444"/><circle cx="98" cy="23" r="2.2" fill="#ef4444"/>
             </svg>
           </div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">结构式：N ≡ N (键能942kJ)</div>
+          <div style="font-size:0.75rem; color:var(--text-muted);">结构式：N ≡ N</div>
         </div>
       </div>
 
-      <!-- 配位键互动模拟器 -->
-      <h4 style="font-size:0.95rem; margin:20px 0 8px 0; color:var(--accent-color);">🔗 配位键形成微观互动模拟器 (Coordinate Bond)</h4>
+      <!-- 配位键形成微观互动模拟器 (根据附图5、6重构) -->
+      <h4 style="font-size:0.95rem; margin:20px 0 8px 0; color:var(--accent-color);">🔗 配位键形成微观互动模拟器 (参考标准弧线轨道配位机理)</h4>
       <div class="grid-2">
         <div style="background:var(--bg-card-subtle); padding:16px; border-radius:var(--radius); border:1px solid var(--border-color); display:flex; flex-direction:column; align-items:center;">
           <div class="tab-pills">
-            <button class="tab-pill active" onclick="switchDativeMol('NH4')">铵根离子 (NH₄⁺)</button>
-            <button class="tab-pill" onclick="switchDativeMol('H3O')">水合氢离子 (H₃O⁺)</button>
+            <button class="tab-pill active" id="pill-nh4" onclick="switchDativeMol('NH4')">铵根离子 (NH₄⁺)</button>
+            <button class="tab-pill" id="pill-h3o" onclick="switchDativeMol('H3O')">水合氢离子 (H₃O⁺)</button>
           </div>
 
-          <div id="dative-anim-stage" style="min-height:120px; display:flex; align-items:center; justify-content:center; width:100%;">
-            <!-- 动态生成交互图 -->
+          <div id="dative-anim-stage" style="min-height:140px; display:flex; align-items:center; justify-content:center; width:100%; padding:10px 0;">
+            <!-- 动态生成高精度 SVG 结构图 -->
           </div>
           <button class="btn btn-primary" id="btn-dative-step" onclick="stepDativeAnimation()" style="margin-top:10px;">
             ▶️ 步进演示：孤对电子向 H⁺ 空轨道配位
@@ -861,10 +897,10 @@
         </div>
 
         <div style="background:var(--bg-card-subtle); padding:16px; border-radius:var(--radius); border:1px solid var(--border-color); font-size:0.88rem; line-height:1.7;">
-          <h4 style="color:var(--primary-color); margin-bottom:6px;" id="dative-rule-title">配位键本质规律</h4>
+          <h4 style="color:var(--primary-color); margin-bottom:6px;" id="dative-rule-title">配位键本质机理</h4>
           <div id="dative-rule-desc">
-            • <strong>成键条件</strong>：一方原子拥有<span class="inline-ans">孤对电子</span>，另一方原子/离子具备容纳电子的<span class="inline-ans">空轨道</span>。<br>
-            • <strong>特点说明</strong>：成键后，铵根离子内部 4 个 N-H 键的键长、键能完全相同，化学性质无差别。
+            • <strong>成键条件</strong>：一方原子（如 N、O）提供<span class="inline-ans">孤对电子</span>，另一方微粒（如 H⁺）提供容纳电子的<span class="inline-ans">空轨道</span>。<br>
+            • <strong>等价性规律</strong>：成键后，铵根离子内部 4 个 N-H 键在键长、键能及化学性质上<strong>完全相同且无法区分</strong>；正电荷均匀分布于整个多原子阳离子上。
           </div>
         </div>
       </div>
@@ -928,7 +964,7 @@
       </div>
     </section>
 
-    <!-- ==================== 7.2 分子间作用力 ==================== -->
+    <!-- 7.2 分子间作用力 -->
     <section class="card">
       <div class="chapter-heading-box">
         <h2 class="card-title" style="border:none; padding:0; margin:0;">💧 7.2 分子间作用力 (Intermolecular Forces)</h2>
@@ -982,36 +1018,37 @@
       </div>
 
       <!-- 7.2.2 氢键动态网络模拟与氢化物沸点反常图 -->
-      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X-H···Y) 动态展示与氢化物沸点反常图谱</h3>
+      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X-H···Y) 严格取向动态模拟与氢化物沸点反常图谱</h3>
       
       <div class="tab-pills">
-        <button class="tab-pill active" onclick="switchHydrogenBondDemo('H2O')">水分子间氢键 (H₂O · 四面体网络)</button>
-        <button class="tab-pill" onclick="switchHydrogenBondDemo('HF')">氟化氢氢键 (HF · 之字形链状)</button>
-        <button class="tab-pill" onclick="switchHydrogenBondDemo('NH3')">氨气氢键 (NH₃ · 分子间网络)</button>
+        <button class="tab-pill active" onclick="switchHydrogenBondDemo('H2O')">水分子间氢键 (H₂O · O···H 取向)</button>
+        <button class="tab-pill" onclick="switchHydrogenBondDemo('HF')">氟化氢氢键 (HF · F···H 链状)</button>
+        <button class="tab-pill" onclick="switchHydrogenBondDemo('NH3')">氨气氢键 (NH₃ · N···H 网络)</button>
       </div>
 
       <div class="grid-2">
         <div class="canvas-wrapper">
           <canvas id="hbond-canvas"></canvas>
-          <div class="canvas-hint" id="hbond-hint">氢键动态网络</div>
+          <div class="canvas-hint" id="hbond-hint">氢键动态网络 (严格遵循 O···H 静电取向)</div>
         </div>
 
         <div style="background:var(--bg-card-subtle); padding:16px; border-radius:var(--radius); border:1px solid var(--border-color); font-size:0.88rem; line-height:1.7;">
           <h4 style="color:var(--primary-color); margin-bottom:6px;" id="hbond-title">水分子 (H₂O) 间氢键特征</h4>
           <div id="hbond-desc">
-            • <strong>成键机制</strong>：强极性 O-H 键中，氢原子核几乎裸露 ($\delta^+$)，强烈吸引相邻水分子中氧原子的孤对电子 ($\delta^-$)。<br>
+            • <strong>成键机制</strong>：带 $\delta^+$ 的 H 原子核几乎裸露，强烈吸引相邻水分子带 $\delta^-$ 的 O 原子孤对电子。<br>
+            • <strong>饱和性与方向性</strong>：1 个水分子最多与周围 4 个水分子形成 4 个氢键，构成以 O 为中心的四面体构型。<br>
             • <strong>键能比值</strong>：共价键 : 氢键 : 范德华力 ≈ <span class="inline-ans">100 : 10 : 1</span>。<br>
-            • <strong>物理影响</strong>：显著提高熔沸点（汽化需克服氢键）；冰中形成 4 氢键开放空腔，密度反常小于液态水。
+            • <strong>物理影响</strong>：显著提高熔沸点；冰中形成 4 氢键开放空腔，导致密度反常小于液态水。
           </div>
         </div>
       </div>
 
-      <!-- 课本指导插图预留：氢化物沸点图 -->
+      <!-- 课本指导插图预留：氢化物沸点图（根据要求更新路径） -->
       <div class="textbook-guide-img" style="margin-top:20px;">
-        <img src="image/ch7_hydride_boiling_points.jpg" alt="课本第180页图7-14：一些氢化物的沸点变化图" onerror="this.style.display='none'; document.getElementById('guide-boiling-fallback').style.display='block';">
+        <img src="image/homebook/Screenshot 2026-08-17 135130.png" alt="课本第180页图7-14：一些氢化物的沸点变化图" onerror="this.style.display='none'; document.getElementById('guide-boiling-fallback').style.display='block';">
         <div id="guide-boiling-fallback" class="img-fallback-box" style="display:none;">
           <strong>📖【课本图 7-14 氢化物沸点图 预留位】</strong>：第 IVA ~ VIIA 族氢化物沸点变化折线图<br>
-          <span style="font-size:0.8rem; color:var(--text-muted);">（请在本地 <code>image/</code> 文件夹中存入 <code>ch7_hydride_boiling_points.jpg</code>）</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">（请在本地 <code>image/homebook/</code> 文件夹中存入 <code>Screenshot 2026-08-17 135130.png</code>）</span>
         </div>
       </div>
 
@@ -1022,7 +1059,7 @@
       </div>
     </section>
 
-    <!-- ==================== 7.3 四大晶体 ==================== -->
+    <!-- 7.3 四大晶体 -->
     <section class="card">
       <div class="chapter-heading-box">
         <h2 class="card-title" style="border:none; padding:0; margin:0;">🧊 7.3 晶体类型及其 3D 晶胞结构探究</h2>
@@ -1045,14 +1082,14 @@
           <div id="crystal-info-desc" style="font-size:0.88rem; line-height:1.7; color:var(--text-main);">
             • <strong>构成微粒</strong>：<span class="inline-ans">Na⁺ 阳离子与 Cl⁻ 阴离子</span><br>
             • <strong>微粒间作用力</strong>：<span class="inline-ans">离子键</span><br>
-            • <strong>导电本质</strong>：固态不导电；熔融或水溶液破坏离子键产生自由离子而<span class="inline-ans">导电</span>。<br>
+            • <strong>导电本质</strong>：固态不导电；熔融或水溶液破坏离子键产生自由移动离子而<span class="inline-ans">导电</span>。<br>
             • <strong>晶体特性</strong>：硬而脆，熔沸点高，无独立单个分子。
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 章节思维导图 ==================== -->
+    <!-- 章节思维导图 -->
     <section class="card" style="background:transparent; border:none; padding:0;">
       <div class="mindmap-wrapper">
         <h3 style="color:#38bdf8; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
@@ -1112,7 +1149,6 @@
 
   </main>
 
-  <!-- ==================== 纯原生 JavaScript 交互与 3D 渲染引擎 ==================== -->
   <script>
     let isAllRevealed = false;
 
@@ -1161,7 +1197,7 @@
     function changeLayout(val) { document.documentElement.style.setProperty('--container-max-w', val); }
 
     /* ==========================================================================
-       1. 电子云分布模拟器 (Canvas)
+       1. 电子云分布模拟器
        ========================================================================== */
     let cloudCanvas, cloudCtx;
     let currentCloudType = 'H2';
@@ -1202,7 +1238,7 @@
       cloudCtx = cloudCanvas.getContext('2d');
       const rect = cloudCanvas.getBoundingClientRect();
       cloudCanvas.width = rect.width * window.devicePixelRatio || 500;
-      cloudCanvas.height = 260 * window.devicePixelRatio;
+      cloudCanvas.height = 270 * window.devicePixelRatio;
       renderElectronCloud();
     }
 
@@ -1271,7 +1307,7 @@
     }
 
     /* ==========================================================================
-       2. 配位键互动步进动画
+       2. 配位键互动模拟器 (根据附图5、6重构)
        ========================================================================== */
     let currentDative = 'NH4';
     let dativeStep = 0;
@@ -1279,6 +1315,8 @@
     function switchDativeMol(mol) {
       currentDative = mol;
       dativeStep = 0;
+      document.getElementById('pill-nh4').classList.toggle('active', mol === 'NH4');
+      document.getElementById('pill-h3o').classList.toggle('active', mol === 'H3O');
       renderDativeStage();
     }
 
@@ -1294,54 +1332,138 @@
       if (currentDative === 'NH4') {
         if (dativeStep === 0) {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:20px;">
-              <div>H-N̈(H)-H <span style="font-size:0.8rem; color:#38bdf8;">(含1对孤对电子)</span></div>
-              <div style="color:var(--accent-ans); font-weight:bold;">+</div>
-              <div>H⁺ <span style="font-size:0.8rem; color:#ef4444;">(具有空轨道)</span></div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <!-- NH3 -->
+              <text x="80" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
+              <line x1="80" y1="42" x2="80" y2="24" stroke="#64748b" stroke-width="2"/>
+              <text x="80" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="68" y1="54" x2="48" y2="54" stroke="#64748b" stroke-width="2"/>
+              <text x="40" y="58" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="80" y1="64" x2="80" y2="82" stroke="#64748b" stroke-width="2"/>
+              <text x="80" y="96" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <!-- 孤对电子 (右侧) -->
+              <circle cx="94" cy="50" r="2.2" fill="#ef4444"/><circle cx="94" cy="58" r="2.2" fill="#ef4444"/>
+              
+              <text x="140" y="58" font-size="20" font-weight="bold" fill="#64748b" text-anchor="middle">+</text>
+              
+              <!-- H+ -->
+              <text x="180" y="58" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">H⁺</text>
+              <circle cx="180" cy="54" r="14" fill="none" stroke="#ef4444" stroke-dasharray="3,3" stroke-width="1.5"/>
+              <text x="80" y="108" font-size="11" fill="#64748b" text-anchor="middle">氨气 (Ammonia)</text>
+              <text x="180" y="108" font-size="11" fill="#64748b" text-anchor="middle">氢离子 (空轨道)</text>
+            </svg>
           `;
-          btn.innerText = "▶️ 步进 1：观察孤对电子向 H⁺ 空轨道靠近";
+          btn.innerText = "▶️ 步进 1：观察孤对电子向 H⁺ 空轨道发起弧线进攻";
         } else if (dativeStep === 1) {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:16px;">
-              <div>H-N(H)(H) ➔ <strong>:</strong> ➔ H⁺</div>
-              <div style="font-size:0.85rem; color:#10b981; font-weight:bold;">[单方面提供孤对电子]</div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <!-- NH3 + 弯箭头弧线进攻 H+ -->
+              <text x="70" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
+              <line x1="70" y1="42" x2="70" y2="24" stroke="#64748b" stroke-width="2"/>
+              <text x="70" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="58" y1="54" x2="38" y2="54" stroke="#64748b" stroke-width="2"/>
+              <text x="30" y="58" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="70" y1="64" x2="70" y2="82" stroke="#64748b" stroke-width="2"/>
+              <text x="70" y="96" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <circle cx="84" cy="50" r="2.2" fill="#ef4444"/><circle cx="84" cy="58" r="2.2" fill="#ef4444"/>
+
+              <text x="120" y="58" font-size="18" fill="#64748b" text-anchor="middle">+</text>
+
+              <!-- 弧线进攻轨迹 -->
+              <path d="M 88 48 Q 120 15 155 45" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2"/>
+              <polygon points="158,45 150,40 152,48" fill="#2563eb"/>
+
+              <text x="165" y="58" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">H⁺</text>
+              <line x1="200" y1="54" x2="240" y2="54" stroke="#059669" stroke-width="2.5"/>
+              <polygon points="244,54 236,50 236,58" fill="#059669"/>
+            </svg>
           `;
-          btn.innerText = "▶️ 步进 2：形成稳定正四面体 NH₄⁺";
+          btn.innerText = "▶️ 步进 2：生成正四面体铵根离子 [NH₄]⁺";
         } else {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:16px;">
-              <div>[ H — N(H)(H) ➔ H ]⁺</div>
-              <div style="font-size:0.85rem; color:#059669; font-weight:bold;">(4个 N-H 键性质完全相同)</div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <text x="95" y="58" font-size="34" fill="#64748b">[</text>
+              <!-- 4个等价 N-H 键 -->
+              <text x="145" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
+              <line x1="145" y1="42" x2="145" y2="24" stroke="#64748b" stroke-width="2"/>
+              <text x="145" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="133" y1="54" x2="113" y2="54" stroke="#64748b" stroke-width="2"/>
+              <text x="105" y="58" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="145" y1="64" x2="145" y2="82" stroke="#64748b" stroke-width="2"/>
+              <text x="145" y="96" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="157" y1="54" x2="177" y2="54" stroke="#2563eb" stroke-width="2"/>
+              <text x="185" y="58" font-size="14" font-weight="bold" fill="#2563eb" text-anchor="middle">H</text>
+              <text x="195" y="58" font-size="34" fill="#64748b">]</text>
+              <circle cx="210" cy="30" r="8" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+              <text x="210" y="34" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">+</text>
+              <text x="145" y="108" font-size="11" fill="#059669" font-weight="bold" text-anchor="middle">铵根离子 (Ammonium ion, 4键等同)</text>
+            </svg>
           `;
           btn.innerText = "🔄 重置演示";
         }
       } else {
+        // H3O+ 模式 (参考附图6)
         if (dativeStep === 0) {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:20px;">
-              <div>H-Ö̈-H <span style="font-size:0.8rem; color:#38bdf8;">(O含2对孤对电子)</span></div>
-              <div style="color:var(--accent-ans); font-weight:bold;">+</div>
-              <div>H⁺ <span style="font-size:0.8rem; color:#ef4444;">(空轨道)</span></div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <!-- H2O 折线构型 -->
+              <text x="80" y="58" font-size="16" font-weight="bold" fill="#ea580c" text-anchor="middle">O</text>
+              <line x1="72" y1="62" x2="52" y2="76" stroke="#64748b" stroke-width="2"/>
+              <text x="44" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="88" y1="62" x2="108" y2="76" stroke="#64748b" stroke-width="2"/>
+              <text x="116" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <!-- 2对孤对电子 -->
+              <circle cx="70" cy="45" r="2.2" fill="#ef4444"/><circle cx="76" cy="40" r="2.2" fill="#ef4444"/>
+              <circle cx="86" cy="40" r="2.2" fill="#ef4444"/><circle cx="92" cy="45" r="2.2" fill="#ef4444"/>
+
+              <text x="150" y="58" font-size="18" fill="#64748b" text-anchor="middle">+</text>
+
+              <text x="190" y="58" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">H⁺</text>
+              <circle cx="190" cy="54" r="13" fill="none" stroke="#ef4444" stroke-dasharray="3,3" stroke-width="1.5"/>
+              <text x="80" y="105" font-size="11" fill="#64748b" text-anchor="middle">水分子 (Water)</text>
+              <text x="190" y="105" font-size="11" fill="#64748b" text-anchor="middle">质子 (Proton)</text>
+            </svg>
           `;
-          btn.innerText = "▶️ 步进 1：O 提供孤对电子与 H⁺ 配位";
+          btn.innerText = "▶️ 步进 1：观察 O 原子孤对电子向 H⁺ 配位弧线";
         } else if (dativeStep === 1) {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:16px;">
-              <div>H-O(H) ➔ <strong>:</strong> ➔ H⁺</div>
-              <div style="font-size:0.85rem; color:#10b981; font-weight:bold;">[配位键形成中]</div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <text x="80" y="58" font-size="16" font-weight="bold" fill="#ea580c" text-anchor="middle">O</text>
+              <line x1="72" y1="62" x2="52" y2="76" stroke="#64748b" stroke-width="2"/>
+              <text x="44" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="88" y1="62" x2="108" y2="76" stroke="#64748b" stroke-width="2"/>
+              <text x="116" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <circle cx="70" cy="45" r="2.2" fill="#ef4444"/><circle cx="76" cy="40" r="2.2" fill="#ef4444"/>
+              
+              <!-- 弯箭头 -->
+              <path d="M 88 38 Q 130 5 178 45" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-dasharray="4,2"/>
+              <polygon points="181,46 172,43 175,51" fill="#ea580c"/>
+
+              <text x="190" y="58" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">H⁺</text>
+              <circle cx="190" cy="54" r="13" fill="none" stroke="#ef4444" stroke-dasharray="3,3" stroke-width="1.5"/>
+            </svg>
           `;
           btn.innerText = "▶️ 步进 2：生成水合氢离子 H₃O⁺";
         } else {
           stage.innerHTML = `
-            <div style="font-family:Courier New; font-size:1.1rem; display:flex; align-items:center; gap:16px;">
-              <div>[ H — Ö(H) ➔ H ]⁺ (H₃O⁺)</div>
-              <div style="font-size:0.85rem; color:#059669; font-weight:bold;">(保留1对孤对电子)</div>
-            </div>
+            <svg width="320" height="110" viewBox="0 0 320 110">
+              <!-- H3O+ 构型 -->
+              <text x="150" y="60" font-size="16" font-weight="bold" fill="#ea580c" text-anchor="middle">O</text>
+              <!-- 顶部配位 H -->
+              <line x1="150" y1="44" x2="150" y2="28" stroke="#2563eb" stroke-width="2"/>
+              <text x="150" y="24" font-size="14" font-weight="bold" fill="#2563eb" text-anchor="middle">H</text>
+              <!-- 左右 H -->
+              <line x1="142" y1="64" x2="122" y2="78" stroke="#64748b" stroke-width="2"/>
+              <text x="114" y="86" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <line x1="158" y1="64" x2="178" y2="78" stroke="#64748b" stroke-width="2"/>
+              <text x="186" y="86" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
+              <!-- 剩余 1 对孤对电子 -->
+              <circle cx="137" cy="50" r="2.2" fill="#ef4444"/><circle cx="137" cy="58" r="2.2" fill="#ef4444"/>
+              <!-- 正电荷标在 O 旁 -->
+              <circle cx="168" cy="50" r="6.5" fill="none" stroke="#ea580c" stroke-width="1.2"/>
+              <text x="168" y="53.5" font-size="10" font-weight="bold" fill="#ea580c" text-anchor="middle">+</text>
+              <text x="150" y="105" font-size="11" fill="#059669" font-weight="bold" text-anchor="middle">水合氢离子 (Hydronium ion, H₃O⁺)</text>
+            </svg>
           `;
           btn.innerText = "🔄 重置演示";
         }
@@ -1366,7 +1488,7 @@
       metalCtx = metalCanvas.getContext('2d');
       const rect = metalCanvas.getBoundingClientRect();
       metalCanvas.width = rect.width * window.devicePixelRatio || 500;
-      metalCanvas.height = 260 * window.devicePixelRatio;
+      metalCanvas.height = 270 * window.devicePixelRatio;
 
       spawnMetalElectrons();
       requestAnimationFrame(renderMetalCanvas);
@@ -1535,7 +1657,7 @@
       molCtx = molCanvas.getContext('2d');
       const rect = molCanvas.getBoundingClientRect();
       molCanvas.width = rect.width * window.devicePixelRatio || 500;
-      molCanvas.height = 260 * window.devicePixelRatio;
+      molCanvas.height = 270 * window.devicePixelRatio;
 
       molCanvas.addEventListener('mousedown', (e) => {
         isDraggingMol = true;
@@ -1658,16 +1780,16 @@
     }
 
     /* ==========================================================================
-       5. 氢键网络动态模拟
+       5. 氢键网络动态模拟 (遵循附图8：严格计算 H 和 O 的实际相对位置)
        ========================================================================== */
     let hbondCanvas, hbondCtx;
     let currentHBondType = 'H2O';
     let hbondMolecules = [];
 
     const hbondMeta = {
-      H2O: { title: "水分子 (H₂O) 氢键网络", desc: "• <strong>结构特征</strong>：每个水分子中 O 原子拥有 2 对孤对电子，可与另外 2 个水分子形成氢键；每个 H 原子亦可与另外 1 个水分子成氢键。<br>• <strong>空间构型</strong>：形成四面体空间网络结构，汽化热极高！" },
+      H2O: { title: "水分子 (H₂O) 间氢键特征", desc: "• <strong>成键机制</strong>：带 $\delta^+$ 的 H 原子核强烈吸引相邻水分子带 $\delta^-$ 的 O 原子孤电子对。<br>• <strong>空间构型</strong>：1 个水分子最多形成 4 个氢键，构成四面体网络。<br>• <strong>物理反常</strong>：汽化热极高；冰中空腔结构使冰的密度小于液态水。" },
       HF: { title: "氟化氢 (HF) 氢键链", desc: "• <strong>结构特征</strong>：强电负性 F 原子与 H 形成链状之字形氢键（...H-F···H-F···）。<br>• <strong>沸点反常</strong>：沸点 20℃，远高于同族 HCl (-85℃)。" },
-      NH3: { title: "氨气 (NH₃) 氢键网络", desc: "• <strong>结构特征</strong>：N 原子含 1 对孤对电子，在分子间形成交联氢键。<br>• <strong>物理性质</strong>：沸点 -33℃ 异常升高且极易溶于水（与水分子形成强烈氢键）。" }
+      NH3: { title: "氨气 (NH₃) 氢键网络", desc: "• <strong>结构特征</strong>：N 原子含 1 对孤对电子，在分子间形成交联氢键。<br>• <strong>物理性质</strong>：沸点 -33℃ 异常升高且极易溶于水。" }
     };
 
     function initHBondCanvas() {
@@ -1675,7 +1797,7 @@
       hbondCtx = hbondCanvas.getContext('2d');
       const rect = hbondCanvas.getBoundingClientRect();
       hbondCanvas.width = rect.width * window.devicePixelRatio || 500;
-      hbondCanvas.height = 260 * window.devicePixelRatio;
+      hbondCanvas.height = 270 * window.devicePixelRatio;
 
       spawnHBondMolecules();
       requestAnimationFrame(renderHBondCanvas);
@@ -1692,14 +1814,15 @@
 
     function spawnHBondMolecules() {
       hbondMolecules = [];
-      const num = 12;
+      const num = 10;
       for (let i = 0; i < num; i++) {
         hbondMolecules.push({
-          x: Math.random() * (hbondCanvas.width - 60) + 30,
-          y: Math.random() * (hbondCanvas.height - 60) + 30,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8,
-          angle: Math.random() * Math.PI * 2
+          x: Math.random() * (hbondCanvas.width - 100) + 50,
+          y: Math.random() * (hbondCanvas.height - 100) + 50,
+          vx: (Math.random() - 0.5) * 0.7,
+          vy: (Math.random() - 0.5) * 0.7,
+          angle: Math.random() * Math.PI * 2,
+          vAngle: (Math.random() - 0.5) * 0.02
         });
       }
     }
@@ -1711,67 +1834,169 @@
       const ratio = window.devicePixelRatio || 1;
       hbondCtx.clearRect(0, 0, w, h);
 
+      // 更新分子位置
       hbondMolecules.forEach(m => {
         m.x += m.vx * ratio;
         m.y += m.vy * ratio;
-        if (m.x < 30 || m.x > w - 30) m.vx *= -1;
-        if (m.y < 30 || m.y > h - 30) m.vy *= -1;
+        m.angle += m.vAngle;
+        if (m.x < 40 || m.x > w - 40) m.vx *= -1;
+        if (m.y < 40 || m.y > h - 40) m.vy *= -1;
       });
 
-      for (let i = 0; i < hbondMolecules.length; i++) {
-        for (let j = i + 1; j < hbondMolecules.length; j++) {
-          const dx = hbondMolecules[i].x - hbondMolecules[j].x;
-          const dy = hbondMolecules[i].y - hbondMolecules[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      // 计算每个分子的 H 原子在全局画布上的绝对坐标
+      const molGeom = hbondMolecules.map(m => {
+        const cos = Math.cos(m.angle);
+        const sin = Math.sin(m.angle);
+        let hList = [];
 
-          if (dist < 85 * ratio) {
-            hbondCtx.beginPath();
-            hbondCtx.setLineDash([4 * ratio, 4 * ratio]);
-            hbondCtx.strokeStyle = `rgba(56, 189, 248, ${1 - dist / (85 * ratio)})`;
-            hbondCtx.lineWidth = 2 * ratio;
-            hbondCtx.moveTo(hbondMolecules[i].x, hbondMolecules[i].y);
-            hbondCtx.lineTo(hbondMolecules[j].x, hbondMolecules[j].y);
-            hbondCtx.stroke();
-            hbondCtx.setLineDash([]);
-          }
+        if (currentHBondType === 'H2O') {
+          // 两个 H 原子相对 O (0,0) 的局部坐标
+          const localH1 = { x: 13 * ratio, y: 9 * ratio };
+          const localH2 = { x: -13 * ratio, y: 9 * ratio };
+          hList.push({
+            x: m.x + localH1.x * cos - localH1.y * sin,
+            y: m.y + localH1.x * sin + localH1.y * cos
+          });
+          hList.push({
+            x: m.x + localH2.x * cos - localH2.y * sin,
+            y: m.y + localH2.x * sin + localH2.y * cos
+          });
+        } else if (currentHBondType === 'HF') {
+          const localH = { x: 14 * ratio, y: 0 };
+          hList.push({
+            x: m.x + localH.x * cos - localH.y * sin,
+            y: m.y + localH.x * sin + localH.y * cos
+          });
+        } else {
+          // NH3 3个 H
+          const localH1 = { x: 12 * ratio, y: 8 * ratio };
+          const localH2 = { x: -12 * ratio, y: 8 * ratio };
+          const localH3 = { x: 0, y: -13 * ratio };
+          [localH1, localH2, localH3].forEach(lh => {
+            hList.push({
+              x: m.x + lh.x * cos - lh.y * sin,
+              y: m.y + lh.x * sin + lh.y * cos
+            });
+          });
+        }
+        return { oX: m.x, oY: m.y, hList: hList };
+      });
+
+      // 严格在 分子A 的 H 与 分子B 的 O 之间连虚线
+      for (let i = 0; i < molGeom.length; i++) {
+        for (let j = 0; j < molGeom.length; j++) {
+          if (i === j) continue;
+          const molA = molGeom[i];
+          const molB = molGeom[j];
+
+          molA.hList.forEach(hPos => {
+            const dx = hPos.x - molB.oX;
+            const dy = hPos.y - molB.oY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // 当 H 到相邻分子的 O 距离适中时形成氢键 (55px以内)
+            if (dist < 60 * ratio && dist > 14 * ratio) {
+              hbondCtx.beginPath();
+              hbondCtx.setLineDash([4 * ratio, 3 * ratio]);
+              hbondCtx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0.2, 1 - dist / (60 * ratio))})`;
+              hbondCtx.lineWidth = 2 * ratio;
+              hbondCtx.moveTo(hPos.x, hPos.y);
+              hbondCtx.lineTo(molB.oX, molB.oY);
+              hbondCtx.stroke();
+              hbondCtx.setLineDash([]);
+            }
+          });
         }
       }
 
+      // 渲染水分子本体及极性标识 δ+/δ-
       hbondMolecules.forEach(m => {
         hbondCtx.save();
         hbondCtx.translate(m.x, m.y);
         hbondCtx.rotate(m.angle);
 
         if (currentHBondType === 'H2O') {
-          hbondCtx.fillStyle = '#ef4444';
+          // 共价键连线
+          hbondCtx.strokeStyle = '#64748b';
+          hbondCtx.lineWidth = 2 * ratio;
           hbondCtx.beginPath();
-          hbondCtx.arc(0, 0, 10 * ratio, 0, Math.PI * 2);
-          hbondCtx.fill();
-          hbondCtx.fillStyle = '#e2e8f0';
-          hbondCtx.beginPath();
-          hbondCtx.arc(10 * ratio, 7 * ratio, 5 * ratio, 0, Math.PI * 2);
-          hbondCtx.arc(-10 * ratio, 7 * ratio, 5 * ratio, 0, Math.PI * 2);
-          hbondCtx.fill();
-        } else if (currentHBondType === 'HF') {
-          hbondCtx.fillStyle = '#ec4899';
+          hbondCtx.moveTo(0, 0); hbondCtx.lineTo(13 * ratio, 9 * ratio);
+          hbondCtx.moveTo(0, 0); hbondCtx.lineTo(-13 * ratio, 9 * ratio);
+          hbondCtx.stroke();
+
+          // O 原子 (中心)
+          hbondCtx.fillStyle = '#a8324e';
           hbondCtx.beginPath();
           hbondCtx.arc(0, 0, 11 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
-          hbondCtx.fillStyle = '#e2e8f0';
+          hbondCtx.strokeStyle = '#fff';
+          hbondCtx.lineWidth = 1 * ratio;
+          hbondCtx.stroke();
+
+          hbondCtx.fillStyle = '#ffffff';
+          hbondCtx.font = `bold ${8 * ratio}px sans-serif`;
+          hbondCtx.textAlign = 'center';
+          hbondCtx.textBaseline = 'middle';
+          hbondCtx.fillText('O', 0, 0);
+
+          // 2 个 H 原子
+          [-1, 1].forEach(side => {
+            const hx = side * 13 * ratio;
+            const hy = 9 * ratio;
+            hbondCtx.fillStyle = '#d97706';
+            hbondCtx.beginPath();
+            hbondCtx.arc(hx, hy, 6 * ratio, 0, Math.PI * 2);
+            hbondCtx.fill();
+            hbondCtx.strokeStyle = '#fff';
+            hbondCtx.stroke();
+            hbondCtx.fillStyle = '#ffffff';
+            hbondCtx.font = `bold ${6 * ratio}px sans-serif`;
+            hbondCtx.fillText('H', hx, hy);
+          });
+        } else if (currentHBondType === 'HF') {
+          hbondCtx.strokeStyle = '#64748b';
+          hbondCtx.lineWidth = 2 * ratio;
           hbondCtx.beginPath();
-          hbondCtx.arc(10 * ratio, 0, 5 * ratio, 0, Math.PI * 2);
+          hbondCtx.moveTo(0, 0); hbondCtx.lineTo(14 * ratio, 0);
+          hbondCtx.stroke();
+
+          hbondCtx.fillStyle = '#ec4899';
+          hbondCtx.beginPath();
+          hbondCtx.arc(0, 0, 12 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
+          hbondCtx.fillStyle = '#fff';
+          hbondCtx.font = `bold ${8 * ratio}px sans-serif`;
+          hbondCtx.textAlign = 'center';
+          hbondCtx.textBaseline = 'middle';
+          hbondCtx.fillText('F', 0, 0);
+
+          hbondCtx.fillStyle = '#d97706';
+          hbondCtx.beginPath();
+          hbondCtx.arc(14 * ratio, 0, 6 * ratio, 0, Math.PI * 2);
+          hbondCtx.fill();
+          hbondCtx.fillStyle = '#fff';
+          hbondCtx.font = `bold ${6 * ratio}px sans-serif`;
+          hbondCtx.fillText('H', 14 * ratio, 0);
         } else {
           hbondCtx.fillStyle = '#2563eb';
           hbondCtx.beginPath();
-          hbondCtx.arc(0, 0, 10 * ratio, 0, Math.PI * 2);
+          hbondCtx.arc(0, 0, 11 * ratio, 0, Math.PI * 2);
           hbondCtx.fill();
-          hbondCtx.fillStyle = '#e2e8f0';
-          hbondCtx.beginPath();
-          hbondCtx.arc(9 * ratio, 6 * ratio, 4.5 * ratio, 0, Math.PI * 2);
-          hbondCtx.arc(-9 * ratio, 6 * ratio, 4.5 * ratio, 0, Math.PI * 2);
-          hbondCtx.arc(0, -10 * ratio, 4.5 * ratio, 0, Math.PI * 2);
-          hbondCtx.fill();
+          hbondCtx.fillStyle = '#fff';
+          hbondCtx.font = `bold ${8 * ratio}px sans-serif`;
+          hbondCtx.textAlign = 'center';
+          hbondCtx.textBaseline = 'middle';
+          hbondCtx.fillText('N', 0, 0);
+
+          [{x:12, y:8}, {x:-12, y:8}, {x:0, y:-13}].forEach(p => {
+            hbondCtx.fillStyle = '#d97706';
+            hbondCtx.beginPath();
+            hbondCtx.arc(p.x * ratio, p.y * ratio, 5.5 * ratio, 0, Math.PI * 2);
+            hbondCtx.fill();
+            hbondCtx.fillStyle = '#fff';
+            hbondCtx.font = `bold ${6 * ratio}px sans-serif`;
+            hbondCtx.fillText('H', p.x * ratio, p.y * ratio);
+          });
         }
         hbondCtx.restore();
       });
@@ -1847,7 +2072,7 @@
     }
 
     /* ==========================================================================
-       7. 7.3 四大晶体 3D 晶胞展示引擎
+       7. 四大晶体 3D 晶胞展示引擎
        ========================================================================== */
     let crystalCanvas, crystalCtx;
     let crystalAngleX = 0.4, crystalAngleY = 0.6;
@@ -1913,7 +2138,7 @@
       crystalCtx = crystalCanvas.getContext('2d');
       const rect = crystalCanvas.getBoundingClientRect();
       crystalCanvas.width = rect.width * window.devicePixelRatio || 500;
-      crystalCanvas.height = 260 * window.devicePixelRatio;
+      crystalCanvas.height = 270 * window.devicePixelRatio;
 
       crystalCanvas.addEventListener('mousedown', (e) => {
         isDraggingCrystal = true;
