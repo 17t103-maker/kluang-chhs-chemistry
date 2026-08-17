@@ -328,17 +328,21 @@
       background: var(--bg-card-subtle);
       border: 1px dashed var(--border-color);
       border-radius: var(--radius);
-      padding: 12px;
-      margin: 14px 0;
+      padding: 14px;
+      margin: 14px auto;
       text-align: center;
+      max-width: 680px;
     }
 
     .textbook-guide-img img {
       max-width: 100%;
       height: auto;
+      max-height: 380px;
       border-radius: 6px;
       display: block;
       margin: 0 auto;
+      object-fit: contain;
+      box-shadow: var(--shadow-sm);
     }
 
     .img-fallback-box {
@@ -572,7 +576,7 @@
           <strong>5. 金属键微观模型</strong>：理解自由电子海模型，论述金属单位体积电荷数与金属键强度的关系。
         </div>
         <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border-left:4px solid var(--primary-color);">
-          <strong>6. 范德华力与氢键</strong>：掌握氢键 $X\text{-}H\cdots Y$ 成键方向与四面体网络，解析氢化物沸点反常图谱。
+          <strong>6. 范德华力与氢键</strong>：掌握氢键 <strong>X—H…Y</strong> 成键方向与四面体网络，解析氢化物沸点反常图谱。
         </div>
       </div>
     </section>
@@ -879,7 +883,7 @@
         </div>
       </div>
 
-      <!-- 配位键形成微观互动模拟器 (根据附图5、6重构) -->
+      <!-- 配位键形成微观互动模拟器 -->
       <h4 style="font-size:0.95rem; margin:20px 0 8px 0; color:var(--accent-color);">🔗 配位键形成微观互动模拟器 (参考标准弧线轨道配位机理)</h4>
       <div class="grid-2">
         <div style="background:var(--bg-card-subtle); padding:16px; border-radius:var(--radius); border:1px solid var(--border-color); display:flex; flex-direction:column; align-items:center;">
@@ -1018,24 +1022,24 @@
       </div>
 
       <!-- 7.2.2 氢键动态网络模拟与氢化物沸点反常图 -->
-      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X-H···Y) 严格取向动态模拟与氢化物沸点反常图谱</h3>
+      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X—H…Y) 严格取向动态模拟与氢化物沸点反常图谱</h3>
       
       <div class="tab-pills">
-        <button class="tab-pill active" onclick="switchHydrogenBondDemo('H2O')">水分子间氢键 (H₂O · O···H 取向)</button>
-        <button class="tab-pill" onclick="switchHydrogenBondDemo('HF')">氟化氢氢键 (HF · F···H 链状)</button>
-        <button class="tab-pill" onclick="switchHydrogenBondDemo('NH3')">氨气氢键 (NH₃ · N···H 网络)</button>
+        <button class="tab-pill active" onclick="switchHydrogenBondDemo('H2O')">水分子间氢键 (H₂O · O…H 取向)</button>
+        <button class="tab-pill" onclick="switchHydrogenBondDemo('HF')">氟化氢氢键 (HF · F…H 链状)</button>
+        <button class="tab-pill" onclick="switchHydrogenBondDemo('NH3')">氨气氢键 (NH₃ · N…H 网络)</button>
       </div>
 
       <div class="grid-2">
         <div class="canvas-wrapper">
           <canvas id="hbond-canvas"></canvas>
-          <div class="canvas-hint" id="hbond-hint">氢键动态网络 (严格遵循 O···H 静电取向)</div>
+          <div class="canvas-hint" id="hbond-hint">氢键动态网络 (严格遵循 O…H 静电取向)</div>
         </div>
 
         <div style="background:var(--bg-card-subtle); padding:16px; border-radius:var(--radius); border:1px solid var(--border-color); font-size:0.88rem; line-height:1.7;">
           <h4 style="color:var(--primary-color); margin-bottom:6px;" id="hbond-title">水分子 (H₂O) 间氢键特征</h4>
           <div id="hbond-desc">
-            • <strong>成键机制</strong>：带 $\delta^+$ 的 H 原子核几乎裸露，强烈吸引相邻水分子带 $\delta^-$ 的 O 原子孤对电子。<br>
+            • <strong>成键机制</strong>：带 δ⁺ 的 H 原子核几乎裸露，强烈吸引相邻水分子带 δ⁻ 的 O 原子孤对电子。<br>
             • <strong>饱和性与方向性</strong>：1 个水分子最多与周围 4 个水分子形成 4 个氢键，构成以 O 为中心的四面体构型。<br>
             • <strong>键能比值</strong>：共价键 : 氢键 : 范德华力 ≈ <span class="inline-ans">100 : 10 : 1</span>。<br>
             • <strong>物理影响</strong>：显著提高熔沸点；冰中形成 4 氢键开放空腔，导致密度反常小于液态水。
@@ -1043,12 +1047,12 @@
         </div>
       </div>
 
-      <!-- 课本指导插图预留：氢化物沸点图（根据要求更新路径） -->
+      <!-- 课本指导插图预留：氢化物沸点图（已更正为 .jpg 格式） -->
       <div class="textbook-guide-img" style="margin-top:20px;">
-        <img src="image/homebook/Screenshot 2026-08-17 135130.png" alt="课本第180页图7-14：一些氢化物的沸点变化图" onerror="this.style.display='none'; document.getElementById('guide-boiling-fallback').style.display='block';">
+        <img src="image/homebook/Screenshot 2026-08-17 135130.jpg" alt="课本第180页图7-14：一些氢化物的沸点变化图" onerror="this.style.display='none'; document.getElementById('guide-boiling-fallback').style.display='block';">
         <div id="guide-boiling-fallback" class="img-fallback-box" style="display:none;">
           <strong>📖【课本图 7-14 氢化物沸点图 预留位】</strong>：第 IVA ~ VIIA 族氢化物沸点变化折线图<br>
-          <span style="font-size:0.8rem; color:var(--text-muted);">（请在本地 <code>image/homebook/</code> 文件夹中存入 <code>Screenshot 2026-08-17 135130.png</code>）</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);">（请在本地 <code>image/homebook/</code> 文件夹中存入 <code>Screenshot 2026-08-17 135130.jpg</code>）</span>
         </div>
       </div>
 
@@ -1124,7 +1128,7 @@
                   <div class="node-children">
                     <ul>
                       <li><span style="color:#94a3b8;"><strong>范德华力</strong>：受式量、极性、原子数、电子数、支链接触面积 5 大因素影响</span></li>
-                      <li><span style="color:#94a3b8;"><strong>氢键 (X-H···Y)</strong>：存在于 N, O, F 氢化物中，引起沸点反常跳跃与冰密度反常</span></li>
+                      <li><span style="color:#94a3b8;"><strong>氢键 (X—H…Y)</strong>：存在于 N, O, F 氢化物中，引起沸点反常跳跃与冰密度反常</span></li>
                     </ul>
                   </div>
                 </li>
@@ -1307,7 +1311,7 @@
     }
 
     /* ==========================================================================
-       2. 配位键互动模拟器 (根据附图5、6重构)
+       2. 配位键互动模拟器
        ========================================================================== */
     let currentDative = 'NH4';
     let dativeStep = 0;
@@ -1333,7 +1337,6 @@
         if (dativeStep === 0) {
           stage.innerHTML = `
             <svg width="320" height="110" viewBox="0 0 320 110">
-              <!-- NH3 -->
               <text x="80" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
               <line x1="80" y1="42" x2="80" y2="24" stroke="#64748b" stroke-width="2"/>
               <text x="80" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
@@ -1341,12 +1344,10 @@
               <text x="40" y="58" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
               <line x1="80" y1="64" x2="80" y2="82" stroke="#64748b" stroke-width="2"/>
               <text x="80" y="96" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
-              <!-- 孤对电子 (右侧) -->
               <circle cx="94" cy="50" r="2.2" fill="#ef4444"/><circle cx="94" cy="58" r="2.2" fill="#ef4444"/>
               
               <text x="140" y="58" font-size="20" font-weight="bold" fill="#64748b" text-anchor="middle">+</text>
               
-              <!-- H+ -->
               <text x="180" y="58" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">H⁺</text>
               <circle cx="180" cy="54" r="14" fill="none" stroke="#ef4444" stroke-dasharray="3,3" stroke-width="1.5"/>
               <text x="80" y="108" font-size="11" fill="#64748b" text-anchor="middle">氨气 (Ammonia)</text>
@@ -1357,7 +1358,6 @@
         } else if (dativeStep === 1) {
           stage.innerHTML = `
             <svg width="320" height="110" viewBox="0 0 320 110">
-              <!-- NH3 + 弯箭头弧线进攻 H+ -->
               <text x="70" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
               <line x1="70" y1="42" x2="70" y2="24" stroke="#64748b" stroke-width="2"/>
               <text x="70" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
@@ -1369,7 +1369,6 @@
 
               <text x="120" y="58" font-size="18" fill="#64748b" text-anchor="middle">+</text>
 
-              <!-- 弧线进攻轨迹 -->
               <path d="M 88 48 Q 120 15 155 45" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2"/>
               <polygon points="158,45 150,40 152,48" fill="#2563eb"/>
 
@@ -1383,7 +1382,6 @@
           stage.innerHTML = `
             <svg width="320" height="110" viewBox="0 0 320 110">
               <text x="95" y="58" font-size="34" fill="#64748b">[</text>
-              <!-- 4个等价 N-H 键 -->
               <text x="145" y="58" font-size="16" font-weight="bold" fill="#2563eb" text-anchor="middle">N</text>
               <line x1="145" y1="42" x2="145" y2="24" stroke="#64748b" stroke-width="2"/>
               <text x="145" y="20" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
@@ -1402,17 +1400,14 @@
           btn.innerText = "🔄 重置演示";
         }
       } else {
-        // H3O+ 模式 (参考附图6)
         if (dativeStep === 0) {
           stage.innerHTML = `
             <svg width="320" height="110" viewBox="0 0 320 110">
-              <!-- H2O 折线构型 -->
               <text x="80" y="58" font-size="16" font-weight="bold" fill="#ea580c" text-anchor="middle">O</text>
               <line x1="72" y1="62" x2="52" y2="76" stroke="#64748b" stroke-width="2"/>
               <text x="44" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
               <line x1="88" y1="62" x2="108" y2="76" stroke="#64748b" stroke-width="2"/>
               <text x="116" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
-              <!-- 2对孤对电子 -->
               <circle cx="70" cy="45" r="2.2" fill="#ef4444"/><circle cx="76" cy="40" r="2.2" fill="#ef4444"/>
               <circle cx="86" cy="40" r="2.2" fill="#ef4444"/><circle cx="92" cy="45" r="2.2" fill="#ef4444"/>
 
@@ -1435,7 +1430,6 @@
               <text x="116" y="84" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
               <circle cx="70" cy="45" r="2.2" fill="#ef4444"/><circle cx="76" cy="40" r="2.2" fill="#ef4444"/>
               
-              <!-- 弯箭头 -->
               <path d="M 88 38 Q 130 5 178 45" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-dasharray="4,2"/>
               <polygon points="181,46 172,43 175,51" fill="#ea580c"/>
 
@@ -1447,19 +1441,14 @@
         } else {
           stage.innerHTML = `
             <svg width="320" height="110" viewBox="0 0 320 110">
-              <!-- H3O+ 构型 -->
               <text x="150" y="60" font-size="16" font-weight="bold" fill="#ea580c" text-anchor="middle">O</text>
-              <!-- 顶部配位 H -->
               <line x1="150" y1="44" x2="150" y2="28" stroke="#2563eb" stroke-width="2"/>
               <text x="150" y="24" font-size="14" font-weight="bold" fill="#2563eb" text-anchor="middle">H</text>
-              <!-- 左右 H -->
               <line x1="142" y1="64" x2="122" y2="78" stroke="#64748b" stroke-width="2"/>
               <text x="114" y="86" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
               <line x1="158" y1="64" x2="178" y2="78" stroke="#64748b" stroke-width="2"/>
               <text x="186" y="86" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">H</text>
-              <!-- 剩余 1 对孤对电子 -->
               <circle cx="137" cy="50" r="2.2" fill="#ef4444"/><circle cx="137" cy="58" r="2.2" fill="#ef4444"/>
-              <!-- 正电荷标在 O 旁 -->
               <circle cx="168" cy="50" r="6.5" fill="none" stroke="#ea580c" stroke-width="1.2"/>
               <text x="168" y="53.5" font-size="10" font-weight="bold" fill="#ea580c" text-anchor="middle">+</text>
               <text x="150" y="105" font-size="11" fill="#059669" font-weight="bold" text-anchor="middle">水合氢离子 (Hydronium ion, H₃O⁺)</text>
@@ -1780,15 +1769,15 @@
     }
 
     /* ==========================================================================
-       5. 氢键网络动态模拟 (遵循附图8：严格计算 H 和 O 的实际相对位置)
+       5. 氢键网络动态模拟
        ========================================================================== */
     let hbondCanvas, hbondCtx;
     let currentHBondType = 'H2O';
     let hbondMolecules = [];
 
     const hbondMeta = {
-      H2O: { title: "水分子 (H₂O) 间氢键特征", desc: "• <strong>成键机制</strong>：带 $\delta^+$ 的 H 原子核强烈吸引相邻水分子带 $\delta^-$ 的 O 原子孤电子对。<br>• <strong>空间构型</strong>：1 个水分子最多形成 4 个氢键，构成四面体网络。<br>• <strong>物理反常</strong>：汽化热极高；冰中空腔结构使冰的密度小于液态水。" },
-      HF: { title: "氟化氢 (HF) 氢键链", desc: "• <strong>结构特征</strong>：强电负性 F 原子与 H 形成链状之字形氢键（...H-F···H-F···）。<br>• <strong>沸点反常</strong>：沸点 20℃，远高于同族 HCl (-85℃)。" },
+      H2O: { title: "水分子 (H₂O) 间氢键特征", desc: "• <strong>成键机制</strong>：带 δ⁺ 的 H 原子核强烈吸引相邻水分子带 δ⁻ 的 O 原子孤电子对。<br>• <strong>空间构型</strong>：1 个水分子最多形成 4 个氢键，构成四面体网络。<br>• <strong>物理反常</strong>：汽化热极高；冰中空腔结构使冰的密度小于液态水。" },
+      HF: { title: "氟化氢 (HF) 氢键链", desc: "• <strong>结构特征</strong>：强电负性 F 原子与 H 形成链状之字形氢键（...H-F…H-F…）。<br>• <strong>沸点反常</strong>：沸点 20℃，远高于同族 HCl (-85℃)。" },
       NH3: { title: "氨气 (NH₃) 氢键网络", desc: "• <strong>结构特征</strong>：N 原子含 1 对孤对电子，在分子间形成交联氢键。<br>• <strong>物理性质</strong>：沸点 -33℃ 异常升高且极易溶于水。" }
     };
 
@@ -1850,7 +1839,6 @@
         let hList = [];
 
         if (currentHBondType === 'H2O') {
-          // 两个 H 原子相对 O (0,0) 的局部坐标
           const localH1 = { x: 13 * ratio, y: 9 * ratio };
           const localH2 = { x: -13 * ratio, y: 9 * ratio };
           hList.push({
@@ -1868,7 +1856,6 @@
             y: m.y + localH.x * sin + localH.y * cos
           });
         } else {
-          // NH3 3个 H
           const localH1 = { x: 12 * ratio, y: 8 * ratio };
           const localH2 = { x: -12 * ratio, y: 8 * ratio };
           const localH3 = { x: 0, y: -13 * ratio };
@@ -1882,7 +1869,7 @@
         return { oX: m.x, oY: m.y, hList: hList };
       });
 
-      // 严格在 分子A 的 H 与 分子B 的 O 之间连虚线
+      // 严格在 分子A 的 H 与 分子B 的中心原子之间连虚线
       for (let i = 0; i < molGeom.length; i++) {
         for (let j = 0; j < molGeom.length; j++) {
           if (i === j) continue;
@@ -1894,7 +1881,6 @@
             const dy = hPos.y - molB.oY;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
-            // 当 H 到相邻分子的 O 距离适中时形成氢键 (55px以内)
             if (dist < 60 * ratio && dist > 14 * ratio) {
               hbondCtx.beginPath();
               hbondCtx.setLineDash([4 * ratio, 3 * ratio]);
@@ -1909,14 +1895,13 @@
         }
       }
 
-      // 渲染水分子本体及极性标识 δ+/δ-
+      // 渲染分子本体
       hbondMolecules.forEach(m => {
         hbondCtx.save();
         hbondCtx.translate(m.x, m.y);
         hbondCtx.rotate(m.angle);
 
         if (currentHBondType === 'H2O') {
-          // 共价键连线
           hbondCtx.strokeStyle = '#64748b';
           hbondCtx.lineWidth = 2 * ratio;
           hbondCtx.beginPath();
@@ -1924,7 +1909,6 @@
           hbondCtx.moveTo(0, 0); hbondCtx.lineTo(-13 * ratio, 9 * ratio);
           hbondCtx.stroke();
 
-          // O 原子 (中心)
           hbondCtx.fillStyle = '#a8324e';
           hbondCtx.beginPath();
           hbondCtx.arc(0, 0, 11 * ratio, 0, Math.PI * 2);
@@ -1939,7 +1923,6 @@
           hbondCtx.textBaseline = 'middle';
           hbondCtx.fillText('O', 0, 0);
 
-          // 2 个 H 原子
           [-1, 1].forEach(side => {
             const hx = side * 13 * ratio;
             const hy = 9 * ratio;
