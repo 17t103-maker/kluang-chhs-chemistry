@@ -380,10 +380,11 @@
       font-size: 0.75rem;
       color: #94a3b8;
       pointer-events: none;
-      background: rgba(15, 23, 42, 0.75);
-      padding: 3px 8px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 4px 10px;
       border-radius: 4px;
       z-index: 2;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .tab-pills {
@@ -1002,8 +1003,8 @@
         </table>
       </div>
 
-      <!-- 7.2.2 氢键动态网络模拟与氢化物沸点反常图 -->
-      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X—H…Y) 严格取向动态模拟与氢化物沸点反常图谱</h3>
+      <!-- 7.2.2 氢键动态网络模拟 -->
+      <h3 class="sub-title" style="margin-top:24px;">7.2.2 氢键 (X—H…Y) 严格取向动态模拟</h3>
       
       <div class="tab-pills">
         <button class="tab-pill active" onclick="switchHydrogenBondDemo('H2O')">水分子间氢键 (H₂O · O…H 取向)</button>
@@ -1072,8 +1073,8 @@
         <!-- 互动 Canvas 与 实时探针解读面板 -->
         <div class="grid-2">
           <div class="canvas-wrapper" style="position:relative;">
-            <div class="canvas-hint" id="boiling-canvas-hint">动态折线图 (网格跨度: -150℃ ~ 100℃)</div>
-            <canvas id="boiling-curve-canvas" style="height:310px; cursor:crosshair;"></canvas>
+            <div class="canvas-hint" id="boiling-canvas-hint">动态折线图 (网格跨度: -170℃ ~ 110℃)</div>
+            <canvas id="boiling-curve-canvas" style="height:320px; cursor:crosshair;"></canvas>
           </div>
 
           <!-- 右侧实时微观探针卡片 -->
@@ -1087,7 +1088,7 @@
               <div id="boiling-inspect-desc" style="font-size:0.88rem; line-height:1.75; color:var(--text-main);">
                 • <strong>周期与式量</strong>：第 2 周期 | $M_{\text{r}} = 18$<br>
                 • <strong>主导作用力</strong>：分子间存在极强的<span class="inline-ans">氢键 (每个水分子最多成 4 个氢键)</span>与范德华力。<br>
-                • <strong>反常现象剖析</strong>：在同族氢化物中，尽管 $H_2O$ 式量最小，但由于强大的氢键网络，沸点反常跃升至 <strong>100℃</strong>（比同族 $H_2S$ 的 -60℃ 高出整整 160℃）！
+                • <strong>反常现象剖析</strong>：在同族氢化物中，尽管 H₂O 式量最小，但由于强大的氢键网络，沸点反常跃升至 <strong>100℃</strong>（比同族 H₂S 的 -60℃ 高出整整 160℃）！
               </div>
             </div>
 
@@ -2012,32 +2013,31 @@
     }
 
     /* ==========================================================================
-       6. 氢化物沸点反常与氢键规律 · 交互探究工作台 (整合升级)
+       6. 氢化物沸点反常与氢键规律 · 交互探究工作台 (色彩/重叠全修复)
        ========================================================================== */
     let boilingCanvas, boilingCtx;
     let currentBoilingFilter = 'ALL';
     let showExtrapolation = false;
     let hoveredPoint = null;
 
-    // 严谨科学数据集
     const hydrideDataset = [
       {
         group: "VIA",
         name: "第 VIA 族氢化物 (O, S, Se, Te)",
         color: "#10b981",
-        extrapolatePeriod2: -80, // 若无氢键外推理论沸点约为 -80℃
+        extrapolatePeriod2: -80,
         pts: [
           { p: 2, t: 100, formula: "H₂O", name: "水", mr: 18, hbond: true, desc: "分子间存在强大的四面体取向氢键网络（每个水分子最多成 4 个氢键），汽化热极大，沸点反常高达 100℃！" },
           { p: 3, t: -60, formula: "H₂S", name: "硫化氢", mr: 34, hbond: false, desc: "无氢键，主要依靠微弱范德华力结合，常温下为具有臭鸡蛋气味的气体。" },
           { p: 4, t: -41.2, formula: "H₂Se", name: "硒化氢", mr: 81, hbond: false, desc: "随原子序数与式量增大，电子云变形性增大，范德华力增强，沸点稳步回升。" },
-          { p: 5, t: -2.2, formula: "H₂Te", name: "碲化氢", mr: 130, hbond: false, desc: "式量最大，分子间范德华力在同族无氢键成员中最强，沸点接近 0℃。" }
+          { p: 5, t: -2.2, formula: "H₂Te", name: "碲化氢", mr: 130, hbond: false, desc: "式量最大，分子间范德华引力在同族无氢键成员中最强，沸点接近 0℃。" }
         ]
       },
       {
         group: "VIIA",
         name: "第 VIIA 族卤化氢 (F, Cl, Br, I)",
         color: "#38bdf8",
-        extrapolatePeriod2: -110, // 若无氢键外推理论沸点约为 -110℃
+        extrapolatePeriod2: -110,
         pts: [
           { p: 2, t: 19.5, formula: "HF", name: "氟化氢", mr: 20, hbond: true, desc: "F 电负性极强，分子间形成强氢键链（...F-H…F-H...），沸点达 19.5℃（远高于 HCl 的 -85℃）。" },
           { p: 3, t: -85, formula: "HCl", name: "氯化氢", mr: 36.5, hbond: false, desc: "Cl 吸引电子能力弱于 F 且半径较大，不能形成分子间氢键，仅含弱范德华力。" },
@@ -2049,7 +2049,7 @@
         group: "VA",
         name: "第 VA 族氢化物 (N, P, As, Sb)",
         color: "#f43f5e",
-        extrapolatePeriod2: -125, // 若无氢键外推理论沸点约为 -125℃
+        extrapolatePeriod2: -125,
         pts: [
           { p: 2, t: -33.3, formula: "NH₃", name: "氨气", mr: 17, hbond: true, desc: "中心 N 原子具 1 对孤对电子，分子间形成交联氢键，使沸点异常高出同族 PH₃ 达 55℃。" },
           { p: 3, t: -87.7, formula: "PH₃", name: "磷化氢", mr: 34, hbond: false, desc: "P 原子的电负性较低且半径较大，分子间无法形成有效氢键，处于该族沸点谷底。" },
@@ -2061,7 +2061,7 @@
         group: "IVA",
         name: "第 IVA 族氢化物 (C, Si, Ge, Sn)",
         color: "#eab308",
-        extrapolatePeriod2: null, // IVA 族无氢键，自身即为标准单调基准线
+        extrapolatePeriod2: null,
         pts: [
           { p: 2, t: -161.5, formula: "CH₄", name: "甲烷", mr: 16, hbond: false, desc: "中心 C 无孤对电子，正四面体非极性分子，无氢键。因式量极小，沸点极低 (-161.5℃)。" },
           { p: 3, t: -111.8, formula: "SiH₄", name: "硅烷", mr: 32, hbond: false, desc: "无氢键，随相对分子质量增大，范德华力增大，沸点平稳上升。" },
@@ -2087,7 +2087,6 @@
         renderBoilingCanvas();
       });
 
-      // 默认选中 H2O
       inspectMolecule(hydrideDataset[0].pts[0], hydrideDataset[0]);
       renderBoilingCanvas();
     }
@@ -2096,7 +2095,7 @@
       if (!boilingCanvas) return;
       const rect = boilingCanvas.getBoundingClientRect();
       boilingCanvas.width = rect.width * window.devicePixelRatio || 500;
-      boilingCanvas.height = 310 * window.devicePixelRatio;
+      boilingCanvas.height = 320 * window.devicePixelRatio;
     }
 
     function filterBoilingGroup(grp) {
@@ -2106,7 +2105,6 @@
         if (pill) pill.classList.toggle('active', g === grp);
       });
 
-      // 如果选中特定族，自动探查该族第2周期成员
       if (grp !== 'ALL') {
         const found = hydrideDataset.find(d => d.group === grp);
         if (found) inspectMolecule(found.pts[0], found);
@@ -2158,7 +2156,7 @@
         grp.pts.forEach(pt => {
           if (pt.canvasX && pt.canvasY) {
             const dist = Math.hypot(pt.canvasX - mouseX, pt.canvasY - mouseY);
-            if (dist < 18 * window.devicePixelRatio) {
+            if (dist < 20 * window.devicePixelRatio) {
               found = { pt, grp };
             }
           }
@@ -2182,16 +2180,15 @@
 
       boilingCtx.clearRect(0, 0, w, h);
 
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const gridColor = isDark ? '#1e293b' : '#e2e8f0';
-      const textColor = isDark ? '#94a3b8' : '#64748b';
-      const zeroLineColor = isDark ? '#475569' : '#cbd5e1';
+      // 固定使用深色系坐标轴与刻度以保证在深色 Canvas 上的高对比度
+      const gridColor = '#1e293b';
+      const textColor = '#94a3b8';
+      const zeroLineColor = '#475569';
 
-      // 坐标系映射 (T: -170 ~ 110℃, Period: 1.8 ~ 5.3)
-      const padLeft = 55 * ratio;
-      const padRight = 35 * ratio;
-      const padTop = 30 * ratio;
-      const padBottom = 35 * ratio;
+      const padLeft = 60 * ratio;
+      const padRight = 45 * ratio;
+      const padTop = 32 * ratio;
+      const padBottom = 38 * ratio;
 
       const plotW = w - padLeft - padRight;
       const plotH = h - padTop - padBottom;
@@ -2199,9 +2196,8 @@
       const mapX = (period) => padLeft + ((period - 2) / 3) * plotW;
       const mapY = (temp) => padTop + ((110 - temp) / 280) * plotH;
 
-      // 绘制背景温度网格
+      // 绘制温度横向网格
       const tempGrids = [100, 75, 50, 25, 0, -25, -50, -75, -100, -125, -150];
-      boilingCtx.lineWidth = 1 * ratio;
 
       tempGrids.forEach(t => {
         const y = mapY(t);
@@ -2212,7 +2208,7 @@
         boilingCtx.lineTo(w - padRight, y);
         boilingCtx.stroke();
 
-        boilingCtx.fillStyle = t === 0 ? (isDark ? '#f8fafc' : '#0f172a') : textColor;
+        boilingCtx.fillStyle = t === 0 ? '#f8fafc' : textColor;
         boilingCtx.font = `${8.5 * ratio}px sans-serif`;
         boilingCtx.textAlign = 'right';
         boilingCtx.textBaseline = 'middle';
@@ -2229,25 +2225,24 @@
         boilingCtx.lineTo(x, h - padBottom);
         boilingCtx.stroke();
 
-        boilingCtx.fillStyle = textColor;
-        boilingCtx.font = `bold ${9 * ratio}px sans-serif`;
+        boilingCtx.fillStyle = '#cbd5e1';
+        boilingCtx.font = `bold ${9.5 * ratio}px sans-serif`;
         boilingCtx.textAlign = 'center';
         boilingCtx.textBaseline = 'top';
         boilingCtx.fillText(`第 ${p} 周期`, x, h - padBottom + 8 * ratio);
       });
 
-      // 绘制折线与假想外推线
+      // 绘制各族折线
       hydrideDataset.forEach(grp => {
         const isSelected = (currentBoilingFilter === 'ALL' || currentBoilingFilter === grp.group);
         const alpha = isSelected ? 1 : 0.15;
 
-        // 计算屏幕坐标
         grp.pts.forEach(pt => {
           pt.canvasX = mapX(pt.p);
           pt.canvasY = mapY(pt.t);
         });
 
-        // 假想无氢键外推线 (周期3 -> 周期2)
+        // 假想无氢键外推线
         if (showExtrapolation && grp.extrapolatePeriod2 !== null && isSelected) {
           const pt3 = grp.pts[1];
           const expY = mapY(grp.extrapolatePeriod2);
@@ -2262,13 +2257,11 @@
           boilingCtx.stroke();
           boilingCtx.setLineDash([]);
 
-          // 假想理论点标记
           boilingCtx.fillStyle = "#eab308";
           boilingCtx.beginPath();
-          boilingCtx.arc(expX, expY, 4 * ratio, 0, Math.PI * 2);
+          boilingCtx.arc(expX, expY, 4.5 * ratio, 0, Math.PI * 2);
           boilingCtx.fill();
 
-          // 绘制温升跃迁双向箭头 ΔT
           boilingCtx.beginPath();
           boilingCtx.strokeStyle = "#f43f5e";
           boilingCtx.lineWidth = 1.8 * ratio;
@@ -2283,7 +2276,7 @@
           boilingCtx.fillText(`ΔT≈+${deltaT}℃ (氢键)`, expX - 8 * ratio, (expY + grp.pts[0].canvasY) / 2);
         }
 
-        // 真实折线
+        // 绘制折线
         boilingCtx.strokeStyle = grp.color;
         boilingCtx.globalAlpha = alpha;
         boilingCtx.lineWidth = (isSelected && currentBoilingFilter !== 'ALL') ? 3.5 * ratio : 2.2 * ratio;
@@ -2295,7 +2288,7 @@
         });
         boilingCtx.stroke();
 
-        // 绘制节点球体与文字
+        // 绘制数据点球体
         grp.pts.forEach(pt => {
           const isHovered = (hoveredPoint && hoveredPoint.pt === pt);
           const radius = (isHovered ? 6.5 : (pt.hbond ? 5 : 4)) * ratio;
@@ -2307,25 +2300,66 @@
           boilingCtx.strokeStyle = isHovered ? grp.color : '#ffffff';
           boilingCtx.lineWidth = 1.5 * ratio;
           boilingCtx.stroke();
-
-          if (isSelected) {
-            boilingCtx.fillStyle = isDark ? '#ffffff' : '#0f172a';
-            boilingCtx.font = `bold ${(pt.hbond ? 9.5 : 8.5) * ratio}px sans-serif`;
-            boilingCtx.textAlign = (pt.p === 2 && pt.hbond) ? 'left' : (pt.p === 3 ? 'center' : 'left');
-            
-            let labelX = pt.canvasX + 6 * ratio;
-            let labelY = pt.canvasY - 5 * ratio;
-
-            // 智能避让排版
-            if (pt.formula === 'HCl') { labelY = pt.canvasY + 12 * ratio; }
-            if (pt.formula === 'PH₃') { labelY = pt.canvasY + 13 * ratio; }
-            if (pt.formula === 'GeH₄') { labelY = pt.canvasY + 12 * ratio; }
-            if (pt.formula === 'CH₄') { labelY = pt.canvasY - 7 * ratio; }
-            if (pt.formula === 'H₂O') { labelX = pt.canvasX - 4 * ratio; labelY = pt.canvasY - 9 * ratio; }
-
-            boilingCtx.fillText(pt.formula, labelX, labelY);
-          }
         });
+
+        // 绘制独立清晰标签（带防遮挡微调与描边）
+        if (isSelected) {
+          grp.pts.forEach(pt => {
+            boilingCtx.font = `bold ${9.5 * ratio}px sans-serif`;
+            
+            let lx = pt.canvasX;
+            let ly = pt.canvasY;
+            let align = 'left';
+
+            // 🎯 精细化防遮挡避让排版表
+            switch (pt.formula) {
+              case 'H₂O':
+                lx -= 4 * ratio; ly -= 10 * ratio; align = 'center'; break;
+              case 'HF':
+                lx += 9 * ratio; ly += 3 * ratio; align = 'left'; break;
+              case 'NH₃':
+                lx += 9 * ratio; ly += 3 * ratio; align = 'left'; break;
+              case 'CH₄':
+                lx += 8 * ratio; ly -= 6 * ratio; align = 'left'; break;
+              case 'H₂S':
+                lx -= 2 * ratio; ly -= 9 * ratio; align = 'center'; break;
+              case 'HCl':
+                lx += 10 * ratio; ly += 2 * ratio; align = 'left'; break;
+              case 'PH₃':
+                lx -= 10 * ratio; ly += 12 * ratio; align = 'right'; break;
+              case 'SiH₄':
+                lx += 10 * ratio; ly += 4 * ratio; align = 'left'; break;
+              case 'H₂Se':
+                lx -= 2 * ratio; ly -= 9 * ratio; align = 'center'; break;
+              case 'AsH₃':
+                lx += 9 * ratio; ly -= 2 * ratio; align = 'left'; break;
+              case 'HBr':
+                lx += 9 * ratio; ly += 8 * ratio; align = 'left'; break;
+              case 'GeH₄':
+                lx -= 2 * ratio; ly += 14 * ratio; align = 'center'; break;
+              case 'H₂Te':
+                lx += 8 * ratio; ly -= 4 * ratio; align = 'left'; break;
+              case 'SbH₃':
+                lx += 8 * ratio; ly -= 2 * ratio; align = 'left'; break;
+              case 'HI':
+                lx += 8 * ratio; ly += 3 * ratio; align = 'left'; break;
+              case 'SnH₄':
+                lx += 8 * ratio; ly += 4 * ratio; align = 'left'; break;
+            }
+
+            boilingCtx.textAlign = align;
+            boilingCtx.textBaseline = 'middle';
+
+            // 1. 绘制暗色光晕描边（确保在任何折线穿过时都极度清晰）
+            boilingCtx.strokeStyle = 'rgba(9, 13, 22, 0.95)';
+            boilingCtx.lineWidth = 3.5 * ratio;
+            boilingCtx.strokeText(pt.formula, lx, ly);
+
+            // 2. 绘制纯正明亮高对比度文字
+            boilingCtx.fillStyle = '#f8fafc';
+            boilingCtx.fillText(pt.formula, lx, ly);
+          });
+        }
 
         boilingCtx.globalAlpha = 1;
       });
